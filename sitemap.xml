@@ -19,6 +19,11 @@
     <lastmod>2026-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://veridell.pages.dev/assets/img/brand/social-card.png</image:loc>
+      <image:title>Artificial intelligence — Veridellindo</image:title>
+      <image:caption>Intelligence in machines. Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human…</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://veridell.pages.dev/articles/Ashoka/</loc>

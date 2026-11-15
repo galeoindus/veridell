@@ -121,8 +121,24 @@
 # ══════════════════════════════════════════════════════════════════════════
 # Images, fonts, manifest — these genuinely do not change
 # ══════════════════════════════════════════════════════════════════════════
+# Brand icons are the exception to the long cache below. A logo change keeps the
+# same filename, and an `immutable` year meant every browser that had ever seen
+# the old mark kept showing it — including the tab icon, where it is most
+# visible. They get a day instead: cheap to revalidate, and a new logo appears
+# without anyone having to clear a cache. Renaming the files (mark-*.png) is
+# what clears the copies already out there.
+/assets/img/brand/*
+  Cache-Control: public, max-age=86400
+
+# Everything else under /assets/img is decorative and effectively fixed.
 /assets/img/*
   Cache-Control: public, max-age=31536000, immutable
+
+# The tab icon itself. Chrome asks for this path directly, so it cannot carry a
+# version query; a short cache is the only way to keep it honest.
+/favicon.ico
+  Cache-Control: public, max-age=86400
+  Content-Type: image/x-icon
 
 /manifest.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
