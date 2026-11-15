@@ -17,10 +17,11 @@ import { el, clamp, esc, cleanUrl, prefersReducedMotion } from '../ui.js';
 import { icon } from '../icons.js';
 import { t } from '../i18n.js';
 import { clean, wordCount, proseText, splitArticle, paragraphsToPoints } from '../parse.js';
-import { factsFromInfobox } from '../answer.js';
+import { composeAnswer, factsFromInfobox } from '../answer.js';
 import { articleToMarkdown } from '../markdown.js';
 import {
   factsBox, sourcesGroup, feedback, referencesBlock, markdownActions,
+  evidenceStrip, methodNote, selectedNote,
 } from '../answerui.js';
 import { sectionHead, card, errorBox, emptyState, toast, breadcrumbs } from '../components.js';
 import { mountOpenSources } from './library.js';
@@ -398,6 +399,29 @@ async function repaintFull(ctx, state) {
   const facts = factsFromInfobox(parts.infoboxHtml);
   const topics = parts.sections.map((s, i) => ({ id: s.id, title: s.line, number: s.number || String(i + 1) }));
 
+  // The article is read through the same composer the Ask view uses, over the
+  // same fetched document — so the definition, the key points and the section
+  // order are produced by one code path, not two that can drift apart. Every
+  // section is kept: an article is not a summary, and dropping the tail of a
+  // long one was the difference between "the whole article" and "the first
+  // twelve sections".
+  let composed = null;
+  try {
+    composed = await composeAnswer({
+      question: state.data.title,
+      root: state.root,
+      sections: state.data.sections,
+      depth: 'deep',
+      lang: state.lang,
+      title: state.data.title,
+      mode: 'article',
+      maxSections: Math.max(parts.sections.length, 1),
+      maxSentences: 40,
+    });
+  } catch {
+    composed = null; // the full text below still renders without it
+  }
+
   mount.innerHTML = '';
   mount.append(tocTop(state, { topics }, 'full-topic'));
   const content = el('div', { class: 'panel panel-wide' });
@@ -412,6 +436,43 @@ async function repaintFull(ctx, state) {
   // The infobox sits at the top, where Wikipedia keeps it, as our facts box.
   const factbox = factsBox(facts, state.data.title);
   if (factbox) content.append(factbox);
+
+  // The same opening the Ask view gives an answer: what was read, the
+  // definition, then the points that carry the article. It comes from the same
+  // composer over the same document, so the two surfaces can never disagree.
+  if (composed) {
+    content.append(evidenceStrip({
+      matched: composed.rankedCount,
+      considered: composed.method.sentencesConsidered,
+      sections: composed.method.sectionsRead,
+      title: state.data.title,
+    }));
+    const coreBox = el('div', { class: 'qa-answer' });
+    coreBox.append(el('h2', { text: t('coreAnswer') }));
+    coreBox.append(selectedNote(state.data.title, state.lang, state.wikiUrl));
+    const core = (composed.core || []).slice(0, 5);
+    if (core.length) {
+      const list = el('ul', { class: 'line-list' });
+      core.forEach((sentence) => list.append(el('li', { text: sentence })));
+      coreBox.append(list);
+    }
+    content.append(coreBox);
+
+    const points = (composed.keyPoints || []).slice(0, 8);
+    if (points.length > 1) {
+      const keyCard = el('div', { class: 'answer-card' });
+      keyCard.append(el('h2', { text: t('keyPoints') }));
+      const ol = el('ol', { class: 'points-list' });
+      points.forEach((point) => {
+        const li = el('li');
+        li.append(el('span', { class: 'point-text', text: point.text }));
+        if (point.section) li.append(el('span', { class: 'point-from', text: `— ${point.section}` }));
+        ol.append(li);
+      });
+      keyCard.append(ol);
+      content.append(keyCard);
+    }
+  }
 
   // The lead, then every section, in Wikipedia's own order — but read as
   // points, with the pictures and tables left where Wikipedia puts them.
@@ -433,6 +494,11 @@ async function repaintFull(ctx, state) {
     lang: state.lang, title: state.data.title, wikiUrl: state.wikiUrl,
     citations: parts.citations, project: state.project, revision: state.revision,
   }));
+  if (composed) {
+    content.append(methodNote(composed.method, {
+      revid: state.revision, lang: state.lang, title: state.data.title, wikiUrl: state.wikiUrl,
+    }));
+  }
   content.append(feedback(ctx, `article:${state.lang}:${state.data.title}`));
 }
 
