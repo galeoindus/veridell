@@ -64,4 +64,4 @@ CHAT_MODEL=
 # ── Identity ──────────────────────────────────────────────────────────────
 # The canonical origin. Used for the Referer header OpenRouter receives and for
 # absolute links in generated answers. It is not a secret.
-SITE_ORIGIN=https://veridell.pages.dev
+SITE_ORIGIN=https://veridellindo.pages.dev

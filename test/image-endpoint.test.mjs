@@ -61,7 +61,7 @@ test('control characters are stripped from the prompt', async () => {
 const postWith = (headers, body, env) => {
   __resetThrottle();
   return onRequestPost({
-  request: new Request('https://veridell.pages.dev/api/image', {
+  request: new Request('https://veridellindo.pages.dev/api/image', {
     method: 'POST',
     headers,
     body,
@@ -84,7 +84,7 @@ test('a cross-origin caller is refused', async () => {
 
 test('a same-origin caller is allowed', async () => {
   const res = await postWith(
-    { 'content-type': 'application/json', origin: 'https://veridell.pages.dev' },
+    { 'content-type': 'application/json', origin: 'https://veridellindo.pages.dev' },
     JSON.stringify({ prompt: 'a paper bird over a river' }),
     liveEnv(),
   );
@@ -134,7 +134,7 @@ test('a burst from one caller is throttled with Retry-After', async () => {
   // No reset between the two sends: this test is about the counter surviving.
   __resetThrottle();
   const send = () => onRequestPost({
-    request: new Request('https://veridell.pages.dev/api/image', {
+    request: new Request('https://veridellindo.pages.dev/api/image', {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'cf-connecting-ip': '203.0.113.9' },
       body: JSON.stringify({ prompt: 'a paper bird over a river' }),

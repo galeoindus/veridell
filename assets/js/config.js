@@ -13,7 +13,7 @@ export const SITE = {
   // The canonical origin. Everything that has to be an absolute URL — canonical
   // links, Open Graph, the sitemap — is built from this and nothing else, so a
   // single edit moves the whole site.
-  origin: 'https://veridell.pages.dev',
+  origin: 'https://veridellindo.pages.dev',
   repo: 'https://github.com/galeoindus/veridellindo',
   description:
     'Veridellindo is a Wikimedia knowledge research and discovery platform. Ask a question or open a topic and get a direct answer, the key points, the facts from the infobox and the sources behind them.',

@@ -33,35 +33,35 @@ answer only from them, citing the passage number for each claim.
 
 ## Main pages
 
-- [Home](https://veridell.pages.dev/): ask a question, or open a breakdown.
-- [Chat](https://veridell.pages.dev/chat/): ask in your own words, with
+- [Home](https://veridellindo.pages.dev/): ask a question, or open a breakdown.
+- [Chat](https://veridellindo.pages.dev/chat/): ask in your own words, with
   Quick / Detailed / Deep answers, saved answers, voice input and read-aloud.
-- [Articles](https://veridell.pages.dev/articles/): the published entries, as
+- [Articles](https://veridellindo.pages.dev/articles/): the published entries, as
   static pages that read without JavaScript.
-- [Topics](https://veridell.pages.dev/topics/): the entries grouped by subject.
-- [Questions](https://veridell.pages.dev/questions/): questions this site can
+- [Topics](https://veridellindo.pages.dev/topics/): the entries grouped by subject.
+- [Questions](https://veridellindo.pages.dev/questions/): questions this site can
   answer, written out in full.
-- [How it works](https://veridell.pages.dev/how-it-works/): where the text comes
+- [How it works](https://veridellindo.pages.dev/how-it-works/): where the text comes
   from, and what is and is not generated.
-- [Help](https://veridell.pages.dev/help/): how to use the site.
-- [Research Desk](https://veridell.pages.dev/research/): search, inspect and
+- [Help](https://veridellindo.pages.dev/help/): how to use the site.
+- [Research Desk](https://veridellindo.pages.dev/research/): search, inspect and
   compare sources directly.
 
 ## Entries
 
-- [Artificial intelligence](https://veridell.pages.dev/articles/Artificial_intelligence/)
-- [Ashoka](https://veridell.pages.dev/articles/Ashoka/)
-- [Ayurveda](https://veridell.pages.dev/articles/Ayurveda/)
-- [Black hole](https://veridell.pages.dev/articles/Black_hole/)
-- [Chandrayaan-2](https://veridell.pages.dev/articles/Chandrayaan-2/)
-- [Chandrayaan-3](https://veridell.pages.dev/articles/Chandrayaan-3/)
-- [Chess](https://veridell.pages.dev/articles/Chess/)
-- [Indian independence movement](https://veridell.pages.dev/articles/Indian_independence_movement/)
-- [ISRO](https://veridell.pages.dev/articles/ISRO/)
-- [Photosynthesis](https://veridell.pages.dev/articles/Photosynthesis/)
-- [Unified Payments Interface](https://veridell.pages.dev/articles/Unified_Payments_Interface/)
-- [Vedas](https://veridell.pages.dev/articles/Vedas/)
-- [World Wide Web](https://veridell.pages.dev/articles/World_Wide_Web/)
+- [Artificial intelligence](https://veridellindo.pages.dev/articles/Artificial_intelligence/)
+- [Ashoka](https://veridellindo.pages.dev/articles/Ashoka/)
+- [Ayurveda](https://veridellindo.pages.dev/articles/Ayurveda/)
+- [Black hole](https://veridellindo.pages.dev/articles/Black_hole/)
+- [Chandrayaan-2](https://veridellindo.pages.dev/articles/Chandrayaan-2/)
+- [Chandrayaan-3](https://veridellindo.pages.dev/articles/Chandrayaan-3/)
+- [Chess](https://veridellindo.pages.dev/articles/Chess/)
+- [Indian independence movement](https://veridellindo.pages.dev/articles/Indian_independence_movement/)
+- [ISRO](https://veridellindo.pages.dev/articles/ISRO/)
+- [Photosynthesis](https://veridellindo.pages.dev/articles/Photosynthesis/)
+- [Unified Payments Interface](https://veridellindo.pages.dev/articles/Unified_Payments_Interface/)
+- [Vedas](https://veridellindo.pages.dev/articles/Vedas/)
+- [World Wide Web](https://veridellindo.pages.dev/articles/World_Wide_Web/)
 
 ## How to cite an answer from this site
 

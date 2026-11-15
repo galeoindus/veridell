@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>', {
-  url: 'https://veridell.pages.dev/#/article/ISRO',
+  url: 'https://veridellindo.pages.dev/#/article/ISRO',
   pretendToBeVisual: true,
 });
 globalThis.window = dom.window;

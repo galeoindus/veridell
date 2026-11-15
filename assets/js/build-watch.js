@@ -3,11 +3,11 @@
   /* A deployment address is frozen at the build it was made from. Opening one
    * looks exactly like "the site is stuck on an old version", and no refresh
    * can fix it, because that URL will serve that build for ever. So any
-   * <id>.veridell.pages.dev visit is sent to the canonical domain, keeping
+   * <id>.veridellindo.pages.dev visit is sent to the canonical domain, keeping
    * the path and the fragment. */
   const host = location.hostname;
   if (/^[0-9a-f]{8}\.Veridellindo\.pages\.dev$/i.test(host)) {
-    location.replace(`https://veridell.pages.dev${location.pathname}${location.search}${location.hash}`);
+    location.replace(`https://veridellindo.pages.dev${location.pathname}${location.search}${location.hash}`);
     return;
   }
 

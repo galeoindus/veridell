@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Veridellindo — a privacy-first Wikimedia research and discovery platform with Amigo multi-turn AI conversation, cited answers and local chat history.",
-  "homepage": "https://veridell.pages.dev/",
+  "homepage": "https://veridellindo.pages.dev/",
   "repository": {
     "type": "git",
     "url": "https://github.com/galeoindus/veridellindo.git"

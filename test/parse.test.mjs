@@ -42,8 +42,8 @@ test('slugs round-trip without losing the title', () => {
 
 test('only articles get a clean path, app state does not', () => {
   assert.equal(pathFor({ name: 'article', params: { title: 'Chandrayaan-3' } }),
-    'https://veridell.pages.dev/articles/Chandrayaan-3/');
-  assert.equal(pathFor({ name: 'home' }), 'https://veridell.pages.dev/');
+    'https://veridellindo.pages.dev/articles/Chandrayaan-3/');
+  assert.equal(pathFor({ name: 'home' }), 'https://veridellindo.pages.dev/');
   assert.equal(pathFor({ name: 'search', path: '/search', query: { q: 'x' } }), null,
     'a query-driven view has no canonical path of its own');
 });
@@ -62,7 +62,7 @@ test('a title with ? or # keeps its whole slug in the canonical', () => {
 
 test('an ordinary slug is not re-encoded', () => {
   assert.equal(pathFor({ name: 'article', params: { title: 'Indian independence movement' } }),
-    'https://veridell.pages.dev/articles/Indian_independence_movement/');
+    'https://veridellindo.pages.dev/articles/Indian_independence_movement/');
 });
 
 test('right-to-left editions are recognised', () => {

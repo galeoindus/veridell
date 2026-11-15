@@ -6,11 +6,11 @@ import { onRequestPost as onSpeechPost } from '../functions/api/speech.js';
 let nextIp = 10;
 function post(path, body, extra = {}) {
   const ip = `198.51.100.${nextIp++}`;
-  return new Request(`https://veridell.pages.dev/api/${path}`, {
+  return new Request(`https://veridellindo.pages.dev/api/${path}`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      origin: 'https://veridell.pages.dev',
+      origin: 'https://veridellindo.pages.dev',
       'cf-connecting-ip': ip,
       ...extra,
     },

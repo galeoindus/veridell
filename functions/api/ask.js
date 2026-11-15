@@ -829,7 +829,7 @@ async function runOpenRouter(question, passages, depth, env, opts = {}) {
             headers: {
               authorization: `Bearer ${key}`,
               'content-type': 'application/json',
-              'http-referer': String(env?.SITE_ORIGIN || 'https://veridell.pages.dev'),
+              'http-referer': String(env?.SITE_ORIGIN || 'https://veridellindo.pages.dev'),
               'x-openrouter-title': 'Veridellindo',
             },
             body: JSON.stringify({

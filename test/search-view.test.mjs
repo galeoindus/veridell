@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 
 const dom = new JSDOM('<!doctype html><html><body><main id="main"></main></body></html>', {
-  url: 'https://veridell.pages.dev/#/search?q=moon',
+  url: 'https://veridellindo.pages.dev/#/search?q=moon',
   pretendToBeVisual: true,
 });
 globalThis.window = dom.window;

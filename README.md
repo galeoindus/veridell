@@ -362,7 +362,7 @@ all create it first.
 
 The project name, `SITE.origin` in `assets/js/config.js`, the canonical and
 Open Graph URLs in `index.html`, `robots.txt`, `sitemap.xml`, `llms.txt` and
-the crawlable pages are one identity: `https://veridell.pages.dev`.
+the crawlable pages are one identity: `https://veridellindo.pages.dev`.
 If you deploy under a different name, change them together in one commit,
 otherwise the canonical URLs point at a host that is not serving the site.
 

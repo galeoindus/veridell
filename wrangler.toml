@@ -7,18 +7,18 @@
 #
 # or by hand:
 #
-#   npx wrangler pages project create veridell --production-branch=main
-#   npx wrangler pages deploy . --project-name=veridell
+#   npx wrangler pages project create veridellindo --production-branch=main
+#   npx wrangler pages deploy . --project-name=veridellindo
 #
 # The project name here, the --project-name in .github/workflows/deploy.yml,
 # SITE.origin in assets/js/config.js and the host in robots.txt, sitemap.xml
-# and the pages are one identity: https://veridell.pages.dev .
+# and the pages are one identity: https://veridellindo.pages.dev .
 # Change them together, in one commit, or the canonical URLs stop matching the
 # host that actually serves the site.
 #
 # Headers and redirects live in _headers and _redirects at the repository root.
 
-name = "veridell"
+name = "veridellindo"
 compatibility_date = "2026-01-01"
 pages_build_output_dir = "."
 

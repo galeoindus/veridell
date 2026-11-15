@@ -21,7 +21,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const ORIGIN = process.env.SITE_ORIGIN || 'https://veridell.pages.dev';
+const ORIGIN = process.env.SITE_ORIGIN || 'https://veridellindo.pages.dev';
 
 /** Page classes: how often the content changes, and how much it matters. */
 const CLASSES = [

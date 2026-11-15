@@ -16,7 +16,7 @@
 import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const ORIGIN = process.env.SITE_ORIGIN || 'https://veridell.pages.dev';
+const ORIGIN = process.env.SITE_ORIGIN || 'https://veridellindo.pages.dev';
 const want = (process.argv[2] || execFileSync('git', ['rev-parse', '--short=7', 'HEAD']).toString()).trim();
 
 const local = (() => {

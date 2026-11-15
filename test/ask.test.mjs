@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { onRequestPost, onRequestGet, __test } from '../functions/api/ask.js';
 
 function request(body, headers = {}) {
-  return new Request('https://veridell.pages.dev/api/ask', {
+  return new Request('https://veridellindo.pages.dev/api/ask', {
     method: 'POST',
-    headers: { 'content-type': 'application/json', origin: 'https://veridell.pages.dev', ...headers },
+    headers: { 'content-type': 'application/json', origin: 'https://veridellindo.pages.dev', ...headers },
     body: JSON.stringify(body),
   });
 }
@@ -81,7 +81,7 @@ test('personal memory or attachment requests bypass shared edge caching', async 
 
 test('rejects requests that do not use JSON content type', async () => {
   const res = await onRequestPost({
-    request: new Request('https://veridell.pages.dev/api/ask', { method: 'POST', headers: { origin: 'https://veridell.pages.dev' }, body: '{}' }),
+    request: new Request('https://veridellindo.pages.dev/api/ask', { method: 'POST', headers: { origin: 'https://veridellindo.pages.dev' }, body: '{}' }),
     env: {},
   });
   assert.equal(res.status, 415);
@@ -104,7 +104,7 @@ test('rejects missing and invalid source passages', async () => {
 
 test('rejects POST requests that omit Origin', async () => {
   const res = await onRequestPost({
-    request: new Request('https://veridell.pages.dev/api/ask', {
+    request: new Request('https://veridellindo.pages.dev/api/ask', {
       method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload),
     }),
     env: {},
@@ -115,8 +115,8 @@ test('rejects POST requests that omit Origin', async () => {
 test('rejects oversized request bodies before invoking a provider', async () => {
   const body = JSON.stringify({ question: 'Q'.repeat(65_000), passages: [] });
   const res = await onRequestPost({
-    request: new Request('https://veridell.pages.dev/api/ask', {
-      method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://veridell.pages.dev' }, body,
+    request: new Request('https://veridellindo.pages.dev/api/ask', {
+      method: 'POST', headers: { 'content-type': 'application/json', origin: 'https://veridellindo.pages.dev' }, body,
     }),
     env: {},
   });
@@ -319,9 +319,9 @@ test('citation markers with no source are removed from the answer', () => {
 });
 
 test('the request budget refuses a burst from one client', () => {
-  const makeRequest = () => new Request('https://veridell.pages.dev/api/ask', {
+  const makeRequest = () => new Request('https://veridellindo.pages.dev/api/ask', {
     method: 'POST',
-    headers: { origin: 'https://veridell.pages.dev', 'cf-connecting-ip': '203.0.113.9' },
+    headers: { origin: 'https://veridellindo.pages.dev', 'cf-connecting-ip': '203.0.113.9' },
   });
   let limited = false;
   for (let i = 0; i < 40; i += 1) {

@@ -45,7 +45,7 @@ POINTS_STYLE = '''
 # release ever served, so the script was fetched from a cold cache every time.
 POINTS_SCRIPT = f'\n<script type="module" src="/assets/js/article-points.js?v={VERSION}" defer></script>'
 
-ORIGIN = "https://veridell.pages.dev"
+ORIGIN = "https://veridellindo.pages.dev"
 LANG = "en"
 UA = "Veridell/3.0 (static article generator; contact bholasee8816@gmail.com)"
 

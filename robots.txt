@@ -1,4 +1,4 @@
-# Veridellindo — https://veridell.pages.dev/
+# Veridellindo — https://veridellindo.pages.dev/
 #
 # Every answer the site gives is built from public sources and every article is
 # a real, indexable page, so there is nothing here to hide from a crawler.
@@ -47,8 +47,8 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://veridell.pages.dev/sitemap.xml
+Sitemap: https://veridellindo.pages.dev/sitemap.xml
 
 # A plain-text description of the site written for language models, not for
 # browsers. It explains the two reading modes and where data goes.
-LLMs-Txt: https://veridell.pages.dev/llms.txt
+LLMs-Txt: https://veridellindo.pages.dev/llms.txt

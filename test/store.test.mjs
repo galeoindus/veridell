@@ -8,7 +8,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 
-const dom = new JSDOM('', { url: 'https://veridell.pages.dev/' });
+const dom = new JSDOM('', { url: 'https://veridellindo.pages.dev/' });
 globalThis.localStorage = dom.window.localStorage;
 
 const { on, pushHistory, getHistory, toggleBookmark, getBookmarks, clearHistory, clearBookmarks } =
