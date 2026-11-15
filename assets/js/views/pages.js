@@ -536,7 +536,17 @@ export function renderCredits() {
   /* --- project identity ------------------------------------------------ */
   const identity = el('section', { class: 'credit-identity' });
   const identityBrand = el('div', { class: 'credit-identity-brand' });
-  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/logo-96.png', alt: 'Veridellindo project logo', width: '88', height: '88', decoding: 'async' });
+  // 88px on screen is 176 device pixels at 2x, so a single 96px file was being
+  // upscaled and read as blurry. The srcset lets the browser take the 192 or
+  // 384 file instead.
+  const mark = el('img', {
+    class: 'credit-identity-mark',
+    src: '/assets/img/brand/logo-192.png',
+    srcset: '/assets/img/brand/logo-96.png 96w, /assets/img/brand/logo-192.png 192w, /assets/img/brand/logo-384.png 384w',
+    sizes: '88px',
+    alt: 'Veridellindo project logo',
+    width: '88', height: '88', decoding: 'async',
+  });
   identityBrand.append(mark);
   const identityCopy = el('div', { class: 'credit-identity-copy' });
   identityCopy.append(el('span', { class: 'kicker', text: 'AN INDEPENDENT KNOWLEDGE PROJECT' }));
