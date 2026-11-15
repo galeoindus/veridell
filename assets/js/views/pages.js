@@ -495,7 +495,7 @@ const CREDIT_GROUPS = [
 
 const CREDIT_PEOPLE = [
   { name: 'Bhola Kumar', role: 'Project creator and maintainer. Responsible for product direction, design, code, writing, review and releases.', kind: 'Human maintainer', href: 'https://github.com/galeoindus', avatar: 'https://github.com/galeoindus.png?size=128', initials: 'BK' },
-  { name: 'Veridellindo project mark', role: 'The site’s own identity and visual system. This is the project mark, not a separate human contributor.', kind: 'Project identity', avatar: '/assets/img/brand/mark-96.png', initials: 'IM' },
+  { name: 'Veridellindo project mark', role: 'The site’s own identity and visual system. This is the project mark, not a separate human contributor.', kind: 'Project identity', avatar: '/assets/img/brand/logo-96.png', initials: 'IM' },
   { name: 'GitHub Actions', role: 'Automates build stamping and deployment workflows when changes are pushed to the repository.', kind: 'Repository automation', href: 'https://github.com/features/actions', avatar: 'https://github.com/github-actions.png?size=128', initials: 'GA' },
   { name: 'Dependabot', role: 'Keeps dependency update proposals visible so project dependencies can be reviewed and maintained.', kind: 'Dependency automation', href: 'https://github.com/dependabot', avatar: 'https://github.com/dependabot.png?size=128', initials: 'DB' },
 ];
@@ -536,7 +536,7 @@ export function renderCredits() {
   /* --- project identity ------------------------------------------------ */
   const identity = el('section', { class: 'credit-identity' });
   const identityBrand = el('div', { class: 'credit-identity-brand' });
-  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/mark-96.png', alt: 'Veridellindo project logo', width: '88', height: '88', decoding: 'async' });
+  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/logo-96.png', alt: 'Veridellindo project logo', width: '88', height: '88', decoding: 'async' });
   identityBrand.append(mark);
   const identityCopy = el('div', { class: 'credit-identity-copy' });
   identityCopy.append(el('span', { class: 'kicker', text: 'AN INDEPENDENT KNOWLEDGE PROJECT' }));

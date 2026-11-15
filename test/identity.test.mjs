@@ -88,8 +88,8 @@ test('the old product name is gone from everything that ships', () => {
 test('the mark exists at every size the manifest and the icons ask for', () => {
   // The site ships the mark as PNG only — one source image, every size drawn
   // from it — so a stray SVG reference would be a broken image, not a fallback.
-  const sizes = ['mark-48.png', 'mark-96.png', 'mark-180.png',
-    'mark-192.png', 'mark-512.png', 'mark-maskable-512.png', 'social-card.png'];
+  const sizes = ['logo-48.png', 'logo-96.png', 'logo-180.png',
+    'logo-192.png', 'logo-512.png', 'logo-maskable-512.png', 'social-card.png'];
   for (const name of sizes) {
     const file = join(ROOT, 'assets/img/brand', name);
     assert.ok(existsSync(file), `missing brand asset ${name}`);
@@ -110,7 +110,7 @@ test('no page asks for the retired SVG mark', () => {
 test('every page shows the mark as an image, at a size the header can use', () => {
   for (const page of pages) {
     const html = readFileSync(page, 'utf8');
-    const marks = [...html.matchAll(/<img[^>]*assets\/img\/brand\/mark-[0-9]+\.png[^>]*>/g)];
+    const marks = [...html.matchAll(/<img[^>]*assets\/img\/brand\/logo-[0-9]+\.png[^>]*>/g)];
     assert.ok(marks.length >= 1, `${rel(page)} shows no brand mark`);
     for (const tag of marks) {
       assert.match(tag[0], /width="\d+"/, `${rel(page)}: the mark has no width`);
