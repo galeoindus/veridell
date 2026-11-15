@@ -102,9 +102,17 @@ npm run release            # patch
 npm run release -- minor   # or minor / major
 ```
 
-The release script bumps `package.json`, stamps every page with the new version
-and the new commit, runs the checks, commits and tags. Nothing ships that has
-not passed `verify` first.
+The release script is the only supported way to change the version. It moves
+`package.json`, `package-lock.json` (both the root version and the root package
+entry) and every stamped page together, then prints the commit message to use.
+
+**Never edit the version in `package.json` by hand.** That is exactly what broke
+CI twice: the package said one version, the lockfile another, and the `version`
+workflow failed in nine seconds while the build was green locally. `npm run
+check` now compares the two and fails before a push, so the mistake is caught
+where it is made rather than on GitHub.
+
+Nothing ships that has not passed `verify` first.
 
 ## Setting the variables on Cloudflare
 

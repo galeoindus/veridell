@@ -190,11 +190,11 @@ for (const file of files) {
     try {
       const lock = JSON.parse(readFileSync(lockPath, 'utf8'));
       if (lock.version && lock.version !== version) {
-        problems.push(`version: package-lock.json says ${lock.version}, package.json says ${version} — run npm run version:bump`);
+        problems.push(`version: package-lock.json says ${lock.version}, package.json says ${version} — run npm run release`);
       }
       const rootEntry = lock.packages && lock.packages[''];
       if (rootEntry && rootEntry.version && rootEntry.version !== version) {
-        problems.push(`version: package-lock.json root entry says ${rootEntry.version}, package.json says ${version} — run npm run version:bump`);
+        problems.push(`version: package-lock.json root entry says ${rootEntry.version}, package.json says ${version} — run npm run release`);
       }
     } catch {
       problems.push('version: package-lock.json is not valid JSON');
