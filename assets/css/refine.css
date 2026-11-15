@@ -154,3 +154,23 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   .btn, button, .card, .composer { border: 1px solid ButtonBorder; }
   :focus-visible { outline: 2px solid Highlight; box-shadow: none; }
 }
+
+/* ── the brand mark, as one rule for every surface ─────────────────────── */
+/* The research desk used to draw its own purple tile behind a CSS square; the
+   mark is a real image now, so that tile has to go or the logo sits on a
+   coloured block. This layer is loaded last on every page, which is why the
+   rule lives here rather than in each page's own sheet. */
+.brand-mark {
+  background: none;
+  box-shadow: none;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+.brand-mark img,
+.brand-mark svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}

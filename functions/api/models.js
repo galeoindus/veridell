@@ -1,5 +1,5 @@
 /**
- * Veridell — the model menu.
+ * Veridellindo — the model menu.
  *
  * The chat lets a reader choose which OpenRouter model writes the answer, and
  * "Auto" must mean the cheapest one that works rather than a model somebody

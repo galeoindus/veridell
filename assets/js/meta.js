@@ -1,4 +1,4 @@
-/* Veridell — page-level metadata.
+/* Veridellindo — page-level metadata.
  *
  * Kept apart from app.js so a view can describe its own page without importing
  * the entry point (which imports every view — a cycle).

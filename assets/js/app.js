@@ -1,4 +1,4 @@
-/* Veridell — application entry point.
+/* Veridellindo — application entry point.
  *
  * Builds the single context object every view receives, wires the header and
  * navigation controls, fills the discover rail, and hands routing to the hash

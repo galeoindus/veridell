@@ -1,4 +1,4 @@
-/* Veridell — the Ask view.
+/* Veridellindo — the Ask view.
  *
  * A question goes in; a source-backed answer comes out, laid out in the app's
  * own architecture rather than as a Wikipedia page:

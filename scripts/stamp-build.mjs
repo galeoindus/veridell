@@ -133,8 +133,8 @@ for (const file of await walk(ROOT)) {
   // article-points.js, the module they already load — a separate tag for it
   // was fetched but never evaluated, so the button never appeared.
   html = html.replace(/[ \t]*<script type="module" src="\/assets\/js\/article-translate-page\.js[^"]*"[^>]*><\/script>\r?\n?/gi, '');
-  html = html.replace(/veridell v\d+\.\d+\.\d+/gi, `Veridell v${version}`);
-  // The footer prints the version inside a span, so "Veridell v5.0.0" alone
+  html = html.replace(/veridell v\d+\.\d+\.\d+/gi, `Veridellindo v${version}`);
+  // The footer prints the version inside a span, so "Veridellindo v5.0.0" alone
   // never matched it and the no-JS footer drifted a release behind.
   html = html.replace(/(id=["']appVersion["'][^>]*>v)\d+\.\d+\.\d+/gi, `$1${version}`);
   if (html !== before) {
@@ -204,7 +204,7 @@ for (const file of await walk(ROOT)) {
       if (!bundles.has(name)) {
         const parts = [];
         for (const sheet of sheets) parts.push(await readSheet(sheet));
-        const css = `/* Veridell — generated stylesheet bundle. Do not edit.\n`
+        const css = `/* Veridellindo — generated stylesheet bundle. Do not edit.\n`
           + ` * Built from ${sheets.length} sheets in cascade order:\n`
           + ` * ${sheets.join(' > ')}\n */\n` + parts.join('\n');
         bundles.set(name, { name, sheets, css });
@@ -225,7 +225,7 @@ for (const file of await walk(ROOT)) {
   if (!bundles.has(hash)) {
     const parts = [];
     for (const name of sheets) parts.push(await readSheet(name));
-    const css = `/* Veridell — generated stylesheet bundle. Do not edit.\n`
+    const css = `/* Veridellindo — generated stylesheet bundle. Do not edit.\n`
       + ` * Built from ${sheets.length} sheets in cascade order:\n`
       + ` * ${sheets.join(' > ')}\n */\n` + parts.join('\n');
     bundles.set(hash, { name: bundleName, sheets, css });

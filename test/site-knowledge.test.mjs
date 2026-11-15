@@ -4,11 +4,11 @@ import assert from 'node:assert/strict';
 import { isSiteQuestion, siteAnswerMarkdown, SITE_PAGES, SITE_CONTEXT, SITE_FACTS } from '../assets/js/site-knowledge.js';
 import { routeFor } from '../functions/api/ask.js';
 
-test('questions about Veridell are recognised as site questions', () => {
+test('questions about Veridellindo are recognised as site questions', () => {
   for (const q of [
-    'What is Veridell?',
+    'What is Veridellindo?',
     'How does this site work?',
-    'Does Veridell store my data?',
+    'Does Veridellindo store my data?',
     'Where are the sources?',
     'Is this website free?',
     'वेरिडेल क्या है?',
@@ -34,21 +34,21 @@ test('a site answer links to the pages it names', () => {
 });
 
 test('a site answer carries no dead citation markers', () => {
-  const answer = siteAnswerMarkdown('What is Veridell and is it free?', 'en');
+  const answer = siteAnswerMarkdown('What is Veridellindo and is it free?', 'en');
   // The chat turns [n] into a link to a source card; a site answer has no
   // source cards, so it must never contain one.
   assert.doesNotMatch(answer, /\[\d{1,2}\]/);
 });
 
 test('the privacy question is answered from the privacy facts', () => {
-  const answer = siteAnswerMarkdown('Does Veridell store my chat history?', 'en');
+  const answer = siteAnswerMarkdown('Does Veridellindo store my chat history?', 'en');
   assert.match(answer, /## Your data/);
   assert.ok(answer.includes(SITE_FACTS.privacy.slice(0, 40)));
 });
 
 test('site answers exist in Hindi too', () => {
   const answer = siteAnswerMarkdown('वेरिडेल क्या है?', 'hi');
-  assert.match(answer, /Veridell/);
+  assert.match(answer, /Veridellindo/);
   assert.match(answer, /## (मुख्य बातें|पेज)/);
 });
 

@@ -1,5 +1,5 @@
 /**
- * Veridell — HTML must never be cached at the edge.
+ * Veridellindo — HTML must never be cached at the edge.
  *
  * Why this file exists: the deployment was correct but the root path `/` kept
  * serving a build from weeks earlier. `/index.html`, `/how-it-works/` and
@@ -29,7 +29,7 @@ export async function onRequest(context) {
   headers.set('CDN-Cache-Control', 'no-store');
   headers.set('Pragma', 'no-cache');
   // Say which deployment answered, so a stale copy is visible in one glance.
-  headers.set('X-Veridell-Page', 'function');
+  headers.set('X-Veridellindo-Page', 'function');
 
   return new Response(response.body, {
     status: response.status,

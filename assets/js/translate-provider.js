@@ -1,4 +1,4 @@
-/* Veridell — the translation provider layer.
+/* Veridellindo — the translation provider layer.
  *
  * One place that talks to a translation service, so the two paths that need
  * one (the Translate tab and the "read the full English article" offer) cannot

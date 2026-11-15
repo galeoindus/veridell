@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Veridell — deploy to Cloudflare Pages.
+ * Veridellindo — deploy to Cloudflare Pages.
  *
  * A Pages project has to exist before `wrangler pages deploy` can publish to
  * it, and a fresh Cloudflare account has none. That is the whole reason a move

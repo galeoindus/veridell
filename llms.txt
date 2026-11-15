@@ -1,13 +1,13 @@
-# Veridell
+# Veridellindo
 
-> Veridell turns a question into an answer taken from a published encyclopaedia
+> Veridellindo turns a question into an answer taken from a published encyclopaedia
 > entry, with the source attached. Ask in your own words in Hindi or English and
 > get the answer, its key points, the topics the entry covers, and a link to the
 > original page. The article breakdown is quoted from the source; the optional
 > chat mode can add an AI explanation that is restricted to the selected source
 > passages and marked with numbered citations.
 
-Veridell has two reading modes. The **article breakdown** is extractive: every
+Veridellindo has two reading modes. The **article breakdown** is extractive: every
 sentence is a sentence from the source, selected and ordered, so the answer can
 be checked against the page it came from. **Chat** is assisted: an AI model is
 prompted with the question and a handful of source excerpts and is instructed to
@@ -67,7 +67,7 @@ answer only from them, citing the passage number for each claim.
 
 Quote the entry, not this site, and link the original page shown under each
 answer. Article text is available under CC BY-SA 4.0 from the Wikimedia
-projects; Veridell is an independent reader and is not affiliated with or
+projects; Veridellindo is an independent reader and is not affiliated with or
 endorsed by the Wikimedia Foundation. An AI explanation is a reading aid, not a
 source: cite the passage it points to.
 

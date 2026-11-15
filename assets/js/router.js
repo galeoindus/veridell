@@ -1,4 +1,4 @@
-/* Veridell — the hash router.
+/* Veridellindo — the hash router.
  *
  * One document serves every in-app view, so navigation is a hash change:
  * #/ , #/ask , #/explore , #/today , #/bookmarks , #/history , #/sources ,

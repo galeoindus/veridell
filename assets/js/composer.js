@@ -1,4 +1,4 @@
-/* Veridell — the ask/search composer.
+/* Veridellindo — the ask/search composer.
  *
  * One form serves the whole product. It carries the two modes (Search, Ask),
  * the answer-depth control, the optional on-device "Understand meaning" switch,

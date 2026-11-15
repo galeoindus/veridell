@@ -1,6 +1,6 @@
-/* Veridell — the answer architecture, shared by every view that shows one.
+/* Veridellindo — the answer architecture, shared by every view that shows one.
  *
- * These are the pieces that make an Veridell answer look like an Veridell
+ * These are the pieces that make an Veridellindo answer look like an Veridellindo
  * answer rather than a Wikipedia page: the evidence strip that says how the
  * answer was ranked, the numbered topic blocks that open short and extend on
  * demand, the transparency note, the source cards, the facts box and the
@@ -292,8 +292,8 @@ export function feedback(ctx, key) {
   }
   cancel.addEventListener('click', () => { note.hidden = true; });
   send.addEventListener('click', () => {
-    const body = encodeURIComponent(`${area.value}\n\n— ${chosen?.label || 'feedback'} on ${key} · Veridell`);
-    window.location.href = `mailto:bholasee8816@gmail.com?subject=${encodeURIComponent(`[Veridell] ${chosen?.label || 'feedback'}`)}&body=${body}`;
+    const body = encodeURIComponent(`${area.value}\n\n— ${chosen?.label || 'feedback'} on ${key} · Veridellindo`);
+    window.location.href = `mailto:bholasee8816@gmail.com?subject=${encodeURIComponent(`[Veridellindo] ${chosen?.label || 'feedback'}`)}&body=${body}`;
     note.hidden = true;
     thanks.textContent = t('feedbackThanks');
   });

@@ -13,7 +13,7 @@ const [view, css, headers, pkg] = await Promise.all([
   read('package.json'),
 ]);
 
- test('credits page shows Veridell identity and India-first context without implying government endorsement', () => {
+ test('credits page shows Veridellindo identity and India-first context without implying government endorsement', () => {
   assert.match(view, /credit-identity/);
   // The mark moved into the brand folder when the Facet replaced the old
   // spark-over-a-pillar logo; the credits row shows the current mark.

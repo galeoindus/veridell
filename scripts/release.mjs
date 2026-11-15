@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Veridell — bump the release version.
+/* Veridellindo — bump the release version.
  *
  * The footer showed v5.19.0 for weeks while a dozen features shipped, because
  * the version in package.json was only ever edited by hand and nobody did.

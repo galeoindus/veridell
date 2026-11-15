@@ -1,4 +1,4 @@
-# Veridell — documentation
+# Veridellindo — documentation
 
 The root `README.md` is the front door: what the site is, how to run it, how to
 deploy it. Everything below is the detail you need once you are working on it,

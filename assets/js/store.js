@@ -1,6 +1,6 @@
-/* Veridell — local state: bookmarks, reading history and preferences.
+/* Veridellindo — local state: bookmarks, reading history and preferences.
  *
- * Everything is kept in localStorage on the device. Veridell has no accounts
+ * Everything is kept in localStorage on the device. Veridellindo has no accounts
  * and no account server, so a reader's saved data never leaves their browser
  * except when they explicitly ask chat to answer. Writes are
  * wrapped so a full or disabled storage never breaks the page.

@@ -1,4 +1,4 @@
-/* Veridell — the icon set.
+/* Veridellindo — the icon set.
  *
  * Every icon is a plain SVG string so it can be dropped into innerHTML or an
  * `html` template. One geometry throughout: a 24 x 24 grid, 1.75 stroke,

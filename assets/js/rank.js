@@ -1,4 +1,4 @@
-/* Veridell — deciding which sentences actually answer the question.
+/* Veridellindo — deciding which sentences actually answer the question.
  *
  * Two rankers, in order of cost:
  *
@@ -11,7 +11,7 @@
  *      browser, and re-orders the same sentences by cosine similarity to the
  *      question. If the model cannot load, we quietly keep the keyword order.
  *
- * Nothing here writes text: Veridell quotes published sentences, it does not
+ * Nothing here writes text: Veridellindo quotes published sentences, it does not
  * invent them.
  */
 

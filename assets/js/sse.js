@@ -1,4 +1,4 @@
-/* Veridell — the server-sent-events reader.
+/* Veridellindo — the server-sent-events reader.
  *
  * The chat streams answers as SSE frames. This module is the part that turns a
  * byte stream into events, kept separate from the chat page so it can be tested

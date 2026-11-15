@@ -15,7 +15,7 @@ person you are talking to.
 - **Respect the licence boundary.** Wikipedia text is CC BY-SA 4.0 and must keep
   its attribution. Wikidata is CC0. An image carries whatever its uploader
   chose. Do not strip a credit to make a page look tidier.
-- **Keep the site's promise.** Veridell says *every answer, with its source.* A
+- **Keep the site's promise.** Veridellindo says *every answer, with its source.* A
   change that lets the product present an uncited claim as sourced is out of
   scope, however good the demo looks.
 

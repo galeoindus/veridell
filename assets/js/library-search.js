@@ -1,4 +1,4 @@
-/* Veridell — the site's own library, searched first.
+/* Veridellindo — the site's own library, searched first.
  *
  * The chat used to go straight to the network for every question, so a reader
  * asking about a subject the site has already written up got a short generated
@@ -120,7 +120,7 @@ let index = null;
  * Storage is per browser and never leaves the device, like the rest of the
  * chat's state.
  */
-const DB_NAME = 'Veridell';
+const DB_NAME = 'Veridellindo';
 const DB_STORE = 'cache';
 const LIBRARY_KEY = 'library';
 const LIBRARY_TTL_MS = 12 * 60 * 60 * 1000;
@@ -394,7 +394,7 @@ export function librarySource(hit) {
     n: 1,
     title: hit.item.title,
     url: hit.item.url,
-    sourceType: 'Veridell library',
+    sourceType: 'Veridellindo library',
     snippet: hit.item.summary || hit.item.lead || '',
     image: null,
   };

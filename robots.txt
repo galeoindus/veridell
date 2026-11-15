@@ -1,4 +1,4 @@
-# Veridell — https://veridell.pages.dev/
+# Veridellindo — https://veridell.pages.dev/
 #
 # Every answer the site gives is built from public sources and every article is
 # a real, indexable page, so there is nothing here to hide from a crawler.

@@ -314,9 +314,9 @@ import { answerFor, toMarkdown } from './research-answer.js';
     anchor.href = url; anchor.download = name; document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function slug(text) { return cleanText(text, 80).toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/gi, '-').replace(/^-|-$/g, '') || 'research'; }
-  function exportSources(items, title = currentQuery || 'Veridell sources') {
+  function exportSources(items, title = currentQuery || 'Veridellindo sources') {
     if (!items.length) { toastMessage('Select at least one source first.'); return; }
-    const content = `# ${title}\n\nExported from Veridell Research Desk on ${new Date().toLocaleString()}.\n\n> Every line here is a sentence from the article it names. Verify in the original.\n\n${items.map((s) => sourceMarkdown(s)).join('\n---\n\n')}`;
+    const content = `# ${title}\n\nExported from Veridellindo Research Desk on ${new Date().toLocaleString()}.\n\n> Every line here is a sentence from the article it names. Verify in the original.\n\n${items.map((s) => sourceMarkdown(s)).join('\n---\n\n')}`;
     downloadFile(`veridell-${slug(title)}.md`, content);
     toastMessage('Sources exported as Markdown.');
   }
@@ -370,7 +370,7 @@ import { answerFor, toMarkdown } from './research-answer.js';
       case 'compare': compareSelected(); break;
       case 'clear-selection': selected.clear(); renderResults(); break;
       case 'export-selected': exportSources(currentResults.filter((s) => selected.has(idFor(s)))); break;
-      case 'export-library': exportSources(savedSearches.savedSources, 'Veridell reading list'); break;
+      case 'export-library': exportSources(savedSearches.savedSources, 'Veridellindo reading list'); break;
       case 'clear-history': clearHistory(); break;
       case 'shortcuts': showShortcuts(); break;
       case 'close-modal': closeModal(); break;

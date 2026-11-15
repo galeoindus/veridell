@@ -1,4 +1,4 @@
-# Veridell — Cloudflare Pages configuration.
+# Veridellindo — Cloudflare Pages configuration.
 #
 # A static site with no build step, plus Pages Functions in ./functions, so
 # Pages only needs to know where the files are.

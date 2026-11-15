@@ -162,7 +162,7 @@ its layout.
 - **`assets/js/site-knowledge.js`** — the site's own facts in one place: every
   page with a one-line purpose, the sources, the privacy model, the provider
   order, the limits, the languages and the version. `isSiteQuestion()` decides
-  whether a message is about Veridell; `siteAnswerMarkdown()` writes the
+  whether a message is about Veridellindo; `siteAnswerMarkdown()` writes the
   answer, with real links, in English or Hindi; `SITE_CONTEXT` is the same
   material injected into the model prompt. A site question is now answered
   locally: no search, no provider call, no quota, and no chance of a model
@@ -190,7 +190,7 @@ its layout.
   citation link pointing at no source card. Those sentences are now written in
   words, and a test asserts no site answer contains a bare citation marker.
 - Site answers offered follow-ups like "What is the history of About
-  Veridell?" — a follow-up row built from the answer title. Suppressed for site
+  Veridellindo?" — a follow-up row built from the answer title. Suppressed for site
   answers, which already end with the real pages.
 - The privacy sentence was printed twice in a site answer; the essentials list
   now defers to the "Your data" section.

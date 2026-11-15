@@ -1,4 +1,4 @@
-/* Veridell — turning Wikipedia's HTML into something we can read and re-shape.
+/* Veridellindo — turning Wikipedia's HTML into something we can read and re-shape.
  *
  * Wikipedia hands back a very rich document (nav boxes, edit links, footnote
  * markers, infoboxes, galleries, protocol-relative image URLs). This module
@@ -54,7 +54,7 @@ export function absoluteUrl(url, base = 'https://en.wikipedia.org') {
   return url;
 }
 
-/** Rewrite an in-article link so it stays inside Veridell where it can. */
+/** Rewrite an in-article link so it stays inside Veridellindo where it can. */
 export function routeHref(href) {
   if (!href) return null;
   const wiki = href.match(/^(?:https?:)?\/\/([a-z-]+)\.wikipedia\.org\/wiki\/(.+)$/i) || href.match(/^\/wiki\/(.+)$/);

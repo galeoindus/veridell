@@ -1,4 +1,4 @@
-/* Veridell — what the site knows about itself.
+/* Veridellindo — what the site knows about itself.
  *
  * The chat is asked about the site constantly: what it is, where a page lives,
  * whether it stores anything, which model answered, why a source is cited. A
@@ -7,7 +7,7 @@
  * answers them from this file — instantly, offline, and identically every time.
  *
  * The same facts are injected into the AI prompt as context, so a model that
- * does get asked about Veridell answers from the product's own description
+ * does get asked about Veridellindo answers from the product's own description
  * rather than from imagination.
  *
  * Everything in this file is a claim the repository can back: routes that
@@ -23,7 +23,7 @@ export const SITE_PAGES = [
   { path: '/#/article/Black_hole', label: 'Article', what: 'A breakdown, not a Wikipedia page: the direct answer, key points, numbered topics, facts, sources and method.' },
   { path: '/#/today', label: 'On this day', what: 'Events, births, deaths and holidays for any date, as a timeline.' },
   { path: '/#/explore', label: 'Explore', what: 'Categories and the most-read articles right now.' },
-  { path: '/#/library', label: 'Library', what: 'One search across every free, keyless source Veridell knows, grouped by source.' },
+  { path: '/#/library', label: 'Library', what: 'One search across every free, keyless source Veridellindo knows, grouped by source.' },
   { path: '/#/sources', label: 'Sources', what: 'Every source the site reads, what it is, and the licence it is used under.' },
   { path: '/#/bookmarks', label: 'Saved', what: 'Articles and answers you kept, stored on this device only.' },
   { path: '/#/history', label: 'History', what: 'What you read, on this device only, clearable at any time.' },
@@ -38,7 +38,7 @@ export const SITE_PAGES = [
 ];
 
 export const SITE_FACTS = {
-  what: 'Veridell is a public knowledge research and discovery site. You ask a question or open a topic and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and the sources behind every claim.',
+  what: 'Veridellindo is a public knowledge research and discovery site. You ask a question or open a topic and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and the sources behind every claim.',
   free: 'It is free and needs no account, no email and no phone number. There is no sign-in and no personal profile.',
   sources: 'Factual answers are built from Wikipedia article text, with Wikidata for facts and Wikimedia Commons for media. The Library and the Research Desk also read Crossref, OpenAlex, Europe PMC, DOAJ, Open Library, Project Gutenberg and the Internet Archive.',
   citations: 'Every research answer marks the passages it used with numbered citations. Each citation opens the exact source, so a claim can be checked instead of trusted.',
@@ -48,12 +48,12 @@ export const SITE_FACTS = {
   depth: 'Answer depth has three levels: Quick, Detailed and Deep. Quick answers briefly, Detailed explains in topics, and Deep opens every topic block extended.',
   languages: 'The interface is in English and हिन्दी. Content can be read in twelve languages: English, हिन्दी, বাংলা, தமிழ், తెలుగు, मराठी, ગુજરાતી, ಕನ್ನಡ, മലയാളം, ਪੰਜਾਬੀ, اردو and संस्कृतम्.',
   limits: 'A question is limited to 800 characters, attachments to 4 MB per file, and a chat keeps the last eight turns as context.',
-  library: 'The Library searches every free source the site knows in one place. It is the fastest way to see whether Veridell has anything on a subject before asking.',
+  library: 'The Library searches every free source the site knows in one place. It is the fastest way to see whether Veridellindo has anything on a subject before asking.',
   reliability: 'Answers are extractive by default: the sentences come from the article and the ranking only chooses the order. Chat answers are labelled as conversation and are never dressed up as sourced fact.',
 };
 
 /**
- * What counts as "you are being asked about Veridell itself".
+ * What counts as "you are being asked about Veridellindo itself".
  *
  * Two tiers, because one flat list of words answered the wrong question. A
  * message saying "privacy" or "amigo" used to be captured and answered with
@@ -115,9 +115,9 @@ export function siteAnswerMarkdown(question, lang = 'en') {
   const wantsCost = asksAbout('free', 'price', 'cost', 'pay', 'कीमत', 'फ्री', 'पैसा');
 
   if (hindi) {
-    out.push(`**Veridell** एक मुफ़्त, सार्वजनिक ज्ञान-खोज साइट है। आप सवाल पूछते हैं या कोई विषय खोलते हैं और सीधा जवाब, मुख्य बिंदु, विषय-वार विवरण, तथ्य और हर दावे के पीछे का स्रोत मिलता है।`);
+    out.push(`**Veridellindo** एक मुफ़्त, सार्वजनिक ज्ञान-खोज साइट है। आप सवाल पूछते हैं या कोई विषय खोलते हैं और सीधा जवाब, मुख्य बिंदु, विषय-वार विवरण, तथ्य और हर दावे के पीछे का स्रोत मिलता है।`);
   } else {
-    out.push(`**Veridell** is a free, public knowledge research and discovery site. You ask a question or open a topic and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and the source behind every claim.`);
+    out.push(`**Veridellindo** is a free, public knowledge research and discovery site. You ask a question or open a topic and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and the source behind every claim.`);
   }
 
   out.push('');

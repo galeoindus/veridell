@@ -1,10 +1,10 @@
-/* Veridell — the answer Amigo gives when it cannot reach a source.
+/* Veridellindo — the answer Amigo gives when it cannot reach a source.
  *
  * A chat that says "something went wrong, try again" is not a chat. When the
  * model is unreachable, or the research path finds nothing to stand on, this
  * module answers from the one thing the site always has: its own library.
  *
- * The answer is deliberately shaped like the rest of Veridell — a plain
+ * The answer is deliberately shaped like the rest of Veridellindo — a plain
  * opening, a short honest statement of what happened, then organised sections
  * with real links the reader can open. It never pretends to be a sourced
  * answer, and it never invents a fact to fill the space.
@@ -124,7 +124,7 @@ export function siteFallback(question, { lang = 'en', reason = 'no-source' } = {
   lines.push(hindi ? '### जहाँ से आपको स्रोत मिलेगा' : '### Where a sourced answer comes from');
   lines.push(hindi
     ? 'वेरिडेल तीन जगह से जवाब बनाता है, और तीनों मुफ़्त हैं:'
-    : 'Veridell builds answers from three places, and all three are free:');
+    : 'Veridellindo builds answers from three places, and all three are free:');
   lines.push('');
 
   const steps = [

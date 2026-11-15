@@ -1,4 +1,4 @@
-/* Veridell — Markdown export.
+/* Veridellindo — Markdown export.
  *
  * "Markdown you can keep" is one of the promises in the footer, so the
  * conversion has to be honest: headings become headings, lists become lists,
@@ -14,7 +14,7 @@ import { SITE } from './config.js';
  *
  * Article links are rewritten to `#/article/<slug>` while the page is live, so
  * exported Markdown used to carry fragment links that resolved to nothing
- * outside a running Veridell page. A saved file gets real addresses instead.
+ * outside a running Veridellindo page. A saved file gets real addresses instead.
  */
 function absoluteHref(href) {
   if (!href) return '';
@@ -119,7 +119,7 @@ export function articleToMarkdown(root, { title = '', url = '', sources = [] } =
   if (title) out += `# ${title}\n\n`;
   out += [...root.children].map((child) => block(child)).join('');
   out = out.replace(/\n{3,}/g, '\n\n').trim();
-  if (url) out += `\n\n---\n\nSource: [${title || url}](${url}) — read on Veridell (${SITE.origin}).`;
+  if (url) out += `\n\n---\n\nSource: [${title || url}](${url}) — read on Veridellindo (${SITE.origin}).`;
   if (sources.length) {
     out += '\n\n### Sources\n';
     out += sources.map((s) => `- [${s.name || s.title}](${s.url})`).join('\n');
@@ -132,7 +132,7 @@ export function answerToMarkdown(answer, { url = '' } = {}) {
   const lines = [];
   lines.push(`# ${answer.question || answer.title}`);
   lines.push('');
-  lines.push(`*Answered from published sources by Veridell (${SITE.origin}).*`);
+  lines.push(`*Answered from published sources by Veridellindo (${SITE.origin}).*`);
   lines.push('');
   if (answer.core?.length) {
     lines.push('## Answer');
@@ -171,7 +171,7 @@ export function answerToMarkdown(answer, { url = '' } = {}) {
   if (url) {
     lines.push('---');
     lines.push('');
-    lines.push(`Source: [${answer.title}](${url}) — via Veridell.`);
+    lines.push(`Source: [${answer.title}](${url}) — via Veridellindo.`);
   }
   return `${lines.join('\n')}\n`;
 }

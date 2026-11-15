@@ -1,6 +1,6 @@
-/* Veridell — the Wikimedia client.
+/* Veridellindo — the Wikimedia client.
  *
- * Everything Veridell knows comes from the public Wikimedia APIs, called
+ * Everything Veridellindo knows comes from the public Wikimedia APIs, called
  * straight from the browser (they send permissive CORS headers; the Action API
  * just needs `origin=*`). No keys and no proxy. This module never touches the
  * site's own /api/ask endpoint — that call lives in chat-page.js.

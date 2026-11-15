@@ -1,4 +1,4 @@
-/* Veridell — the whole article, in the reader's language.
+/* Veridellindo — the whole article, in the reader's language.
  *
  * Wikipedia's own "translate this page" tool only ever machine-translates a
  * lead paragraph, so a reader who picks Hindi gets a summary of a summary.

@@ -1,4 +1,4 @@
-/* Veridell — the remaining views, in one place.
+/* Veridellindo — the remaining views, in one place.
  *
  * Explore, On this day, Saved, Reading history, Sources, Topics and the static
  * pages (About, Privacy, Terms, Accessibility, Support, Feedback) all share the
@@ -388,9 +388,9 @@ export function renderTopics(ctx) {
 
 const STATIC = {
   about: {
-    title: 'About Veridell',
+    title: 'About Veridellindo',
     body: [
-      'Veridell is an independent reader for the free knowledge published by the Wikimedia projects. It takes a question, finds the Wikipedia article that answers it, sifts the article down to the sentences that matter, and lays the result out so it can be read in a minute or studied in depth.',
+      'Veridellindo is an independent reader for the free knowledge published by the Wikimedia projects. It takes a question, finds the Wikipedia article that answers it, sifts the article down to the sentences that matter, and lays the result out so it can be read in a minute or studied in depth.',
       'It is not an encyclopedia and it does not write prose. Every sentence shown is quoted from a published article, and every answer links back to the page it came from. Where a claim is contested on Wikipedia, it stays contested here.',
       'Search and article reading happen in your browser: requests go straight from this page to the public Wikimedia APIs. There are no accounts and no tracking, and your bookmarks, reading history and preferences are stored only on your device. Two features do send text out, and both are your choice: Translate sends the article text to a machine-translation service, and Chat sends your question and the selected source excerpts to this site\'s own /api/ask function and on to the configured AI provider (OpenRouter or Cloudflare Workers AI). Those services process the request under their own terms. If you use neither, nothing is sent to any server of ours.'
     ],
@@ -398,8 +398,8 @@ const STATIC = {
   privacy: {
     title: 'Privacy',
     body: [
-      'Veridell does not collect personal data. It sets no advertising or analytics cookies, and it does not fingerprint your device.',
-      'When you ask a question, your browser contacts the Wikimedia APIs directly. Wikimedia may record that request under its own privacy policy, exactly as it would if you had visited Wikipedia yourself. Veridell never sees it.',
+      'Veridellindo does not collect personal data. It sets no advertising or analytics cookies, and it does not fingerprint your device.',
+      'When you ask a question, your browser contacts the Wikimedia APIs directly. Wikimedia may record that request under its own privacy policy, exactly as it would if you had visited Wikipedia yourself. Veridellindo never sees it.',
       'Your bookmarks, reading history and preferences are kept in your browser’s local storage. Clearing site data removes them. Nothing is uploaded to us for them.',
       'Translation is the one reading feature that leaves your browser. When you press Translate, the article’s text is sent from this page directly to a machine-translation service — Google Translate first, and MyMemory if Google does not answer — and comes back translated. Those services receive the text you asked to translate and your network request, and they may keep the submitted text under their own terms; MyMemory states that segments may be stored and processed by partner services. Nothing about your bookmarks, history or reading list is sent with it. The original article is never modified, and if you do not use Translate, no text is sent anywhere.',
       'The optional “Understand meaning” feature downloads a small model from a public CDN the first time you switch it on. It runs entirely on your device; your questions are not sent anywhere for it.',
@@ -408,15 +408,15 @@ const STATIC = {
   terms: {
     title: 'Terms of use',
     body: [
-      'Veridell is provided as-is, for reading and research. It comes with no warranty of accuracy or availability.',
+      'Veridellindo is provided as-is, for reading and research. It comes with no warranty of accuracy or availability.',
       'The content it shows belongs to the Wikimedia community and is reused under the licences described on the Sources & attribution page. You are responsible for respecting those licences when you reuse it.',
-      'Do not use Veridell to misrepresent quoted material as original writing, or in any way that breaks the Wikimedia Foundation’s terms of use.',
+      'Do not use Veridellindo to misrepresent quoted material as original writing, or in any way that breaks the Wikimedia Foundation’s terms of use.',
     ],
   },
   accessibility: {
     title: 'Accessibility',
     body: [
-      'Veridell aims to meet WCAG 2.2 level AA. Text is resizable, the interface works with a keyboard alone, and every interactive control has an accessible name.',
+      'Veridellindo aims to meet WCAG 2.2 level AA. Text is resizable, the interface works with a keyboard alone, and every interactive control has an accessible name.',
       'The interface can follow your system light/dark preference, and a Reading comfort switch makes translucent surfaces fully opaque for readers who find them hard to read.',
       'If something here is not usable for you, please tell us through the Feedback page. Accessibility reports go to the top of the queue.',
     ],
@@ -456,7 +456,7 @@ export function renderStatic(name) {
 const CREDITS_ASOF = '7 November 2026';
 
 const CREDIT_TIMELINE = [
-  { date: '20 October 2026', title: 'The first commit', detail: 'The design system is scaffolded and Veridell starts as a folder of plain HTML, CSS and ES modules.' },
+  { date: '20 October 2026', title: 'The first commit', detail: 'The design system is scaffolded and Veridellindo starts as a folder of plain HTML, CSS and ES modules.' },
   { date: '23 October 2026', title: 'v3.0.0, first public release', detail: 'Ask, Search, Article, On this day, Explore and the Sources page go live on Cloudflare Pages.' },
   { date: '7 November 2026', title: `v${SITE.version}`, detail: 'A unified theme system, responsive multimorphism, clearer source attribution and an expanded contributors experience.' },
 ];
@@ -477,7 +477,7 @@ const CREDIT_GROUPS = [
     items: [
       { name: 'Cloudflare Pages', what: 'Serves the static website, custom headers and deployment output close to readers.', detail: 'Hosting and delivery', licence: 'Platform service', href: 'https://pages.cloudflare.com/', logo: `${PROVIDERS}/cloudflare.png`, initials: 'CF' },
       { name: 'Cloudflare Workers AI', what: 'Optional server-side answer generation when that binding is configured. Provider credentials stay on the server.', detail: 'Optional AI runtime', licence: 'Platform service', href: 'https://developers.cloudflare.com/workers-ai/', logo: `${PROVIDERS}/cloudflare.png`, initials: 'AI' },
-      { name: 'OpenRouter', what: 'Configurable language-model gateway used by the optional chat-answer endpoint. It is not the owner of Veridell.', detail: 'AI model gateway', licence: 'Platform service', href: 'https://openrouter.ai/', logo: 'https://openrouter.ai/favicon.ico', initials: 'OR' },
+      { name: 'OpenRouter', what: 'Configurable language-model gateway used by the optional chat-answer endpoint. It is not the owner of Veridellindo.', detail: 'AI model gateway', licence: 'Platform service', href: 'https://openrouter.ai/', logo: 'https://openrouter.ai/favicon.ico', initials: 'OR' },
       { name: 'GitHub', what: 'The public source repository, issue history, review trail and automation workflows used to maintain the project.', detail: 'Source collaboration', licence: 'Project code: MIT', href: SITE.repo, logo: 'https://github.com/favicon.ico', initials: 'GH' },
     ],
   },
@@ -495,7 +495,7 @@ const CREDIT_GROUPS = [
 
 const CREDIT_PEOPLE = [
   { name: 'Bhola Kumar', role: 'Project creator and maintainer. Responsible for product direction, design, code, writing, review and releases.', kind: 'Human maintainer', href: 'https://github.com/galeoindus', avatar: 'https://github.com/galeoindus.png?size=128', initials: 'BK' },
-  { name: 'Veridell project mark', role: 'The site’s own identity and visual system. This is the project mark, not a separate human contributor.', kind: 'Project identity', avatar: '/assets/img/brand/facet-96.png', initials: 'IM' },
+  { name: 'Veridellindo project mark', role: 'The site’s own identity and visual system. This is the project mark, not a separate human contributor.', kind: 'Project identity', avatar: '/assets/img/brand/facet-96.png', initials: 'IM' },
   { name: 'GitHub Actions', role: 'Automates build stamping and deployment workflows when changes are pushed to the repository.', kind: 'Repository automation', href: 'https://github.com/features/actions', avatar: 'https://github.com/github-actions.png?size=128', initials: 'GA' },
   { name: 'Dependabot', role: 'Keeps dependency update proposals visible so project dependencies can be reviewed and maintained.', kind: 'Dependency automation', href: 'https://github.com/dependabot', avatar: 'https://github.com/dependabot.png?size=128', initials: 'DB' },
 ];
@@ -531,16 +531,16 @@ function creditGroupCard(item) {
 
 export function renderCredits() {
   const wrap = el('div', { class: 'wrap-narrow credits-page' });
-  wrap.append(head(t('credits'), 'The people, tools and open-knowledge projects behind Veridell.'));
+  wrap.append(head(t('credits'), 'The people, tools and open-knowledge projects behind Veridellindo.'));
 
   /* --- project identity ------------------------------------------------ */
   const identity = el('section', { class: 'credit-identity' });
   const identityBrand = el('div', { class: 'credit-identity-brand' });
-  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/facet-96.png', alt: 'Veridell project logo', width: '76', height: '76', decoding: 'async' });
+  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/facet-96.png', alt: 'Veridellindo project logo', width: '76', height: '76', decoding: 'async' });
   identityBrand.append(mark);
   const identityCopy = el('div', { class: 'credit-identity-copy' });
   identityCopy.append(el('span', { class: 'kicker', text: 'AN INDEPENDENT KNOWLEDGE PROJECT' }));
-  identityCopy.append(el('h2', { text: 'Veridell' }));
+  identityCopy.append(el('h2', { text: 'Veridellindo' }));
   identityCopy.append(el('p', { text: 'A reader and research interface for open knowledge — bringing Wikipedia articles, references and optional AI explanations into one calm workspace.' }));
   identityBrand.append(identityCopy);
   identity.append(identityBrand);
@@ -606,7 +606,7 @@ export function renderCredits() {
   /* --- providers and source projects ---------------------------------- */
   const stack = el('section', { class: 'sec credit-section' });
   stack.append(sectionHead({ title: 'The technology and knowledge behind the site' }));
-  stack.append(el('p', { class: 'credit-section-intro', text: 'Each logo links to its owner’s official website. The descriptions explain the actual role each project or service has in Veridell.' }));
+  stack.append(el('p', { class: 'credit-section-intro', text: 'Each logo links to its owner’s official website. The descriptions explain the actual role each project or service has in Veridellindo.' }));
   for (const groupData of CREDIT_GROUPS) {
     const group = el('section', { class: 'credit-stack-group' });
     const heading = el('div', { class: 'credit-stack-group-heading' });
@@ -679,12 +679,12 @@ export function renderCredits() {
   const legal = el('section', { class: 'sec credit-section' });
   legal.append(sectionHead({ title: 'Licences, attribution and independence' }));
   legal.append(el('ul', { class: 'line-list', html: [
-    '<li><strong>Veridell code</strong> — MIT. Reuse and modify it while keeping the licence notice.</li>',
+    '<li><strong>Veridellindo code</strong> — MIT. Reuse and modify it while keeping the licence notice.</li>',
     '<li><strong>Wikipedia article text</strong> — CC BY-SA 4.0. Keep attribution and share-alike requirements when reusing it.</li>',
     '<li><strong>Wikidata</strong> — CC0 1.0.</li>',
     '<li><strong>Wikimedia Commons images</strong> — each file carries its own author credit and licence.</li>',
     '<li><strong>Brand marks</strong> — logos remain the property of their respective owners and are shown to identify the relevant project or service. Follow the owner’s current brand rules and get any required permission before publication.</li>',
-    '<li><strong>Independent project</strong> — Veridell is not endorsed by or affiliated with the Wikimedia Foundation, Sarvam AI, Cloudflare, OpenRouter, GitHub or the Government of India.</li>',
+    '<li><strong>Independent project</strong> — Veridellindo is not endorsed by or affiliated with the Wikimedia Foundation, Sarvam AI, Cloudflare, OpenRouter, GitHub or the Government of India.</li>',
   ].join('') }));
   legal.append(el('p', { class: 'ask-note', text: 'Something missing, wrong, or listed without permission? Use the Feedback page and it will be corrected.' }));
   wrap.append(legal);
@@ -704,7 +704,7 @@ const HELP_LINES = [
 
 export function renderSupport() {
   const wrap = el('div', { class: 'wrap-narrow' });
-  wrap.append(head(t('supportLink'), 'Veridell is a reading tool, not a source of advice.'));
+  wrap.append(head(t('supportLink'), 'Veridellindo is a reading tool, not a source of advice.'));
 
   const help = el('div', { class: 'crisis-help shown' });
   help.append(el('p', { class: 'crisis-where', text: 'If you are in distress, these lines are free, confidential and answered by people.' }));
@@ -722,12 +722,12 @@ export function renderSupport() {
   help.append(el('p', { class: 'crisis-emergency', html: 'If you or someone else is in immediate danger, call <strong>112</strong> now.' }));
 
   const actions = el('div', { class: 'crisis-actions' });
-  actions.append(el('a', { class: 'crisis-btn', href: '#/feedback', text: 'Report a problem with Veridell' }));
-  actions.append(el('a', { class: 'crisis-btn', href: '#/', text: 'Back to Veridell' }));
+  actions.append(el('a', { class: 'crisis-btn', href: '#/feedback', text: 'Report a problem with Veridellindo' }));
+  actions.append(el('a', { class: 'crisis-btn', href: '#/', text: 'Back to Veridellindo' }));
   help.append(actions);
 
   wrap.append(help);
-  wrap.append(el('p', { class: 'ask-note', style: 'margin-top:20px', text: 'Veridell cannot help with a medical, legal or personal emergency, and it cannot contact anyone for you. For problems with the site itself — a broken page, a wrong answer, an accessibility barrier — use the Feedback page.' }));
+  wrap.append(el('p', { class: 'ask-note', style: 'margin-top:20px', text: 'Veridellindo cannot help with a medical, legal or personal emergency, and it cannot contact anyone for you. For problems with the site itself — a broken page, a wrong answer, an accessibility barrier — use the Feedback page.' }));
   return wrap;
 }
 
@@ -756,12 +756,12 @@ export function renderFeedback(ctx) {
     event.preventDefault();
     // No backend: open the reader's own mail client, pre-filled. Nothing is
     // transmitted by the site itself.
-    const subject = encodeURIComponent(`[Veridell] ${kind.value}`);
+    const subject = encodeURIComponent(`[Veridellindo] ${kind.value}`);
     // If the reader gave an address, it belongs in the draft — asking for it
     // and then dropping it would be worse than not asking (F-12).
     const contact = email.value.trim();
     const body = encodeURIComponent(
-      [message.value, contact ? `\n\nReply to: ${contact}` : '', '\n\n— sent from Veridell'].join(''),
+      [message.value, contact ? `\n\nReply to: ${contact}` : '', '\n\n— sent from Veridellindo'].join(''),
     );
     window.location.href = `mailto:bholasee8816@gmail.com?subject=${subject}&body=${body}`;
     toast('Opening your email app — nothing is sent until you send it there.');

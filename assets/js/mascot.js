@@ -1,4 +1,4 @@
-/* Veridell — Amigo, exactly as drawn.
+/* Veridellindo — Amigo, exactly as drawn.
  *
  * The artwork is used as delivered: the five poses cut from the character
  * sheet, checkerboard removed, nothing redrawn or restyled. Each pose is a

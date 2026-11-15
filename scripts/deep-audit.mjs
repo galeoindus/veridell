@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Veridell — deep audit.
+ * Veridellindo — deep audit.
  *
  * `npm run check` answers "does the site load". This answers "is every file
  * internally consistent", one file at a time, and it is meant to be run daily:

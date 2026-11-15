@@ -1,4 +1,4 @@
-/* Veridell — the floating chat launcher.
+/* Veridellindo — the floating chat launcher.
  *
  * One control, bottom-right, on every page except the chat itself: a tap goes
  * straight to /chat/. The side panel that briefly lived here was removed on

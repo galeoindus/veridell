@@ -1,4 +1,4 @@
-/* Veridell — composing an answer out of an article.
+/* Veridellindo — composing an answer out of an article.
  *
  * Given a question and a Wikipedia article, this produces the object every
  * answer view renders:

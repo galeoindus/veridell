@@ -6,7 +6,7 @@
    * <id>.veridell.pages.dev visit is sent to the canonical domain, keeping
    * the path and the fragment. */
   const host = location.hostname;
-  if (/^[0-9a-f]{8}\.Veridell\.pages\.dev$/i.test(host)) {
+  if (/^[0-9a-f]{8}\.Veridellindo\.pages\.dev$/i.test(host)) {
     location.replace(`https://veridell.pages.dev${location.pathname}${location.search}${location.hash}`);
     return;
   }

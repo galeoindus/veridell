@@ -1,4 +1,4 @@
-/* Veridell — reading a short article in a fuller translation.
+/* Veridellindo — reading a short article in a fuller translation.
  *
  * Hindi (and most of the other editions) often carry a much shorter article
  * than English for the same subject. A reader who picks Hindi then gets a

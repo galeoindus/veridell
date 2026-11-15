@@ -1,4 +1,4 @@
-/* Veridell — small DOM and formatting helpers used everywhere.
+/* Veridellindo — small DOM and formatting helpers used everywhere.
  *
  * Deliberately tiny: build a node from a tag/attrs/children, escape text, and
  * format the few numbers and dates the interface shows. No framework.

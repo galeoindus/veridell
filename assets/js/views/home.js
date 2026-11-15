@@ -1,4 +1,4 @@
-/* Veridell — the home dashboard.
+/* Veridellindo — the home dashboard.
  *
  * The page the snapshot showed: a hero with the composer, the six quick
  * actions, article of the day, popular questions, categories, how it works and

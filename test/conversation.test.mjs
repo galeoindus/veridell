@@ -65,11 +65,11 @@ test('stored legacy question-answer entries migrate into thread format', () => {
 });
 
 
-test('questions about Veridell and how to use the website stay in site-aware chat mode', () => {
+test('questions about Veridellindo and how to use the website stay in site-aware chat mode', () => {
   assert.equal(classifyMessage('What can I do on this website?'), 'chat');
-  assert.equal(classifyMessage('How does Veridell work?'), 'chat');
-  assert.equal(classifyMessage('Tell me about Veridell privacy and research features.'), 'chat');
+  assert.equal(classifyMessage('How does Veridellindo work?'), 'chat');
+  assert.equal(classifyMessage('Tell me about Veridellindo privacy and research features.'), 'chat');
   assert.equal(classifyMessage('इस वेबसाइट पर क्या-क्या कर सकते हैं?'), 'chat');
   assert.equal(classifyMessage('What research papers can I find on climate change?'), 'grounded');
-  assert.equal(classifyMessage('How does Veridell work?', 'research'), 'grounded');
+  assert.equal(classifyMessage('How does Veridellindo work?', 'research'), 'grounded');
 });

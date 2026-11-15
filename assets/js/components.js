@@ -1,4 +1,4 @@
-/* Veridell — shared markup pieces.
+/* Veridellindo — shared markup pieces.
  *
  * Every view is built from these: the same card, the same section heading, the
  * same skeleton and error box. Keeping them here is what makes the dashboard,

@@ -10,7 +10,7 @@ import { parseJsonFrame, splitFrames } from './sse.js';
 import { siteFallback } from './site-fallback.js';
 import { isSiteQuestion, siteAnswerMarkdown, SITE_CONTEXT } from './site-knowledge.js';
 
-/* Veridell chat — one question box, one answer column.
+/* Veridellindo chat — one question box, one answer column.
  *
  * Behaviour, in the order it matters:
  *
@@ -57,7 +57,7 @@ const COPY = {
     voice: 'Voice', listening: 'Listening…', voiceUnsupported: 'Voice input is unavailable in this browser.',
     modeAutoShort: 'Auto', modeChatShort: 'Chat', modeResearchShort: 'Research',
     readVoice: 'Read-aloud voice', deviceVoice: 'Device voice · private', cloudVoice: 'Natural English · cloud',
-    cloudVoiceNote: 'Natural cloud voice is available for English. It sends the text to Veridell’s speech endpoint; Hindi and other languages use a voice available on your device.',
+    cloudVoiceNote: 'Natural cloud voice is available for English. It sends the text to Veridellindo’s speech endpoint; Hindi and other languages use a voice available on your device.',
     cloudVoiceUnavailable: 'Natural cloud voice is only available for English. Your device voice is used for this language.',
   },
   hi: {
@@ -83,7 +83,7 @@ const COPY = {
     voice: 'आवाज़', listening: 'सुन रहा है…', voiceUnsupported: 'इस ब्राउज़र में आवाज़ से लिखना उपलब्ध नहीं है।',
     modeAutoShort: 'ऑटो', modeChatShort: 'चैट', modeResearchShort: 'रिसर्च',
     readVoice: 'जवाब सुनने की आवाज़', deviceVoice: 'डिवाइस की आवाज़ · निजी', cloudVoice: 'प्राकृतिक अंग्रेज़ी आवाज़ · क्लाउड',
-    cloudVoiceNote: 'प्राकृतिक क्लाउड आवाज़ केवल अंग्रेज़ी में उपलब्ध है। इस विकल्प में पाठ Veridell के speech endpoint को भेजा जाता है; हिंदी और अन्य भाषाओं में डिवाइस की आवाज़ उपयोग होगी।',
+    cloudVoiceNote: 'प्राकृतिक क्लाउड आवाज़ केवल अंग्रेज़ी में उपलब्ध है। इस विकल्प में पाठ Veridellindo के speech endpoint को भेजा जाता है; हिंदी और अन्य भाषाओं में डिवाइस की आवाज़ उपयोग होगी।',
     cloudVoiceUnavailable: 'प्राकृतिक क्लाउड आवाज़ केवल अंग्रेज़ी के लिए है। इस भाषा में डिवाइस की आवाज़ उपयोग होगी।',
   },
 };
@@ -419,8 +419,8 @@ function localSmallTalkReply(question) {
   }
   if (/who are you|what are you|your name|what.s your name|tell me about yourself|are you an? ai|आप कौन|आपका नाम|तुम कौन/.test(q)) {
     return hindi
-      ? 'मैं Amigo हूँ—Veridell का AI research assistant। मैं सामान्य बातचीत कर सकता हूँ और आपके सवालों के लिए Wikipedia से संबंधित लेख खोजकर स्रोतों के साथ जवाब देता हूँ।'
-      : 'I’m Amigo, the AI research assistant on Veridell. I can chat with you and search Wikipedia articles to answer factual questions with citations you can open.';
+      ? 'मैं Amigo हूँ—Veridellindo का AI research assistant। मैं सामान्य बातचीत कर सकता हूँ और आपके सवालों के लिए Wikipedia से संबंधित लेख खोजकर स्रोतों के साथ जवाब देता हूँ।'
+      : 'I’m Amigo, the AI research assistant on Veridellindo. I can chat with you and search Wikipedia articles to answer factual questions with citations you can open.';
   }
   if (/thank|धन्यवाद|शुक्रिया/.test(q)) return hindi ? 'आपका स्वागत है! कुछ और जानना हो तो पूछिए।' : 'You’re welcome! Ask me anything else you’d like to explore.';
   if (/bye|goodbye|अलविदा/.test(q)) return hindi ? 'फिर मिलेंगे! जब भी कुछ जानना हो, वापस आइए।' : 'See you soon! Come back whenever you want to explore something new.';
@@ -979,7 +979,7 @@ function renderAnswer(a, { store = false, animate = true } = {}) {
 
   // A short row of next questions, the way an AI page offers them. A site
   // answer already ends with the doors into the site, so "the history of About
-  // Veridell" would be noise — the follow-ups there are the real pages.
+  // Veridellindo" would be noise — the follow-ups there are the real pages.
   if (!a.aboutSite) {
     const follow = el('div', 'followups');
     // A titled answer is about a subject, so the follow-ups can name it. A
@@ -1219,17 +1219,17 @@ async function ask(raw, depthOverride) {
       syncDeleteButton();
       return;
     }
-    // A question about Veridell itself is answered from the product's own
+    // A question about Veridellindo itself is answered from the product's own
     // facts: no search, no model, no quota, and no chance of a confident
     // invention about what the site does or stores.
     if (!filesForTurn.length && isSiteQuestion(question)) {
       working.remove();
       const reply = {
         question,
-        title: uiLang() === 'hi' ? 'Veridell के बारे में' : 'About Veridell',
+        title: uiLang() === 'hi' ? 'Veridellindo के बारे में' : 'About Veridellindo',
         answer: siteAnswerMarkdown(question, lang()),
         sources: [],
-        provider: 'Veridell site',
+        provider: 'Veridellindo site',
         model: '',
         aboutSite: true,
       };
@@ -1256,7 +1256,7 @@ async function ask(raw, depthOverride) {
         title: libraryHit.item.title,
         answer: composeAnswer(libraryHit, { depth }),
         sources: [librarySource(libraryHit)],
-        provider: 'Veridell library',
+        provider: 'Veridellindo library',
         model: '',
         fromLibrary: true,
       };
@@ -1307,7 +1307,7 @@ async function ask(raw, depthOverride) {
           // published articles, the three places a sourced answer comes from,
           // and an honest line about why this is not a sourced answer.
           const fallback = siteFallback(question, { lang: language, reason: 'offline' });
-          data = { answer: fallback.markdown, provider: 'Veridell library', model: '', fallback: true };
+          data = { answer: fallback.markdown, provider: 'Veridellindo library', model: '', fallback: true };
         }
       }
       working.remove();
@@ -1345,7 +1345,7 @@ async function ask(raw, depthOverride) {
           title: `${libraryHit.item.title} — ${passage.heading}`.replace(/\s+—\s+$/, ''),
           text: passage.text,
           url: libraryHit.item.url,
-          sourceType: 'Veridell library',
+          sourceType: 'Veridellindo library',
         })),
         ...passages,
       ].slice(0, limit + 2);
@@ -1365,7 +1365,7 @@ async function ask(raw, depthOverride) {
           title: '',
           answer: fallback.markdown,
           sources: [],
-          provider: 'Veridell library',
+          provider: 'Veridellindo library',
           model: '',
           fallback: true,
         };
@@ -1448,14 +1448,14 @@ async function ask(raw, depthOverride) {
     } else {
       // Even a failure the reader did not cause should end in something they
       // can use. The site's own library is always available, so the answer is
-      // a list of what Veridell does hold, not an apology and a retry button.
+      // a list of what Veridellindo does hold, not an apology and a retry button.
       const fallback = siteFallback(question, { lang: language, reason: 'offline' });
       const reply = {
         question,
         title: '',
         answer: fallback.markdown,
         sources: [],
-        provider: 'Veridell library',
+        provider: 'Veridellindo library',
         model: '',
         fallback: true,
       };

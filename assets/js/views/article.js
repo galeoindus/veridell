@@ -1,7 +1,7 @@
-/* Veridell — the article view.
+/* Veridellindo — the article view.
  *
  * Opening an article does not drop the reader into a Wikipedia page. It opens
- * the Veridell breakdown first — the same architecture the Ask view uses:
+ * the Veridellindo breakdown first — the same architecture the Ask view uses:
  *
  *   Breakdown     evidence, the definition, key points, numbered topic blocks
  *                 (short, extendable), facts, sources, method, feedback
@@ -617,7 +617,7 @@ function dedupeImages(root) {
 
 function publishMetadata(ctx, state) {
   const lead = proseText(state.root.querySelector('p') || state.root).slice(0, 300);
-  const title = `${state.data.title} — Veridell`;
+  const title = `${state.data.title} — Veridellindo`;
   updateRouteMetadata(ctx.route, {
     title,
     description: lead || state.data.title,

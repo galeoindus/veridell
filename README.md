@@ -1,8 +1,8 @@
-# Veridell
+# Veridellindo
 
 **Every answer, with its source.**
 
-Veridell is a Wikimedia knowledge research and discovery platform. Ask a question, or open a topic, and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and every source with a link back to Wikipedia.
+Veridellindo is a Wikimedia knowledge research and discovery platform. Ask a question, or open a topic, and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and every source with a link back to Wikipedia.
 
 It is a **static single-page application** — plain HTML, CSS and ES modules with no frontend bundler — plus Cloudflare Pages Functions for the optional source-grounded AI chat and speech. Cloudflare Pages runs a small Node build step to stamp each deployment and bundle the stylesheets. Search, article and Wikidata data are fetched live in the reader's browser from the public Wikimedia APIs, which need no key. The AI endpoint's OpenRouter credentials are Cloudflare encrypted Secrets and never reach the browser.
 
@@ -10,7 +10,7 @@ It is a **static single-page application** — plain HTML, CSS and ES modules wi
 
 ## What this release changes
 
-Veridell 6.0 is the whole site rebuilt on one identity, one stylesheet layer and
+Veridellindo 6.0 is the whole site rebuilt on one identity, one stylesheet layer and
 one checked set of pages. The reading model — a question in, a sourced answer
 out — is unchanged, because it was the right one. What changed is everything
 around it.
@@ -48,13 +48,13 @@ disagree about who this site is.
 |---|---|
 | **Ask** — a question in your own words, answered from the best-matching article | `#/ask?q=…` |
 | **Search** — matching articles as cards | `#/search?q=…` |
-| **Article** — opens as a Veridell **breakdown**, not a Wikipedia page: evidence, the definition, key points, numbered topic blocks that open short and extend on demand, facts, sources, method. Two more tabs carry the full re-set text and the Markdown. | `#/article/<Title>` |
+| **Article** — opens as a Veridellindo **breakdown**, not a Wikipedia page: evidence, the definition, key points, numbered topic blocks that open short and extend on demand, facts, sources, method. Two more tabs carry the full re-set text and the Markdown. | `#/article/<Title>` |
 | **On this day** — events, births, deaths and holidays for any date, as a timeline | `#/today` |
 | **Explore** — categories and the most-read articles right now | `#/explore` |
 | **Saved / Bookmarks** — kept on the device | `#/bookmarks` |
 | **Reading history** | `#/history` |
 | **Articles** — thirteen topics published as complete, indexable article pages: lead, quick facts, numbered table of contents, sections with inline citations, references, related topics | `/articles/<slug>/` |
-| **Library** — one search across every free, keyless source Veridell knows, grouped by source and named | `#/library?q=…` |
+| **Library** — one search across every free, keyless source Veridellindo knows, grouped by source and named | `#/library?q=…` |
 | **Work** — a book, paper or archive item, rendered in the same architecture as an article | `#/work?src=…&id=…` |
 | **Sources** — every source, what it is, and under which licence | `#/sources` |
 | **Markdown export** — copy or download any answer or article as Markdown | answer & article views |
@@ -63,7 +63,7 @@ disagree about who this site is.
 | **Credits** — a logo-led attribution page: project identity, maker, the knowledge and infrastructure it runs on, AI-development acknowledgement, contributors and the licences | `#/credits` |
 | **Voice search**, where the browser supports it | composer |
 | **Chat (AI Mode)** — a search-shaped answer surface: one Amigo, one calm column, a large rounded composer, Quick / Detailed / Deep answers, numbered citations, a source-verification strip, saved answers, local history, voice input and read-aloud | `/chat/` |
-| **Site guide** — questions about Veridell itself are answered from the product's own facts in the browser, with links to every page: no model, no quota, no invention | `/chat/`, `assets/js/site-knowledge.js` |
+| **Site guide** — questions about Veridellindo itself are answered from the product's own facts in the browser, with links to every page: no model, no quota, no invention | `/chat/`, `assets/js/site-knowledge.js` |
 | **PWA** — installable; the shell loads offline (no service worker: caching is done with `_headers`) | `manifest.webmanifest`, `_headers` |
 
 ### The answer architecture
@@ -100,7 +100,7 @@ OpenRouter runs in **free-only** mode by default: only model ids ending in `:fre
 
 Chat is a separate, clearly labelled mode. Auto reads the question before it spends anything: greetings and short conversation go to the lightest model that can hold a sentence, everyday questions to the cheap grounded path, and long, comparative or Deep questions to a heavier model. Model choice is by live OpenRouter price inside the allowed band, so the cheapest model that fits is the one that runs.
 
-A question about Veridell itself never reaches a model at all. `assets/js/site-knowledge.js` holds the product's facts — pages, sources, privacy, providers, limits, version — and the chat answers from that file, instantly and offline, with links to the pages it names. The same facts are injected into the AI prompt as context, so a model that is asked about the site answers from the product's own description.
+A question about Veridellindo itself never reaches a model at all. `assets/js/site-knowledge.js` holds the product's facts — pages, sources, privacy, providers, limits, version — and the chat answers from that file, instantly and offline, with links to the pages it names. The same facts are injected into the AI prompt as context, so a model that is asked about the site answers from the product's own description.
  `/chat/` sends the question plus up to six source excerpts to `/api/ask`, which prompts a model to explain those excerpts only, cite each factual sentence with `[n]`, and say so when the passages do not contain the answer. If no provider is configured or the call fails, the page shows an honest source excerpt instead of pretending an AI answered.
 
 ### Reading progress in the contents
@@ -142,7 +142,7 @@ export named…" and leaves a blank page.
 
 ### Open sources
 
-Everything Veridell reads is free, public and needs **no API key**. They are
+Everything Veridellindo reads is free, public and needs **no API key**. They are
 called straight from the browser, so each one has to send CORS headers — arXiv
 and Google Books do not, and are deliberately absent.
 
@@ -207,7 +207,7 @@ footer             attribution, licence and the modification notice
 ```
 
 **Attribution is explicit.** Reused text carries the source, the licence, a link
-to the original and a statement that Veridell reformats and condenses it —
+to the original and a statement that Veridellindo reformats and condenses it —
 which the licence requires and which the audit asked for. Pictures are checked
 **one at a time**: each gallery image asks Wikimedia Commons for its own licence
 and author, because a text licence does not cover the media.
@@ -385,7 +385,7 @@ No accounts, no analytics, no cookies, no tracking. Bookmarks, reading history, 
 - **Wikidata data** — CC0 1.0.
 - **Wikimedia Commons files** — their own licences, shown with each image.
 
-Veridell is an independent reader and is **not affiliated with or endorsed by the Wikimedia Foundation**.
+Veridellindo is an independent reader and is **not affiliated with or endorsed by the Wikimedia Foundation**.
 
 
 ### Conversation continuity and reader preferences

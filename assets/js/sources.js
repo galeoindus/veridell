@@ -1,4 +1,4 @@
-/* Veridell — the open-source registry.
+/* Veridellindo — the open-source registry.
  *
  * Every source here is free, public and needs no API key. They are called
  * straight from the browser, so each one has to send CORS headers; the ones

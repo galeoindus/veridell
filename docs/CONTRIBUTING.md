@@ -1,4 +1,4 @@
-# Contributing to Veridell
+# Contributing to Veridellindo
 
 Thanks for helping. A few things worth knowing before you start.
 

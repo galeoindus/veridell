@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Veridell — build assets/data/library.json.
+ * Veridellindo — build assets/data/library.json.
  *
  * Two kinds of knowledge go in:
  *
@@ -76,10 +76,10 @@ const howSections = [...howHtml.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>([\s\S]*?)(?=
 
 items.push({
   slug: 'about-this-site',
-  title: 'Veridell — about this site',
+  title: 'Veridellindo — about this site',
   url: '/how-it-works/',
-  summary: 'Veridell turns a question into an answer taken from a published encyclopaedia entry, with the source attached. Ask in Hindi or English.',
-  lead: 'Veridell turns a question into an answer taken from a published encyclopaedia entry, with the source attached. Ask in your own words in Hindi or English and get the answer, its key points, the topics the entry covers, and a link to the original page.',
+  summary: 'Veridellindo turns a question into an answer taken from a published encyclopaedia entry, with the source attached. Ask in Hindi or English.',
+  lead: 'Veridellindo turns a question into an answer taken from a published encyclopaedia entry, with the source attached. Ask in your own words in Hindi or English and get the answer, its key points, the topics the entry covers, and a link to the original page.',
   facts: [
     { k: 'What it is', v: 'An evidence-first knowledge reader: every answer carries the source it came from.' },
     { k: 'Reading modes', v: 'Article breakdown (extractive, quoted from the source) and chat (an AI answer restricted to the selected source passages, with numbered citations).' },

@@ -1,6 +1,6 @@
-/* Veridell — the languages an article can be read in.
+/* Veridellindo — the languages an article can be read in.
  *
- * The Wikimedia editions in config.js are the languages Veridell *sources*
+ * The Wikimedia editions in config.js are the languages Veridellindo *sources*
  * from. This list is different: it is the set of languages a reader can have a
  * whole article translated INTO, so it covers the world rather than the
  * editions we index. Indian languages come first, because that is who this

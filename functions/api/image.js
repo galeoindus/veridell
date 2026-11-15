@@ -1,5 +1,5 @@
 /**
- * Veridell — free image generation, on Workers AI.
+ * Veridellindo — free image generation, on Workers AI.
  *
  * The chat can draw a picture when a reader asks for one. It uses the free
  * Workers AI text-to-image model, so it costs nothing per image beyond the

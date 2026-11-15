@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Veridell — build sitemap.xml from the pages that actually exist.
+ * Veridellindo — build sitemap.xml from the pages that actually exist.
  *
  * The old sitemap was hand-maintained and stamped every URL with the same
  * date, so Search Console saw twenty-one "changed today" pages on every

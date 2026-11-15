@@ -1,4 +1,4 @@
-/* Veridell — search results.
+/* Veridellindo — search results.
  *
  * The Search mode of the composer lands here. It shows the composer again at
  * the top (so refining is one keystroke away), then the matching articles.

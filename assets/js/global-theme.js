@@ -1,4 +1,4 @@
-/* Veridell — one theme controller for every route.
+/* Veridellindo — one theme controller for every route.
  * The value is stored in the same JSON format as store.js and is shared by
  * the home SPA, chat, research desk, static articles and utility pages.
  */
@@ -203,7 +203,7 @@
     panel.append(appearance.wrap, surface.wrap, accent.wrap, width.wrap, scale.wrap);
     const note = document.createElement('p');
     note.className = 'im-pref-note';
-    note.textContent = 'Your choices are saved on this device and follow you across Veridell pages.';
+    note.textContent = 'Your choices are saved on this device and follow you across Veridellindo pages.';
     panel.append(note);
     const close = document.createElement('button');
     close.type = 'button';

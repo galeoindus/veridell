@@ -20,7 +20,7 @@ Verified locally on 14 November 2026 for v6.4.0, on Node.js 20.20.2 and npm 10.8
 
 - Repository: `galeoindus/veridellindo`
 - Branch: `main`
-- Product: Veridell 6.4.0
+- Product: Veridellindo 6.4.0
 - Node.js: `20.20.2`
 - npm: `10.8.2`
 

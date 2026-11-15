@@ -1,5 +1,5 @@
 /*
- * Veridell public-source search core.
+ * Veridellindo public-source search core.
  * Browser-only: direct requests to Wikimedia's public API; no backend call, no AI model.
  */
 const LANGUAGES = new Set(['en', 'hi', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa', 'ur', 'sa']);

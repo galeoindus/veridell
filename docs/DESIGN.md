@@ -1,13 +1,13 @@
-# Veridell Design System
+# Veridellindo Design System
 
 Version: 2.0  
-Product: Veridell — every answer, with its source
+Product: Veridellindo — every answer, with its source
 
 ## Identity
 
-**The name.** *Veridell* — from *veri-* (true) and *-dell* (a small valley, a
+**The name.** *Veridellindo* — from *veri-* (true) and *-dell* (a small valley, a
 sheltered place). A quiet place where things are checked. The product is
-Veridell; the assistant inside it is Amigo. Never write the two as one name, and
+Veridellindo; the assistant inside it is Amigo. Never write the two as one name, and
 never ship a second product name.
 
 **The mark.** A faceted V on a rounded tile: two facets of one prism, cream on
@@ -119,7 +119,7 @@ Article text, source citations, tables, infoboxes and answer bodies should use s
 
 ## Amigo assistant layer
 
-The conversational assistant is named **Amigo**; the knowledge platform remains Veridell. The `amigo-mark.svg` is a neutral geometric chat-face mark. Assistant progress and answer-reveal states use restrained CSS motion, with a complete reduced-motion fallback. The old wheel-like loader is replaced by a neutral progress ring. The shared `amigo-ui.css` composes with the existing light/dark design tokens and responsive article-gallery layout; `amigo-chat.css` is scoped to the dedicated chat route. Exactly one Amigo instance appears per screen: the rail's mark is the site facet, and the character appears once, in the welcome state or beside an answer. `chat-ai-mode.css` is the last layer in the chat cascade and settles the shell into an AI Mode shape — a search-led hero, chip starters, one answer card per reply, and a single rounded composer on the floor. The rail carries the site's doorways (Articles, Topics, Library, Sources, How it works) so the chat is part of Veridell rather than a separate product. Every answer states what it is: a badge (Source-backed, From the library, Site guide, Conversation), how many of its sources are actually cited, and which model wrote it. Preserve the existing source-grounding, URL validation, server-side secret handling, and privacy notice when extending the agent.
+The conversational assistant is named **Amigo**; the knowledge platform remains Veridellindo. The `amigo-mark.svg` is a neutral geometric chat-face mark. Assistant progress and answer-reveal states use restrained CSS motion, with a complete reduced-motion fallback. The old wheel-like loader is replaced by a neutral progress ring. The shared `amigo-ui.css` composes with the existing light/dark design tokens and responsive article-gallery layout; `amigo-chat.css` is scoped to the dedicated chat route. Exactly one Amigo instance appears per screen: the rail's mark is the site facet, and the character appears once, in the welcome state or beside an answer. `chat-ai-mode.css` is the last layer in the chat cascade and settles the shell into an AI Mode shape — a search-led hero, chip starters, one answer card per reply, and a single rounded composer on the floor. The rail carries the site's doorways (Articles, Topics, Library, Sources, How it works) so the chat is part of Veridellindo rather than a separate product. Every answer states what it is: a badge (Source-backed, From the library, Site guide, Conversation), how many of its sources are actually cited, and which model wrote it. Preserve the existing source-grounding, URL validation, server-side secret handling, and privacy notice when extending the agent.
 
 
 ## User-controlled reading and surface preferences

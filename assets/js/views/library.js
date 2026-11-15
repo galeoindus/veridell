@@ -1,6 +1,6 @@
-/* Veridell — the Library.
+/* Veridellindo — the Library.
  *
- * One search box across every free, keyless source Veridell knows: the
+ * One search box across every free, keyless source Veridellindo knows: the
  * Wikimedia family, Project Gutenberg, Open Library, the Internet Archive,
  * Crossref, OpenAlex, Europe PMC, PubMed and DOAJ.
  *
@@ -315,7 +315,7 @@ function paintWork(ctx, mount, record) {
     citations: [],
   }));
   mount.append(methodNote({ depth: 'detailed', rankedBy: 'relevance' }, { title: record.title, lang: record.sourceName, wikiUrl: record.url }));
-  mount.append(scopeNote(`This record comes from ${record.sourceName}. Veridell shows the metadata and description that source publishes; the full work is on their site.`));
+  mount.append(scopeNote(`This record comes from ${record.sourceName}. Veridellindo shows the metadata and description that source publishes; the full work is on their site.`));
   mount.append(feedback(ctx, key));
 }
 

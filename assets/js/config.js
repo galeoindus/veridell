@@ -1,4 +1,4 @@
-/* Veridell — site-wide configuration.
+/* Veridellindo — site-wide configuration.
  *
  * One place for every constant the rest of the app reads: identity, canonical
  * origin, the content languages we serve, the Wikimedia sources we cite, and
@@ -6,17 +6,17 @@
  */
 
 export const SITE = {
-  name: 'Veridell',
-  title: 'Veridell — every answer, with its source',
+  name: 'Veridellindo',
+  title: 'Veridellindo — every answer, with its source',
   tagline: 'Every answer, with its source',
-  version: '6.6.1',
+  version: '6.6.2',
   // The canonical origin. Everything that has to be an absolute URL — canonical
   // links, Open Graph, the sitemap — is built from this and nothing else, so a
   // single edit moves the whole site.
   origin: 'https://veridell.pages.dev',
   repo: 'https://github.com/galeoindus/veridellindo',
   description:
-    'Veridell is a Wikimedia knowledge research and discovery platform. Ask a question or open a topic and get a direct answer, the key points, the facts from the infobox and the sources behind them.',
+    'Veridellindo is a Wikimedia knowledge research and discovery platform. Ask a question or open a topic and get a direct answer, the key points, the facts from the infobox and the sources behind them.',
   ogDescription:
     'Understand the question. Research the sources. Filter the evidence. Explain the answer. Show the sources.',
   locale: 'en_IN',

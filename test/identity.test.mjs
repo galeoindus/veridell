@@ -129,7 +129,7 @@ test('the package and the deployment agree on one name', () => {
   assert.match(wrangler, /^name = "veridell"$/m, 'wrangler.toml names another project');
 
   const manifest = JSON.parse(readFileSync(join(ROOT, 'manifest.webmanifest'), 'utf8'));
-  assert.match(manifest.name, /^Veridell/, 'the manifest names another product');
+  assert.match(manifest.name, /^Veridellindo/, 'the manifest names another product');
 });
 
 test('one version reaches the page and the package', () => {

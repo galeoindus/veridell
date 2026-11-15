@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Veridell — one command that answers "is this tree still well?"
+ * Veridellindo — one command that answers "is this tree still well?"
  *
  * The checks already exist; they were scattered across five npm scripts and two
  * workflows, so nobody ran all of them. This runs them in the order that fails
@@ -56,7 +56,7 @@ if (full) {
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 const results = [];
 
-console.log(`Veridell ${pkg.version} — doctor${full ? ' (full)' : ''}\n`);
+console.log(`Veridellindo ${pkg.version} — doctor${full ? ' (full)' : ''}\n`);
 
 for (const step of STEPS) {
   const started = process.hrtime.bigint();
