@@ -12,7 +12,10 @@
 
 # Galeoindus is replaced by the Research Desk. Old addresses keep working.
 /galeoindus     /research/        301
-/chat           /chat/            301
+# The chat was removed in 6.7.0. Old links land on the front page rather than a
+# 404, and the page itself is gone from the build.
+/chat           /                 301
+/chat/          /                 301
 
 
 # Article routes are generated as independent static index.html files.

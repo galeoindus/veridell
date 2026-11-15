@@ -161,7 +161,7 @@ for (const route of routes) {
   rows.push({ route, view: info.view, len: info.len, errors: bad });
 }
 
-const pages = ['/', '/chat/', '/research/', '/topics/', '/questions/', '/help/', '/how-it-works/', '/articles/', '/articles/ISRO/', '/404.html'];
+const pages = ['/', '/research/', '/topics/', '/questions/', '/help/', '/how-it-works/', '/articles/', '/articles/ISRO/', '/404.html'];
 for (const path of pages) {
   errors = [];
   await send('Page.navigate', { url: `${BASE}${path}` }).catch(() => {});

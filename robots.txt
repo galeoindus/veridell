@@ -14,7 +14,7 @@ Disallow: /test/
 # The app is one document served under many fragments (#/ask, #/article/…).
 # A fragment is never a separate URL to a crawler, so the crawlable surface is
 # the real directories: /, /articles/, /topics/, /questions/, /research/,
-# /chat/, /help/ and /how-it-works/. They are all listed in the sitemap below.
+# /help/ and /how-it-works/. They are all listed in the sitemap below.
 
 # ── assistants and answer engines ─────────────────────────────────────────
 # The site publishes llms.txt and a full sitemap for exactly this: an answer

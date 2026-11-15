@@ -3,26 +3,21 @@
 > Veridellindo turns a question into an answer taken from a published encyclopaedia
 > entry, with the source attached. Ask in your own words in Hindi or English and
 > get the answer, its key points, the topics the entry covers, and a link to the
-> original page. The article breakdown is quoted from the source; the optional
-> chat mode can add an AI explanation that is restricted to the selected source
-> passages and marked with numbered citations.
+> original page. Every sentence is quoted from the source, so the answer can be
+> checked against the page it came from.
 
-Veridellindo has two reading modes. The **article breakdown** is extractive: every
-sentence is a sentence from the source, selected and ordered, so the answer can
-be checked against the page it came from. **Chat** is assisted: an AI model is
-prompted with the question and a handful of source excerpts and is instructed to
-answer only from them, citing the passage number for each claim.
+Veridellindo is extractive by design. Every sentence in an answer is a sentence
+from the source article, selected and ordered; nothing is written by a model.
+There is no AI chat and no chat endpoint on this site.
 
 ## Where the data goes
 
 - Search, article and Wikidata requests go from the visitor's browser to the
   public Wikimedia APIs. Those APIs need no key.
-- When chat AI is used, the question and the selected source excerpts are sent
-  to the same-origin `/api/ask` Cloudflare Pages Function, which calls the
-  configured OpenRouter model or the Cloudflare Workers AI binding. Provider
-  credentials are server-side only.
-- There is no account. Bookmarks, reading history and saved chat answers stay in
-  the visitor's own browser storage.
+- There is no AI provider, no API key and no server-side model: the site has no
+  chat and no `/api/ask` endpoint.
+- There is no account. Bookmarks, reading history and preferences stay in the
+  visitor's own browser storage.
 
 ## What this site is for
 
@@ -34,8 +29,6 @@ answer only from them, citing the passage number for each claim.
 ## Main pages
 
 - [Home](https://veridellindo.pages.dev/): ask a question, or open a breakdown.
-- [Chat](https://veridellindo.pages.dev/chat/): ask in your own words, with
-  Quick / Detailed / Deep answers, saved answers, voice input and read-aloud.
 - [Articles](https://veridellindo.pages.dev/articles/): the published entries, as
   static pages that read without JavaScript.
 - [Topics](https://veridellindo.pages.dev/topics/): the entries grouped by subject.
@@ -76,4 +69,4 @@ source: cite the passage it points to.
 - Every entry page is static HTML and readable without JavaScript.
 - `sitemap.xml` lists every crawlable page with its last-modified date.
 - `robots.txt` allows all crawlers and points at the sitemap.
-- The interactive answer chat needs JavaScript; the entries do not.
+- Search and the breakdown need JavaScript; the written entries do not.

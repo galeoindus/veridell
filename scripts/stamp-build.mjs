@@ -123,12 +123,6 @@ for (const file of await walk(ROOT)) {
   if (!/assets\/js\/build-watch\.js/.test(html) && /<\/body>/i.test(html)) {
     html = html.replace(/<\/body>/i, `  <script type="module" src="/assets/js/build-watch.js?v=${build}"></script>\n</body>`);
   }
-  // The floating Amigo launcher belongs on every page except the chat
-  // itself, which is already the destination.
-  const isChat = /(^|\/)chat\/index\.html$/.test(file.replace(/\\/g, '/'));
-  if (!isChat && !/assets\/js\/chat-launcher\.js/.test(html) && /<\/body>/i.test(html)) {
-    html = html.replace(/<\/body>/i, `  <script src="/assets/js/chat-launcher.js?v=${build}" defer></script>\n</body>`);
-  }
   // The standalone article pages get the Translate control from
   // article-points.js, the module they already load — a separate tag for it
   // was fetched but never evaluated, so the button never appeared.
