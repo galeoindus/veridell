@@ -536,7 +536,7 @@ export function renderCredits() {
   /* --- project identity ------------------------------------------------ */
   const identity = el('section', { class: 'credit-identity' });
   const identityBrand = el('div', { class: 'credit-identity-brand' });
-  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/mark-96.png', alt: 'Veridellindo project logo', width: '76', height: '76', decoding: 'async' });
+  const mark = el('img', { class: 'credit-identity-mark', src: '/assets/img/brand/mark-96.png', alt: 'Veridellindo project logo', width: '88', height: '88', decoding: 'async' });
   identityBrand.append(mark);
   const identityCopy = el('div', { class: 'credit-identity-copy' });
   identityCopy.append(el('span', { class: 'kicker', text: 'AN INDEPENDENT KNOWLEDGE PROJECT' }));
