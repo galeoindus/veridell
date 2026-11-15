@@ -3332,6 +3332,9 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
   line-height: 1;
 }
 .brand-mark svg { width: 32px; height: 32px; display: block; }
+/* The mark is a PNG now: the same rule has to size the image, or it renders at
+   its intrinsic 96px and blows the header apart. */
+.brand-mark img { width: 100%; height: 100%; display: block; object-fit: contain; }
 .brand { gap: 10px; }
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

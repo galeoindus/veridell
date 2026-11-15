@@ -32,7 +32,8 @@ test('the chat page carries exactly one Amigo, in the welcome state', () => {
   assert.match(html, /id="welcomeAmigo"/);
   assert.doesNotMatch(html, /id="railAmigo"/);
   assert.match(html, /assets\/img\/amigo\/front\.png/);
-  assert.match(html, /assets\/img\/brand\/facet\.svg/);
+  // The mark ships as PNG now; the old SVG is retired.
+  assert.match(html, /assets\/img\/brand\/facet-96\.png/);
   assert.match(html, /<em>AI Mode<\/em>/);
   // every pose the interface can show exists in the module
   for (const state of ['idle', 'thinking', 'happy', 'listening', 'sleepy']) {

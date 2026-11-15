@@ -86,15 +86,37 @@ test('the old product name is gone from everything that ships', () => {
 });
 
 test('the mark exists at every size the manifest and the icons ask for', () => {
-  const sizes = ['facet.svg', 'facet-48.png', 'facet-96.png', 'facet-180.png',
+  // The site ships the mark as PNG only — one source image, every size drawn
+  // from it — so a stray SVG reference would be a broken image, not a fallback.
+  const sizes = ['facet-48.png', 'facet-96.png', 'facet-180.png',
     'facet-192.png', 'facet-512.png', 'facet-maskable-512.png', 'og-card.png'];
   for (const name of sizes) {
     const file = join(ROOT, 'assets/img/brand', name);
     assert.ok(existsSync(file), `missing brand asset ${name}`);
     assert.ok(statSync(file).size > 200, `brand asset ${name} is suspiciously small`);
   }
-  const svg = readFileSync(join(ROOT, 'assets/img/brand/facet.svg'), 'utf8');
-  assert.match(svg, /<title>Veridell<\/title>/, 'the mark does not name the product');
+  assert.ok(!existsSync(join(ROOT, 'assets/img/brand/facet.svg')),
+    'the retired SVG mark is still on disk');
+});
+
+test('no page asks for the retired SVG mark', () => {
+  for (const file of [...pages, ...walk(ROOT, '.js'), ...walk(ROOT, '.webmanifest')]) {
+    if (rel(file).startsWith('test/')) continue;
+    const body = readFileSync(file, 'utf8');
+    assert.ok(!body.includes('facet.svg'), `${rel(file)} still points at facet.svg`);
+  }
+});
+
+test('every page shows the mark as an image, at a size the header can use', () => {
+  for (const page of pages) {
+    const html = readFileSync(page, 'utf8');
+    const marks = [...html.matchAll(/<img[^>]*assets\/img\/brand\/facet-[0-9]+\.png[^>]*>/g)];
+    assert.ok(marks.length >= 1, `${rel(page)} shows no brand mark`);
+    for (const tag of marks) {
+      assert.match(tag[0], /width="\d+"/, `${rel(page)}: the mark has no width`);
+      assert.match(tag[0], /height="\d+"/, `${rel(page)}: the mark has no height`);
+    }
+  }
 });
 
 test('the package and the deployment agree on one name', () => {

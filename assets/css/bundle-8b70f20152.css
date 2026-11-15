@@ -384,7 +384,7 @@ body:not(.is-empty) .empty { display: none; }
   content: "";
   width: 26px; height: 26px; flex: none; margin-top: 2px;
   border-radius: 9px;
-  background-image: url("/assets/img/brand/facet.svg");
+  background-image: url("/assets/img/brand/facet-96.png");
   background-size: cover;
   background-repeat: no-repeat;
 }

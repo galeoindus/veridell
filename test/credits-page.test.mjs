@@ -17,7 +17,7 @@ const [view, css, headers, pkg] = await Promise.all([
   assert.match(view, /credit-identity/);
   // The mark moved into the brand folder when the Facet replaced the old
   // spark-over-a-pillar logo; the credits row shows the current mark.
-  assert.match(view, /assets\/img\/brand\/facet\.svg/);
+  assert.match(view, /assets\/img\/brand\/facet-96\.png/);
   // The chip names the project's India-first framing in words. It used to carry
   // a flag emoji, which renders as two empty boxes wherever the platform has no
   // emoji font, so the words alone carry the meaning now.
