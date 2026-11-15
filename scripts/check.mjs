@@ -180,6 +180,27 @@ for (const file of files) {
     else if (swVersion !== version) problems.push(`version: sw.js says ${swVersion}, package.json says ${version}`);
   }
 
+  // The lockfile carries the version too, and the `version` workflow fails the
+  // build when it disagrees. That check only ran in CI, so a release that
+  // edited package.json alone shipped green locally and red on GitHub. It is
+  // checked here now, which means `npm run check` and `npm run doctor` catch it
+  // before a push instead of after.
+  const lockPath = join(ROOT, 'package-lock.json');
+  if (existsSync(lockPath)) {
+    try {
+      const lock = JSON.parse(readFileSync(lockPath, 'utf8'));
+      if (lock.version && lock.version !== version) {
+        problems.push(`version: package-lock.json says ${lock.version}, package.json says ${version} — run npm run version:bump`);
+      }
+      const rootEntry = lock.packages && lock.packages[''];
+      if (rootEntry && rootEntry.version && rootEntry.version !== version) {
+        problems.push(`version: package-lock.json root entry says ${rootEntry.version}, package.json says ${version} — run npm run version:bump`);
+      }
+    } catch {
+      problems.push('version: package-lock.json is not valid JSON');
+    }
+  }
+
   for (const page of ['index.html', 'chat/index.html', 'research/index.html']) {
     if (!existsSync(join(ROOT, page))) continue;
     const html = readFileSync(join(ROOT, page), 'utf8');
