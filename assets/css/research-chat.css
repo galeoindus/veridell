@@ -57,11 +57,7 @@
   box-shadow: 0 4px 24px rgba(23, 59, 50, .035);
 }
 
-#research-app .brand-mark {
-  background: linear-gradient(145deg, #173b32, #a85f3d);
-  border-radius: 13px;
-  box-shadow: 0 8px 19px rgba(23, 59, 50, .18), inset 0 1px 0 rgba(255, 255, 255, .24);
-}
+
 #research-app .brand-copy strong { letter-spacing: -.045em; }
 #research-app .brand-copy strong > span { color: var(--accent); }
 #research-app .topbar-center { color: var(--muted); }

@@ -80,7 +80,6 @@ body {
   border-bottom: 1px solid var(--line);
   position: sticky; top: 0;
 }
-.brand-mark { background: var(--grad); box-shadow: 0 10px 22px -14px rgba(180, 97, 58, .9); }
 .brand-copy strong > span { color: var(--accent); }
 
 /* rails and panels are clay */

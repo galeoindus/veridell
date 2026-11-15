@@ -1583,7 +1583,7 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
   }
   .topnav { flex-wrap: nowrap; gap: 3px; margin-left: auto; }
   .btn-icon { width: 32px; height: 32px; min-height: 32px; padding: 6px; }
-  .brand-mark { width: 36px; height: 36px; }
+  .brand-mark { width: 42px; height: 42px; }
   .brand-text strong { font-size: 15.5px; }
   .nav-sep { display: none; }
 
@@ -1823,7 +1823,7 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
   color: var(--text, #242824);
   line-height: 1;
 }
-.brand-mark svg { width: 40px; height: 40px; display: block; }
+.brand-mark svg { width: 46px; height: 46px; display: block; }
 /* The mark is a PNG now: the same rule has to size the image, or it renders at
    its intrinsic 96px and blows the header apart. */
 .brand-mark img { width: 100%; height: 100%; display: block; object-fit: contain; }
@@ -2650,7 +2650,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   box-shadow: var(--im-clay-shadow, var(--shadow-sm));
 }
 .credit-identity-brand { display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1 1 440px; }
-.credit-identity-mark { width: 76px; height: 76px; flex: 0 0 auto; border-radius: 23px; box-shadow: 0 7px 20px rgba(20, 48, 35, .13); }
+.credit-identity-mark { width: 88px; height: 88px; flex: 0 0 auto; border-radius: 23px; box-shadow: 0 7px 20px rgba(20, 48, 35, .13); }
 .credit-identity-copy { min-width: 0; }
 .credit-identity-copy .kicker { display: block; margin-bottom: 5px; font-size: 10.5px; letter-spacing: .13em; }
 .credit-identity-copy h2 { margin: 0 0 5px; font-family: var(--font-head); font-size: clamp(25px, 4vw, 34px); line-height: 1.05; color: var(--text); }
@@ -2735,7 +2735,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 700px) {
   .credit-identity { align-items: flex-start; }
   .credit-identity-brand { flex-basis: 100%; gap: 13px; }
-  .credit-identity-mark { width: 62px; height: 62px; border-radius: 18px; }
+  .credit-identity-mark { width: 72px; height: 72px; border-radius: 18px; }
   .credit-identity-tags { width: 100%; }
   .credit-facts-v2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .credit-sarvam-card { grid-template-columns: minmax(0, 1fr); gap: 16px; }
