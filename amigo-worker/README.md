@@ -1,4 +1,11 @@
-# Amigo Worker
+# Amigo Worker (optional)
+
+> **You do not need this to use the chat.** The site now answers from its own
+> `/api/chat` and `/api/image` Pages Functions, on the `AI` binding the Pages
+> project already declares. Nothing to deploy, no URL to paste.
+>
+> Keep this Worker only if you want the assistant reachable from a *different*
+> origin, or if you would rather keep the AI calls on a Worker you control.
 
 The backend for the Amigo interface at `/amigo/`. It is a separate Cloudflare
 Worker because the site itself is static: the keys live here, in Worker
