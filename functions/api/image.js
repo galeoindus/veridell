@@ -171,7 +171,9 @@ export async function onRequestPost({ request, env = {} }) {
     if (!/^data:image\/(png|jpeg|webp);base64,/.test(image)) {
       return json({ error: 'not_an_image' }, 502);
     }
-    return json({ ok: true, image, model: MODEL, prompt });
+    // `image` for this site's own client, `dataURI` for the Amigo interface
+    // that was supplied and expects that name.
+    return json({ ok: true, image, dataURI: image, model: MODEL, prompt });
   } catch (error) {
     return json({ error: 'image_failed', message: error?.message || 'Image generation failed.' }, 502);
   }
