@@ -38,6 +38,11 @@ const STEPS = [
     args: ['scripts/deep-audit.mjs'],
   },
   {
+    name: 'health',
+    what: 'every page, sheet and script — ids, alt text, headings, anchors, meta',
+    args: ['scripts/health-check.mjs'],
+  },
+  {
     name: 'drift',
     what: 'nothing has fallen out of the sitemap, the index or a link',
     args: ['scripts/weekly-audit.mjs'],

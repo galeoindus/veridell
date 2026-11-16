@@ -653,6 +653,6 @@ body.dark .msg.me .bubble{background:linear-gradient(140deg,rgba(72,76,140,.38),
 .skip-link { position: absolute; left: -9999px; top: 0; z-index: 999; padding: 10px 16px;
   background: #173b32; color: #fff; border-radius: 0 0 10px 0; font: 600 14px system-ui; }
 .skip-link:focus { left: 0; }
-.site-version { margin: 0; padding: 10px 14px; color: #8a8f8a; font-size: 11px;
-  font-variant-numeric: tabular-nums; text-align: center; }
+.site-version { display: inline-block; margin-left: 6px; padding: 0; color: inherit;
+  opacity: .72; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .site-version .is-stale { color: #b45309; font-weight: 600; }
