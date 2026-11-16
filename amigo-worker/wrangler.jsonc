@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "amigo-ai",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-16",
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    // The exact origins allowed to call this Worker. No trailing slash.
+    // The site is https://veridellindo.pages.dev; add localhost for local work.
+    "ALLOWED_ORIGINS": "https://veridellindo.pages.dev,http://localhost:4173",
+    // Sent to OpenRouter as HTTP-Referer. Must be a full URL.
+    "SITE_ORIGIN": "https://veridellindo.pages.dev"
+  }
+}

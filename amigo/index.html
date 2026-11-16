@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta name="veridell-build" content="6.8.0-4a11e0b">
+  <meta name="veridell-version" content="6.8.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Amigo — Veridellindo</title>
+<meta name="description" content="Amigo is the assistant interface on Veridellindo: ask a question, attach a file, or have a document read aloud, answered by a Cloudflare Worker that keeps every key on the server.">
+<link rel="canonical" href="https://veridellindo.pages.dev/amigo/">
+<meta name="theme-color" content="#f7f4ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101713" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veridellindo">
+<meta property="og:title" content="Amigo — Veridellindo">
+<meta property="og:description" content="The assistant interface on Veridellindo. Keys stay on the Worker; nothing is stored on a server.">
+<meta property="og:url" content="https://veridellindo.pages.dev/amigo/">
+<meta property="og:image" content="https://veridellindo.pages.dev/assets/img/brand/social-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/brand/logo-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/brand/logo-180.png">
+<link rel="stylesheet" href="/amigo/app.css">
+  <script src="/assets/js/image-fallback.js?v=6.8.0-4a11e0b"></script>
+  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.8.0-4a11e0b">
+  <script src="/assets/js/global-theme.js?v=6.8.0-4a11e0b"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Amigo — Veridellindo",
+  "url": "https://veridellindo.pages.dev/amigo/",
+  "isPartOf": { "@type": "WebSite", "url": "https://veridellindo.pages.dev/", "name": "Veridellindo" },
+  "inLanguage": "en",
+  "description": "The assistant interface on Veridellindo. Answers come from a Cloudflare Worker that keeps every provider key on the server."
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#chat">Skip to the conversation</a>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gstar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f9730c"/><stop offset=".5" stop-color="#ffb053"/><stop offset="1" stop-color="#3333cc"/>
+    </linearGradient>
+    <linearGradient id="gcha" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e2f63"/><stop offset=".5" stop-color="#1a4a94"/><stop offset="1" stop-color="#2a6fd0"/>
+    </linearGradient>
+    <linearGradient id="gcha2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#143f85"/><stop offset="1" stop-color="#2a6fd0"/>
+    </linearGradient>
+    <linearGradient id="gflame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb053"/><stop offset="1" stop-color="#e6651b"/>
+    </linearGradient>
+    <linearGradient id="gem" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4285f4"/><stop offset=".5" stop-color="#9b72cb"/><stop offset="1" stop-color="#d96570"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="shell">
+<aside id="side">
+  <div class="sTop">
+    <a class="sBrand" href="/" title="Back to Veridellindo"><img src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async" srcset="/assets/img/brand/logo-48.png 48w, /assets/img/brand/logo-96.png 96w, /assets/img/brand/logo-192.png 192w" sizes="26px"><span>Amigo</span></a>
+    <button id="sideClose" class="hbtn" type="button" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <input id="sideSearch" class="sSearch" type="text" placeholder="Search chats" autocomplete="off">
+  <button id="sideNew" class="sNew" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg><span>New chat</span></button>
+  <div class="sList" id="sideList"></div>
+  <div class="sFoot">
+    <button id="sideSet" class="sFootBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9"/><path d="M18.5 6H20"/><circle cx="15.5" cy="6" r="2.2"/><path d="M4 12h3"/><path d="M12.5 12H20"/><circle cx="9.5" cy="12" r="2.2"/><path d="M4 18h9"/><path d="M18.5 18H20"/><circle cx="15.5" cy="18" r="2.2"/></svg><span>Settings</span></button>
+  </div>
+</aside>
+
+<div class="app">
+  <header>
+    <button class="hbtn" id="btnMenu" type="button" title="Your chats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="brand">
+      <div class="star"><img class="lgimg" id="brandLogo" alt="Amigo mascot"></div>
+      <h1>Amigo</h1>
+    </div>
+    <span class="engine-status" id="engineStatus">Connect Cloudflare</span>
+    <div class="hbtns">
+      <button class="hbtn" id="btnNew" title="New chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.6 3.4a2.1 2.1 0 0 1 3 3L7.5 18.5 3 20l1.5-4.5Z"/></svg></button>
+      <button class="hbtn" id="btnDel" title="Delete this chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6.5h17"/><path d="M8.5 6.5V4.2h7v2.3"/><path d="M6 6.5l1 13h10l1-13"/><path d="M10 10.5v6M14 10.5v6"/></svg></button>
+      <button class="hbtn" id="btnTheme" title="Light / dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8Z"/></svg></button>
+      <button class="hbtn" id="btnSet" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9"/><path d="M18.5 6H20"/><circle cx="15.5" cy="6" r="2.2"/><path d="M4 12h3"/><path d="M12.5 12H20"/><circle cx="9.5" cy="12" r="2.2"/><path d="M4 18h9"/><path d="M18.5 18H20"/><circle cx="15.5" cy="18" r="2.2"/></svg></button>
+    </div>
+  </header>
+
+  <main id="chat"></main>
+
+  <div class="helpline" id="helpline">
+    Going through a hard time? Help is available — Emergency <b>112</b> · Tele-MANAS <b>14416</b> (24×7, free) · Women Helpline <b>181</b> · Childline <b>1098</b>
+  </div>
+
+  <div class="attbar" id="attBar"></div>
+  <div class="composer">
+    <button id="plusBtn" class="toolbtn plus" type="button" title="Add a file, or switch a mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg></button>
+    <textarea id="input" rows="1" placeholder="Message Amigo…"></textarea>
+    <button id="micBtn" class="toolbtn" type="button" title="Speak your question" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
+    <button id="send" title="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M6 12l6-6 6 6"/></svg></button>
+    <div class="menu" id="toolMenu">
+      <button id="attach" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.5h7A2 2 0 0 1 20.5 10v6.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/></svg><span>Upload a file or photo</span></button>
+      <button id="abBtn" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v6.2L5.3 18a1.7 1.7 0 0 0 1.5 2.6h10.4a1.7 1.7 0 0 0 1.5-2.6L13.5 9.2V3"/><path d="M7.6 14.5h8.8"/></svg><span>A/B test calculator</span></button>
+      <div class="mdiv"></div>
+      <button id="btnImg" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.9 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-3.9-4-6.7-9-6.7Z"/><circle cx="7.6" cy="11" r="1.2"/><circle cx="10" cy="7.6" r="1.2"/><circle cx="14.5" cy="7.6" r="1.2"/><circle cx="16.9" cy="11" r="1.2"/></svg><span>Create images</span><span class="chk">✓</span></button>
+      <button id="btnLive" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M21 8v5h-5"/></svg><span>Live trends</span><span class="chk">✓</span></button>
+      <button id="btnDeep" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13.4 13.4 0 0 1 0 17.2 13.4 13.4 0 0 1 0-17.2Z"/></svg><span>Deep search the web</span><span class="chk">✓</span></button>
+    </div>
+  </div>
+
+
+  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦</div>
+  <input type="file" id="fileInput" multiple style="display:none">
+</div>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>⚙️ Settings</h3>
+    <p class="sub">Your chat history stays in this browser. AI provider secrets stay on Cloudflare.</p>
+
+    <div class="field" id="fWorker">
+      <label for="inWorkerUrl">Cloudflare Worker URL</label>
+      <input type="text" id="inWorkerUrl" placeholder="https://amigo-ai.your-subdomain.workers.dev" autocomplete="url" spellcheck="false">
+      <label for="inAiModel" style="display:block;margin-top:12px">AI engine</label>
+      <select id="inAiModel">
+        <option value="auto">Auto — Workers AI first, OpenRouter fallback</option>
+        <option value="@cf/meta/llama-3.3-70b-instruct-fp8-fast">Workers AI — Llama 3.3 70B</option>
+        <option value="@cf/meta/llama-4-scout-17b-16e-instruct">Workers AI — Llama 4 Scout (vision)</option>
+        <option value="@cf/meta/llama-3.2-3b-instruct">Workers AI — Llama 3.2 3B (light)</option>
+        <option value="openrouter/free">OpenRouter — Free Router</option>
+        <option value="meta-llama/llama-3.3-70b-instruct:free">OpenRouter — Llama 3.3 70B (free)</option>
+      </select>
+      <div class="hint">OpenRouter credentials stay inside Cloudflare Worker Secrets. The browser only calls this Worker URL. Auto mode prioritises Workers AI and falls back to OpenRouter when needed.</div>
+    </div>
+
+    <div class="field" id="fConn">
+      <label>Optional search connectors</label>
+      <input type="text" id="inGKey" placeholder="Google API key — only if you want real Google Search">
+      <input type="text" id="inGCx" placeholder="Google search-engine ID (cx) — used with the key" style="margin-top:7px">
+      <input type="text" id="inGhTok" placeholder="GitHub token — optional, only for higher limits" style="margin-top:7px">
+      <div class="hint">Built in: Wikipedia, Wikidata, DuckDuckGo, Stack Overflow, Hacker News, GDELT world news, Open Library, Crossref, OpenAlex, GitHub, weather and trending topics. Google Search and GitHub higher limits are optional. Image generation is served by Cloudflare Workers AI.</div>
+    </div>
+
+    <div class="field" id="fChats">
+      <label>Saved chats</label>
+      <div class="chatlist" id="chatList"></div>
+      <div class="hint">Deleting a chat removes it from this browser for good. It cannot be undone.</div>
+    </div>
+
+
+    <div class="mrow">
+      <button class="btn dangerlink" id="btnClear">Clear all history</button>
+      <button class="btn ghost" id="btnClose">Close</button>
+      <button class="btn ghost" id="btnTest">🔌 Test connection</button>
+      <button class="btn primary" id="btnSave">Save</button>
+    </div>
+    <div class="fnote" id="testOut" style="display:none; margin-top:12px"></div>
+  </div>
+</div>
+
+
+<script src="/amigo/app.js"></script>
+<script src="/amigo/boot.js"></script>
+  <nav class="bottom-nav" aria-label="Primary (phone)">
+    <a href="/#/ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg><span>Ask</span></a>
+    <a href="/#/explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M15 9l-2 4-4 2 2-4z"/></svg><span>Explore</span></a>
+    <a href="/topics/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Topics</span></a>
+    <a href="/#/library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h5v14H4zM11 5h5v14h-5zM18 6l3 12-3 1z"/></svg><span>Library</span></a>
+    <a href="/#/bookmarks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Saved</span></a>
+  </nav>
+  <script type="module" src="/assets/js/build-watch.js?v=6.8.0-4a11e0b"></script>
+<p class="site-version">Veridellindo <span id="appVersion">v6.8.0</span> <span id="appBuild" class="foot-build"></span></p>
+<script type="module" src="/assets/js/build-watch.js"></script>
+</body>
+</html>
