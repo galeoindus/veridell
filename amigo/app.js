@@ -4,13 +4,42 @@
  * rendered differently on every platform and looked dated beside the rest of the
  * interface; these inherit the text colour and stay sharp at any size. */
 const ICON_PATHS = {
-  "\u{1F3A8}": '<path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4 5 5 0 0 0-5-5Z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/>',
+  /* one line icon per emoji the skill data uses, so nothing falls back to a
+     glyph the phone cannot draw (which rendered as an empty box) */
+  "\u{1F3A8}": '<path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4 5 5 0 0 0-5-5Z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/>',
   "\u{1F4CA}": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  "\u{1F4C8}": '<path d="M3 17l6-6 4 3 7-8M17 6h4v4"/>',
   "\u{1F3AC}": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 9 18-4M8 5l2 4M14 4l2 4"/>',
+  "\u{1F39E}\uFE0F": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 9 18-4M8 5l2 4M14 4l2 4"/>',
+  "\u{1F4FD}\uFE0F": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 9 18-4M8 5l2 4M14 4l2 4"/>',
+  "\u{1F4FA}": '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="m8 3 4 3 4-3"/>',
   "\u2705": '<path d="m4 12.5 5 5L20 6.5"/>',
   "\u{1F4AC}": '<path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z"/>',
-  "\u2699\uFE0F": '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
-  "\u2699": '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  "\u270D\uFE0F": '<path d="M4 20h4L20 8l-4-4L4 16z"/><path d="m14 6 4 4"/>',
+  "\u{1F4DD}": '<path d="M4 20h4L20 8l-4-4L4 16z"/><path d="m14 6 4 4"/>',
+  "\u{1F4C4}": '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/>',
+  "\u{1F4D6}": '<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 3v18"/>',
+  "\u{1F4D7}": '<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 3v18"/>',
+  "\u{1F50D}": '<circle cx="11" cy="11" r="6.5"/><path d="m19.5 19.5-4-4"/>',
+  "\u{1F50E}": '<circle cx="11" cy="11" r="6.5"/><path d="m19.5 19.5-4-4"/>',
+  "\u{1F9ED}": '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  "\u{1F5C2}\uFE0F": '<path d="M3 7h6l2 2h10v10H3z"/><path d="M3 7V5h6l2 2"/>',
+  "\u{1F5C4}\uFE0F": '<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  "\u{1F6E0}\uFE0F": '<path d="M14 6a3 3 0 1 0 4 4l-9 9-4-4z"/><path d="m3 21 3-3"/>',
+  "\u{1F9E9}": '<path d="M9 3h6v3a2 2 0 1 0 4 0h2v6h-3a2 2 0 1 0 0 4h3v6H9v-3a2 2 0 1 0-4 0H3V9h3a2 2 0 1 0 0-4H3V3h6z"/>',
+  "\u{1F5A5}\uFE0F": '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 20h6M12 16v4"/>',
+  "\u{1F5BC}\uFE0F": '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m4 17 5-4 4 3 3-2 4 3"/>',
+  "\u{1F310}": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/>',
+  "\u{1F578}\uFE0F": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/>',
+  "\u{1F3D7}\uFE0F": '<path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/>',
+  "\u{1F3B2}": '<rect x="4" y="4" width="16" height="16" rx="4"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="15" r="1"/><circle cx="15" cy="9" r="1"/>',
+  "\u{1F3A4}": '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+  "\u{1F5CC}\uFE0F": '<path d="M4 20h4L20 8l-4-4L4 16z"/><path d="m14 6 4 4"/>',
+  "\u{1F58C}\uFE0F": '<path d="M4 20h4L20 8l-4-4L4 16z"/><path d="m14 6 4 4"/>',
+  "\u{1F4D0}": '<path d="M4 20 20 4M8 4h4M4 8v4M16 20h4M20 16v4"/>',
+  "\u23F1\uFE0F": '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+  "\u{1F9EA}": '<path d="M9 3h6v5l4 9a3 3 0 0 1-2.7 4H7.7A3 3 0 0 1 5 17l4-9z"/><path d="M7.5 14h9"/>',
+  "\u{1FA9E}": '<rect x="5" y="3" width="14" height="18" rx="7"/><path d="M12 7v6"/>',
 };
 function iconFor(value, size){
   const d = ICON_PATHS[String(value || "").trim()] || ICON_PATHS["\u{1F4AC}"];
@@ -489,10 +518,10 @@ function showHero(){
     "<p>Your thoughtful AI companion for writing, research, ideas and everyday work.</p>" +
     (workerBase() ? '' : '<div class="worker-note">Using this site\'s own endpoint. <button type="button" data-open-settings="1">Open settings</button></div>') +
     '<div class="gcards">' +
-      '<button class="gcard"><span class="gi">💬</span><span class="gt">Ask me anything — writing, research or a quick decision</span></button>' +
-      '<button class="gcard"><span class="gi">📊</span><span class="gt">Analyze my data — funnel, trend or segments</span></button>' +
-      '<button class="gcard"><span class="gi">📽️</span><span class="gt">Help me build a presentation or pitch deck</span></button>' +
-      '<button class="gcard"><span class="gi">🧪</span><span class="gt">Check an A/B test result</span></button>' +
+      '<button class="gcard"><span class="gi">' + iconFor('\u{1F4AC}') + '</span><span class="gt">Ask me anything — writing, research or a quick decision</span></button>' +
+      '<button class="gcard"><span class="gi">' + iconFor('\u{1F4CA}') + '</span><span class="gt">Analyze my data — funnel, trend or segments</span></button>' +
+      '<button class="gcard"><span class="gi">' + iconFor('\u{1F4FD}\uFE0F') + '</span><span class="gt">Help me build a presentation or pitch deck</span></button>' +
+      '<button class="gcard"><span class="gi">' + iconFor('\u{1F9EA}') + '</span><span class="gt">Check an A/B test result</span></button>' +
     "</div>" +
     '';
   chatEl.append(d);

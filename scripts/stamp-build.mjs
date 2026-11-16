@@ -105,7 +105,11 @@ for (const file of await walk(ROOT)) {
   // `class="bottom-nav glass"`, which the exact-string test below did not see,
   // so a second bar was appended to the home page on every single build and the
   // phone rendered two stacked navigation bars.
-  if (!/class="bottom-nav(\s|")/.test(html) && /<\/body>/i.test(html)) {
+  // /amigo/ is its own interface with its own layout and composer. Injecting the
+  // site's phone bar there put Ask / Explore / Topics / Library / Saved on top of
+  // the message box, which is exactly what a reader saw.
+  const standalone = /(^|\/)amigo\/index\.html$/.test(file.replace(/\\/g, '/'));
+  if (!standalone && !/class="bottom-nav(\s|")/.test(html) && /<\/body>/i.test(html)) {
     const nav = `  <nav class="bottom-nav" aria-label="Primary (phone)">
     <a href="/#/ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg><span>Ask</span></a>
     <a href="/#/explore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M15 9l-2 4-4 2 2-4z"/></svg><span>Explore</span></a>
