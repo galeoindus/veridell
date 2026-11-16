@@ -266,7 +266,9 @@ export async function onRequestPost({ request, env = {} }) {
     return json({ error: 'invalid_messages', message: error.message }, 400);
   }
 
-  const maxTokens = Math.max(64, Math.min(Number(body.max_tokens) || 1024, 4096));
+  // A 1024 default truncated long answers mid-sentence. The ceiling is what
+  // the free models can actually emit, not an arbitrary small number.
+  const maxTokens = Math.max(256, Math.min(Number(body.max_tokens) || 2048, 8192));
   const temperature = Math.max(0, Math.min(Number(body.temperature) ?? 0.6, 1.5));
   const model = String(body.model || '').slice(0, 120);
   const wantsStream = Boolean(body.stream);
