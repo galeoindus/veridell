@@ -174,3 +174,29 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   display: block;
   object-fit: contain;
 }
+
+/* ── the floating way into Amigo ──────────────────────────────────────────── */
+/* A link, not a panel: the assistant has its own address, so this opens the
+   page instead of growing a second chat inside the site. It sits above the
+   phone's bottom bar and clear of the composer on the chat page (which is why
+   the chat page itself never gets one). */
+.amigo-launcher {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 16px; border-radius: 999px; text-decoration: none;
+  background: var(--primary, #173b32); color: #f7f4ec;
+  font: 600 13.5px/1 var(--font-sans, system-ui, sans-serif);
+  box-shadow: 0 10px 26px -10px rgba(23, 59, 50, .55);
+  transition: transform .16s cubic-bezier(.22,.61,.36,1), box-shadow .16s;
+}
+.amigo-launcher svg { width: 17px; height: 17px; flex: none; }
+.amigo-launcher:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -10px rgba(23, 59, 50, .6); }
+.amigo-launcher:focus-visible { outline: 2px solid var(--focus, #b46a45); outline-offset: 3px; }
+
+/* the phone's bottom bar owns the bottom edge; lift the launcher above it */
+@media (max-width: 860px) {
+  .amigo-launcher { bottom: calc(70px + env(safe-area-inset-bottom, 0px)); right: 14px; padding: 10px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .amigo-launcher, .amigo-launcher:hover { transition: none; transform: none; }
+}

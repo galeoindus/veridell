@@ -683,3 +683,45 @@ body.dark .msg.me .bubble{background:linear-gradient(140deg,rgba(72,76,140,.38),
 @media (prefers-reduced-motion: reduce) {
   .amigo-mascot { animation: none !important; transition: none !important; }
 }
+
+/* ── the faults a phone screenshot showed ───────────────────────────────────
+   1. the welcome mascot was sliced across the top: the image carried
+      `overflow: clip` and the float animation lifted it 4px, so its own top
+      edge was cut off. The clip is gone and the wrapper keeps the room.
+   2. a tap left the hover background stuck on the button that was tapped,
+      which read as a white circle around Delete and Settings. Hover styling
+      now only applies where a pointer can actually hover.
+   3. on a short screen the welcome content was taller than the scroll area, so
+      the last prompt card sat under the composer. The hero padding shrinks on
+      short viewports and the scroll area keeps a clear strip at the bottom. */
+.hero .hstar img,
+.hero .hstar .lgimg { overflow: visible; }
+
+@media (max-height: 780px) {
+  .hero { padding-top: 4vh; }
+  .hero .hstar { margin-bottom: 8px; }
+}
+
+#chat { padding-bottom: 26px; scroll-padding-bottom: 26px; }
+
+.hbtn { -webkit-tap-highlight-color: transparent; }
+@media (hover: hover) {
+  .hbtn:hover { background: var(--hover); color: var(--ink); }
+}
+@media (hover: none) {
+  .hbtn:active { background: var(--hover); }
+}
+
+/* A later layer re-introduced the hover bubble, so the stuck white circle came
+   back on the button that was tapped. This is the last word on it: on a device
+   with no pointer, nothing keeps a background after the finger lifts. */
+@media (hover: none) {
+  .hbtn:hover,
+  .hbtn:focus:not(:focus-visible) {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--muted);
+  }
+  .hbtn:active { background: var(--hover); }
+}

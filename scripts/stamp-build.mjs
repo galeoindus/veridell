@@ -109,6 +109,15 @@ for (const file of await walk(ROOT)) {
   // site's phone bar there put Ask / Explore / Topics / Library / Saved on top of
   // the message box, which is exactly what a reader saw.
   const standalone = /(^|\/)amigo\/index\.html$/.test(file.replace(/\\/g, '/'));
+  // A floating way into the assistant, on every page of the site but the
+  // assistant's own. The chat lives at its own address, so this is a link, not
+  // a panel: it opens the page rather than growing a second chat inside the site.
+  if (!standalone && !/amigo-launcher/.test(html) && /<\/body>/i.test(html)) {
+    html = html.replace(/<\/body>/i, `  <a class="amigo-launcher" href="/amigo/" aria-label="Open Amigo, the assistant">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z"/></svg>
+    <span>Amigo</span>
+  </a>\n</body>`);
+  }
   if (!standalone && !/class="bottom-nav(\s|")/.test(html) && /<\/body>/i.test(html)) {
     const nav = `  <nav class="bottom-nav" aria-label="Primary (phone)">
     <a href="/#/ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg><span>Ask</span></a>
