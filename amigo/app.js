@@ -561,7 +561,15 @@ function renderDataCard(m){
     tbody.append(tr);
   }
   table.append(tbody);
-  card.append(table);
+  // A wide table scrolls inside its own region instead of widening the page.
+  // The wrapper is built with DOM calls, so the safe rendering from Phase 1 is
+  // untouched: no value is ever turned back into an HTML string.
+  const tableScroll = document.createElement("div");
+  tableScroll.className = "datacard__table-scroll";
+  tableScroll.setAttribute("role", "region");
+  tableScroll.setAttribute("aria-label", "Scrollable data table");
+  tableScroll.append(table);
+  card.append(tableScroll);
   return card;
 }
 
