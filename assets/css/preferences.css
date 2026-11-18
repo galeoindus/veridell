@@ -133,7 +133,7 @@ html[data-surface-style="clay"] .suggestion-card {
 .im-preferences-toggle { margin-inline-start: 6px; }
 .im-preferences-panel {
   position: fixed;
-  z-index: 12000;
+  z-index: var(--z-popover, 20);
   top: max(72px, calc(env(safe-area-inset-top) + 64px));
   right: max(14px, env(safe-area-inset-right));
   width: min(360px, calc(100vw - 24px));

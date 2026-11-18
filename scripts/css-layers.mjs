@@ -22,7 +22,7 @@ export function stylesheetOrder(htmlPath) {
   const html = readFileSync(resolve(ROOT, htmlPath), 'utf8');
   const hrefs = [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/gi)]
     .map((tag) => (tag[0].match(/href="([^"]*)"/) || [])[1] || '')
-    .filter((href) => href.startsWith('/assets/css/'));
+    .filter((href) => href.startsWith('/assets/css/') || href.startsWith('/amigo/'));
 
   const names = [];
   for (const href of hrefs) {
@@ -44,7 +44,7 @@ export function stylesheetSource(htmlPath) {
   const html = readFileSync(resolve(ROOT, htmlPath), 'utf8');
   const hrefs = [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/gi)]
     .map((tag) => (tag[0].match(/href="([^"]*)"/) || [])[1] || '')
-    .filter((href) => href.startsWith('/assets/css/'));
+    .filter((href) => href.startsWith('/assets/css/') || href.startsWith('/amigo/'));
 
   const parts = [];
   for (const href of hrefs) {

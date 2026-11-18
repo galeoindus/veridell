@@ -2,6 +2,9 @@
  * Built from 11 sheets in cascade order:
  * styles.css > app.css > responsive.css > system.css > article-layout.css > mobile.css > polish.css > design-system.css > amigo-ui.css > preferences.css > refine.css
  */
+/* Veridellindo CSS cascade contract — keep identical across bundles. */
+@layer reset, tokens, base, components, layout, pages, responsive, utilities, overrides;
+@layer pages {
 /* ── styles.css ── */
 :root { color-scheme: light dark; --ivory: #f5f0e6; --forest: #173b32; --charcoal: #242824; --copper: #b46a45; --sage: #c8d5c3; --sand: #e8dfd0; --bg: var(--ivory); --surface: #fbf8f1; --surface-2: var(--sand); --text: var(--charcoal); --muted: #5c6259; --faint: #5b6258; --ok: #1f5c48; --warn: #8a4a24; --danger: #9b2c2c; --border: #e0d6c4; --border-2: #cfc3ac; --focus: var(--copper-ink); --primary: var(--forest); --accent: var(--copper); --copper-ink: #9a5636; --copper-deep: #8a4f24; --forest-ink: #173b32; --accent-2: #44705f; --on-primary: #f7f4ec; --topbar-h: 62px; --radius-xl: 24px; --radius-lg: 20px; --radius: 16px; --radius-sm: 14px; --radius-xs: 12px; --shadow-sm: 0 1px 2px rgba(36, 40, 36, .06); --shadow: 0 1px 2px rgba(36, 40, 36, .05), 0 12px 28px -14px rgba(23, 59, 50, .22); --shadow-lg: 0 2px 6px rgba(36, 40, 36, .06), 0 34px 60px -30px rgba(23, 59, 50, .38); --maxw: 1200px; --font-head: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Tiro Devanagari Hindi', serif; --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Helvetica Neue', Arial, sans-serif; --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; }
 
@@ -1505,6 +1508,8 @@ body::before { animation-duration: 34s, 46s; }
   .btn-primary, .depth-btn, .chip, .chip-btn, .mode-btn, .tab, .btn, .bottom-nav a, .dash-action, .q-card, .cat-card, .rail-card, .howstep { will-change: auto; }
 }
 
+}
+@layer pages {
 /* ── app.css ── */
 /* Veridell — additions on top of the design system.
  *
@@ -4291,6 +4296,8 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* The research desk footer carries the same chip, inline with its own line. */
 .main-footer .foot-version { margin: 0; font-size: 12px; }
 
+}
+@layer responsive {
 /* ── responsive.css ── */
 /* ══════════════════════════════════════════════════════════════════════════
    Veridell — every screen
@@ -4396,6 +4403,8 @@ h2 { font-size: var(--fluid-h2); }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 11px; }
 }
 
+}
+@layer base {
 /* ── system.css ── */
 /* Veridell — one system for the whole site.
  *
@@ -5111,6 +5120,8 @@ form.panel .searchbar {
   object-position: center;
 }
 
+}
+@layer layout {
 /* ── article-layout.css ── */
 /* ==========================================================================
    Veridell — article layout, rebuilt for the screen it is on
@@ -5522,6 +5533,8 @@ main#main {
   overflow: visible;
 }
 
+}
+@layer responsive {
 /* ── mobile.css ── */
 /* ==========================================================================
    Veridell — the phone
@@ -5570,7 +5583,7 @@ main#main {
     grid-template-columns: repeat(5, 1fr);
     position: fixed;
     left: 0; right: 0; bottom: 0;
-    z-index: 55;
+    z-index: var(--z-bottom-nav, 15);
     padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
     background: color-mix(in srgb, var(--bg) 94%, transparent);
     -webkit-backdrop-filter: saturate(150%) blur(14px);
@@ -5598,7 +5611,11 @@ main#main {
   .bottom-nav svg { width: 21px; height: 21px; }
 
   /* nothing may sit under the bar */
-  body { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)); }
+  /* Reserve room for the bottom navigation only on the pages that render it.
+     A blanket body padding gave every route a phantom 58px, and Amigo — a
+     full-height chat shell with no bottom bar — paid it for nothing. */
+  body.has-bottom-nav { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)); }
+  body.amigo-chat { padding-bottom: 0; }
   .site-foot { padding-bottom: 24px; }
 
   /* the floating launcher moves above the bar, and off the last button */
@@ -5864,6 +5881,8 @@ textarea,
   .lead-figure img, .art-figure img { max-height: 220px; }
 }
 
+}
+@layer utilities {
 /* ── polish.css ── */
 /* Veridell — quiet, precise surface polish.
    A restrained iOS-inspired layer: soft translucency, clear hierarchy,
@@ -6126,6 +6145,8 @@ img.image-fallback {
 /* References are evidence, not teaser copy: keep every citation intact. */
 .reference-list li { overflow-wrap: anywhere; word-break: normal; }
 
+}
+@layer components {
 /* ── design-system.css ── */
 /* Veridell Design System 1.0 — shared tokens and restrained multimorphism.
    Rule of use: glass for navigation/chrome, clay for a few expressive feature
@@ -6175,6 +6196,21 @@ img.image-fallback {
   --shadow-sm: var(--im-shadow-sm);
   --shadow: var(--im-shadow);
   --shadow-lg: var(--im-shadow-lg);
+
+  /* Phase 2 — one documented stacking scale. A token is not a guarantee a child
+     can escape its parent's stacking context, so overlay hosts stay near the
+     document root. */
+  --z-content: 0;
+  --z-sticky: 10;
+  --z-bottom-nav: 15;
+  --z-popover: 20;
+  --z-composer-menu: 30;
+  --z-scrim: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+  --z-build-notice: 80;
+  --z-skip-link: 100;
 }
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -6293,7 +6329,7 @@ button, input, textarea, select { font: inherit; }
   margin-inline-start: 8px; border: 1px solid var(--im-border); border-radius: 14px;
   color: var(--im-text); box-shadow: var(--im-shadow-sm); cursor: pointer;
   transition: transform .18s var(--im-motion), box-shadow .18s var(--im-motion), border-color .18s;
-  z-index: 120;
+  z-index: var(--z-popover, 20);
 }
 .im-theme-toggle svg { width: 19px; height: 19px; display: block; }
 /* The shared control is appended to whatever header a page has. Keep it on the
@@ -6315,6 +6351,8 @@ body > .im-theme-toggle { position: fixed; top: max(14px, env(safe-area-inset-to
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 
+}
+@layer components {
 /* ── amigo-ui.css ── */
 /* Amigo UI refinement: shared article, card, gallery and navigation rules.
    Tokens remain owned by design-system.css; this sheet only composes them. */
@@ -6435,6 +6473,8 @@ button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
   .bottom-nav a, .card, .source-card, .topic-card { transition: none !important; }
 }
 
+}
+@layer pages {
 /* ── preferences.css ── */
 /* Veridell cross-route reading and surface preferences. Keep prose surfaces
    flat and opaque; reserve morphic effects for controls and focal surfaces. */
@@ -6571,7 +6611,7 @@ html[data-surface-style="clay"] .suggestion-card {
 .im-preferences-toggle { margin-inline-start: 6px; }
 .im-preferences-panel {
   position: fixed;
-  z-index: 12000;
+  z-index: var(--z-popover, 20);
   top: max(72px, calc(env(safe-area-inset-top) + 64px));
   right: max(14px, env(safe-area-inset-right));
   width: min(360px, calc(100vw - 24px));
@@ -7455,6 +7495,8 @@ body.amigo-chat .a-actions button:focus-visible {
   body.amigo-chat .a-actions button { transition: none; }
 }
 
+}
+@layer utilities {
 /* ── refine.css ── */
 /* Veridell — the finishing layer.
  *
@@ -7657,4 +7699,6 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
 }
 @media (prefers-reduced-motion: reduce) {
   .amigo-launcher, .amigo-launcher:hover { transition: none; transform: none; }
+}
+
 }

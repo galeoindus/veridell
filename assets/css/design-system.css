@@ -46,6 +46,21 @@
   --shadow-sm: var(--im-shadow-sm);
   --shadow: var(--im-shadow);
   --shadow-lg: var(--im-shadow-lg);
+
+  /* Phase 2 — one documented stacking scale. A token is not a guarantee a child
+     can escape its parent's stacking context, so overlay hosts stay near the
+     document root. */
+  --z-content: 0;
+  --z-sticky: 10;
+  --z-bottom-nav: 15;
+  --z-popover: 20;
+  --z-composer-menu: 30;
+  --z-scrim: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+  --z-build-notice: 80;
+  --z-skip-link: 100;
 }
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -164,7 +179,7 @@ button, input, textarea, select { font: inherit; }
   margin-inline-start: 8px; border: 1px solid var(--im-border); border-radius: 14px;
   color: var(--im-text); box-shadow: var(--im-shadow-sm); cursor: pointer;
   transition: transform .18s var(--im-motion), box-shadow .18s var(--im-motion), border-color .18s;
-  z-index: 120;
+  z-index: var(--z-popover, 20);
 }
 .im-theme-toggle svg { width: 19px; height: 19px; display: block; }
 /* The shared control is appended to whatever header a page has. Keep it on the

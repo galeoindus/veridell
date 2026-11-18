@@ -129,6 +129,15 @@ for (const file of await walk(ROOT)) {
 </body>`;
     html = html.replace(/<\/body>/i, nav);
   }
+  // The body is marked only where a bottom navigation actually exists, so the
+  // reserved mobile space follows the structure instead of every route paying it.
+  if (/class="bottom-nav(\s|")/.test(html) && !/has-bottom-nav/.test(html)) {
+    html = html.replace(/<body([^>]*)>/i, (m, attrs) => (
+      /class="/.test(attrs)
+        ? `<body${attrs.replace(/class="([^"]*)"/, 'class="$1 has-bottom-nav"')}>`
+        : `<body${attrs} class="has-bottom-nav">`
+    ));
+  }
   // A phone with a notch needs the safe-area insets the sheets rely on.
   if (/name=["']viewport["']/i.test(html) && !/viewport-fit=cover/i.test(html)) {
     html = html.replace(/(<meta\s+name=["']viewport["'][^>]*content=["'])([^"']*)(["'])/i, '$1$2, viewport-fit=cover$3');
@@ -189,6 +198,36 @@ let bundledPages = 0;
  * they are now — so the sheets are the source of truth on every build, and the
  * hash still names the bundle by its sheet list. */
 const BUNDLE_RE = /assets\/css\/(bundle-[0-9a-f]+\.css)/;
+
+/* Phase 2 — one cascade-layer contract for every stylesheet the site ships.
+ * The same prelude must appear in each generated bundle and in the page sheets
+ * that load before a bundle, because normal unlayered rules outrank layered
+ * ones: layering only one side would silently reverse the intended order. */
+const LAYER_ORDER = 'reset, tokens, base, components, layout, pages, responsive, utilities, overrides';
+const LAYER_PRELUDE = `/* Veridellindo CSS cascade contract — keep identical across bundles. */\n@layer ${LAYER_ORDER};\n`;
+
+const SHEET_LAYER = {
+  'system.css': 'base',
+  'design-system.css': 'components',
+  'amigo-ui.css': 'components',
+  'article-layout.css': 'layout',
+  'preferences.css': 'pages',
+  'mobile.css': 'responsive',
+  'responsive.css': 'responsive',
+  'polish.css': 'utilities',
+  'refine.css': 'utilities',
+};
+
+function layerOf(sheet) {
+  return SHEET_LAYER[sheet] || 'pages';
+}
+
+/** Wrap a source sheet's rules in its assigned layer, keeping its marker. */
+function layeredSheet(sheet, css) {
+  const body = String(css).replace(/^@charset[^;]+;\s*/i, '');
+  return `@layer ${layerOf(sheet)} {\n${body}\n}`;
+}
+
 async function sheetsOfBundle(name) {
   try {
     const head = (await readFile(join(CSS_DIR, name), 'utf8')).split('*/')[0];
@@ -210,10 +249,10 @@ for (const file of await walk(ROOT)) {
     if (sheets && sheets.length > 1) {
       if (!bundles.has(name)) {
         const parts = [];
-        for (const sheet of sheets) parts.push(await readSheet(sheet));
+        for (const sheet of sheets) parts.push(layeredSheet(sheet, await readSheet(sheet)));
         const css = `/* Veridellindo — generated stylesheet bundle. Do not edit.\n`
           + ` * Built from ${sheets.length} sheets in cascade order:\n`
-          + ` * ${sheets.join(' > ')}\n */\n` + parts.join('\n');
+          + ` * ${sheets.join(' > ')}\n */\n` + LAYER_PRELUDE + parts.join('\n');
         bundles.set(name, { name, sheets, css });
       }
       html = html.replace(/(href="\/assets\/css\/bundle-[0-9a-f]+\.css)\?v=[^"]*"/, `$1?v=${build}"`);
@@ -231,10 +270,10 @@ for (const file of await walk(ROOT)) {
 
   if (!bundles.has(hash)) {
     const parts = [];
-    for (const name of sheets) parts.push(await readSheet(name));
+    for (const name of sheets) parts.push(layeredSheet(name, await readSheet(name)));
     const css = `/* Veridellindo — generated stylesheet bundle. Do not edit.\n`
       + ` * Built from ${sheets.length} sheets in cascade order:\n`
-      + ` * ${sheets.join(' > ')}\n */\n` + parts.join('\n');
+      + ` * ${sheets.join(' > ')}\n */\n` + LAYER_PRELUDE + parts.join('\n');
     bundles.set(hash, { name: bundleName, sheets, css });
   }
 

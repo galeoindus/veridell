@@ -45,7 +45,7 @@
     grid-template-columns: repeat(5, 1fr);
     position: fixed;
     left: 0; right: 0; bottom: 0;
-    z-index: 55;
+    z-index: var(--z-bottom-nav, 15);
     padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
     background: color-mix(in srgb, var(--bg) 94%, transparent);
     -webkit-backdrop-filter: saturate(150%) blur(14px);
@@ -73,7 +73,11 @@
   .bottom-nav svg { width: 21px; height: 21px; }
 
   /* nothing may sit under the bar */
-  body { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)); }
+  /* Reserve room for the bottom navigation only on the pages that render it.
+     A blanket body padding gave every route a phantom 58px, and Amigo — a
+     full-height chat shell with no bottom bar — paid it for nothing. */
+  body.has-bottom-nav { padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)); }
+  body.amigo-chat { padding-bottom: 0; }
   .site-foot { padding-bottom: 24px; }
 
   /* the floating launcher moves above the bar, and off the last button */
