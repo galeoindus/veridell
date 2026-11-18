@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="veridell-build" content="6.10.9-a93071c">
-  <meta name="veridell-version" content="6.10.9">
+  <meta name="veridell-build" content="6.10.10-416796d">
+  <meta name="veridell-version" content="6.10.10">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Amigo — Veridellindo</title>
@@ -37,9 +37,9 @@
   "description": "The assistant interface on Veridellindo, answered by Cloudflare Workers AI through this site's own endpoint."
 }
 </script>
-  <script src="/assets/js/image-fallback.js?v=6.10.9-a93071c"></script>
-  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.9-a93071c">
-  <script src="/assets/js/global-theme.js?v=6.10.9-a93071c"></script>
+  <script src="/assets/js/image-fallback.js?v=6.10.10-416796d"></script>
+  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.10-416796d">
+  <script src="/assets/js/global-theme.js?v=6.10.10-416796d"></script>
 </head>
 <body class="amigo-chat">
 <a class="skip-link" href="#chat">Skip to the conversation</a>
@@ -109,7 +109,8 @@
         <textarea id="input" rows="1" placeholder="Message Amigo…" aria-describedby="inputHelp"></textarea>
         <span id="inputHelp" class="sr-only">Press Enter to send. Press Shift and Enter for a new line.</span>
     <button id="micBtn" class="toolbtn" type="button" title="Speak your question" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
-    <button id="send" title="Send" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M6 12l6-6 6 6"/></svg></button>
+    <button id="stop" type="button" class="toolbtn" aria-label="Stop response" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+        <button id="send" title="Send" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M6 12l6-6 6 6"/></svg></button>
     <div class="menu" id="toolMenu">
       <button id="attach" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.5h7A2 2 0 0 1 20.5 10v6.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/></svg><span>Upload a file or photo</span></button>
       <button id="abBtn" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v6.2L5.3 18a1.7 1.7 0 0 0 1.5 2.6h10.4a1.7 1.7 0 0 0 1.5-2.6L13.5 9.2V3"/><path d="M7.6 14.5h8.8"/></svg><span>A/B test calculator</span></button>
@@ -121,7 +122,7 @@
   </div>
 
 
-  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.9</span> <span id="appBuild" class="foot-build"></span></span></div>
+  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.10</span> <span id="appBuild" class="foot-build"></span></span></div>
   <input type="file" id="fileInput" multiple style="display:none">
 </div>
 </div>

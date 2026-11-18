@@ -734,6 +734,99 @@ function selectedAiRoute(){
   if (id.indexOf("@cf/") === 0) return { provider: "workers-ai", model: id };
   return { provider: "openrouter", model: id };
 }
+
+/* ── P4-03: one owner for the active request ───────────────────────────────
+ * idle → thinking → responding → done | stopped | error. Only this object holds
+ * the controller, so Stop always aborts the request that is actually running and
+ * a late reply cannot land in a different conversation. */
+const REQUEST = { state: "idle", controller: null, chatId: null, startedAt: 0 };
+
+function setRequestState(state){
+  REQUEST.state = state;
+  const stopEl = document.getElementById("stop");
+  if (stopEl) stopEl.hidden = !(state === "thinking" || state === "responding");
+  if (state === "thinking") announce("Amigo is thinking");
+  else if (state === "responding") announce("Amigo is responding");
+  else if (state === "stopped") announce("Response stopped");
+  else if (state === "error") announce("Amigo could not answer");
+}
+
+function stopActiveRequest(){
+  if (!REQUEST.controller) return;
+  REQUEST.controller.abort();
+  REQUEST.controller = null;
+}
+
+/* Real streaming: the endpoint already speaks SSE, so deltas render as they
+ * arrive instead of the whole answer appearing after a long silence. */
+async function streamAmigoAI(messages, onDelta){
+  const route = selectedAiRoute();
+  const controller = new AbortController();
+  REQUEST.controller = controller;
+  REQUEST.startedAt = Date.now();
+  const target = siteRoute("/v1/chat/completions") || "/api/chat";
+  const response = await fetch(target, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "text/event-stream" },
+    body: JSON.stringify({
+      messages: messages,
+      provider: route.provider,
+      model: route.model,
+      temperature: 0.65,
+      max_tokens: 4096,
+      stream: true
+    }),
+    signal: controller.signal
+  });
+
+  if (!response.ok){
+    const raw = await response.text().catch(() => "");
+    let message = "AI request failed (" + response.status + ")";
+    try { const parsed = JSON.parse(raw); message = parsed.message || parsed.error || message; } catch(e){}
+    throw new Error(message);
+  }
+
+  const contentType = String(response.headers.get("content-type") || "");
+  if (contentType.indexOf("text/event-stream") === -1){
+    // a deployment that answered with plain JSON: hand it back to the caller
+    const data = await response.json().catch(() => ({}));
+    const text = data && data.choices && data.choices[0] && data.choices[0].message
+      && data.choices[0].message.content;
+    if (text) return { reply: String(text), provider: data.provider || route.provider, model: data.model || route.model, streamed: false };
+    throw new Error("AI returned an empty answer.");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  let answer = "";
+  let meta = {};
+  for (;;){
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const frames = buffer.split("\n\n");
+    buffer = frames.pop() || "";
+    for (const frame of frames){
+      const line = frame.split("\n").find(l => l.indexOf("data:") === 0);
+      if (!line) continue;
+      let event;
+      try { event = JSON.parse(line.slice(5).trim()); } catch(e){ continue; }
+      if (event.type === "delta" && event.text){
+        answer += event.text;
+        if (onDelta) onDelta(answer);
+      } else if (event.type === "done"){
+        if (event.answer) answer = event.answer;
+        meta = event;
+      } else if (event.type === "error"){
+        throw new Error(event.message || "The assistant could not answer.");
+      }
+    }
+  }
+  if (!answer.trim()) throw new Error("AI returned an empty answer.");
+  return { reply: answer, provider: meta.provider || route.provider, model: meta.model || route.model, streamed: true };
+}
+
 async function callAmigoAI(messages, overrides){
   const route = selectedAiRoute();
   const extra = overrides || {};
@@ -1144,17 +1237,31 @@ async function send(){
     })
   );
   let reply = "";
+  let partial = "";
   let usedProvider = "workers-ai";
   let usedModel = settings.aiModel || WORKER_DEFAULT_MODEL;
   let fallbackReason = "";
   try {
-    const result = await callAmigoAI(msgs);
+    setRequestState("thinking");
+    const result = await streamAmigoAI(msgs, (text) => {
+      // deltas render as they arrive; the typing placeholder is replaced by the
+      // first real token rather than waiting for the whole answer
+      setRequestState("responding");
+      partial = text;
+      bub.innerHTML = mdLite(text);
+      scrollDown(false);
+    });
     reply = result.reply;
     usedProvider = result.provider;
     usedModel = result.model;
     fallbackReason = result.fallbackReason || "";
     const _chip = (reply && curSkill !== "assistant") ? skillChipHTML() : "";
-    await typeInto(bub, reply, _chip);
+    if (result.streamed){
+      bub.innerHTML = mdLite(reply) + _chip;
+    } else {
+      await typeInto(bub, reply, _chip);
+    }
+    setRequestState("done");
     if (fallbackReason){
       const fn = document.createElement("div"); fn.className = "fallbacknote";
       fn.textContent = "Workers AI was unavailable, so Amigo used OpenRouter instead.";
@@ -1167,6 +1274,19 @@ async function send(){
     curHistory().push({ role: "assistant", content: reply, sources: sources || null, provider: usedProvider, model: usedModel });
     histSave();
   } catch(err){
+    if (err && err.name === "AbortError"){
+      // stopped by the reader: keep whatever arrived, say so, do not shout error
+      setRequestState("stopped");
+      bub.classList.remove("err");
+      const kept = (partial || "").trim();
+      bub.innerHTML = (kept ? mdLite(kept) : "")
+        + '<div class="fallbacknote">Response stopped.</div>';
+      if (kept) curHistory().push({ role: "assistant", content: kept, sources: sources || null, provider: usedProvider, model: usedModel });
+      histSave();
+      setBusy(false); setRequestState("idle"); inputEl.focus();
+      return;
+    }
+    setRequestState("error");
     bub.classList.add("err");
     bub.textContent = "⚠️ " + (err && err.message ? err.message : "Something went wrong.") + "\n\nCheck the Cloudflare Worker URL, Worker deployment, AI binding and OpenRouter secret in Settings.";
     const rb = document.createElement("button");
@@ -1869,6 +1989,7 @@ function computeFunnel(card){
 
 /* ---------------- ui wiring ---------------- */
 sendEl.addEventListener("click", send);
+$("#stop")?.addEventListener("click", () => stopActiveRequest());
 inputEl.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey){ e.preventDefault(); send(); } });
 inputEl.addEventListener("input", () => { inputEl.style.height = "auto"; inputEl.style.height = Math.min(inputEl.scrollHeight, 130) + "px"; });
 $("#attach").addEventListener("click", () => $("#fileInput").click());
