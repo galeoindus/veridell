@@ -147,7 +147,38 @@ function histSave(){
 }
 let _histories = {};
 function curHistory(){ return _histories[curSkill]; }
-function saveAllSettings(){ try { localStorage.setItem("amigo2_settings", JSON.stringify(settings)); } catch(e){} }
+/* Long-lived user credentials are not written to browser storage. IndexedDB and
+ * localStorage are origin storage, not a vault: anything here is readable by any
+ * script on this origin and survives on the device. Personal tokens stay in
+ * memory for this session only, and the product says so instead of implying the
+ * field is secure. Provider keys belong in Cloudflare secrets, server-side. */
+const SESSION_SECRETS = { ghToken: "", gkey: "" };
+
+function stripSecrets(source){
+  const copy = JSON.parse(JSON.stringify(source || {}));
+  if (copy.connectors && typeof copy.connectors === "object"){
+    for (const key of Object.keys(SESSION_SECRETS)){
+      if (key in copy.connectors){
+        SESSION_SECRETS[key] = String(copy.connectors[key] || "");
+        delete copy.connectors[key];
+      }
+    }
+  }
+  return copy;
+}
+
+function withSecrets(source){
+  const copy = JSON.parse(JSON.stringify(source || {}));
+  copy.connectors = copy.connectors || {};
+  for (const key of Object.keys(SESSION_SECRETS)){
+    if (SESSION_SECRETS[key]) copy.connectors[key] = SESSION_SECRETS[key];
+  }
+  return copy;
+}
+
+function saveAllSettings(){
+  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){}
+}
 
 /* ---------------- auto skill routing ---------------- */
 function routeSkill(t){
@@ -739,7 +770,10 @@ function selectedAiRoute(){
  * idle → thinking → responding → done | stopped | error. Only this object holds
  * the controller, so Stop always aborts the request that is actually running and
  * a late reply cannot land in a different conversation. */
-const REQUEST = { state: "idle", controller: null, chatId: null, startedAt: 0 };
+const REQUEST = { state: "idle", id: 0, controller: null, chatId: null, startedAt: 0 };
+
+function nextRequestId(){ REQUEST.id += 1; return REQUEST.id; }
+function isCurrentRequest(id){ return REQUEST.id === id; }
 
 function setRequestState(state){
   REQUEST.state = state;
@@ -753,6 +787,7 @@ function setRequestState(state){
 
 function stopActiveRequest(){
   if (!REQUEST.controller) return;
+  REQUEST.id += 1;          // invalidate anything still in flight
   REQUEST.controller.abort();
   REQUEST.controller = null;
 }
@@ -762,6 +797,7 @@ function stopActiveRequest(){
 async function streamAmigoAI(messages, onDelta){
   const route = selectedAiRoute();
   const controller = new AbortController();
+  const requestId = nextRequestId();
   REQUEST.controller = controller;
   REQUEST.startedAt = Date.now();
   const target = siteRoute("/v1/chat/completions") || "/api/chat";
@@ -812,6 +848,7 @@ async function streamAmigoAI(messages, onDelta){
       if (!line) continue;
       let event;
       try { event = JSON.parse(line.slice(5).trim()); } catch(e){ continue; }
+      if (!isCurrentRequest(requestId)) break;   // superseded or cancelled
       if (event.type === "delta" && event.text){
         answer += event.text;
         if (onDelta) onDelta(answer);
@@ -2248,14 +2285,18 @@ $("#btnTest").addEventListener("click", async () => {
   try {
     const _raw = localStorage.getItem("amigo2_settings");
     const s = JSON.parse(_raw || "null");
-    if (s) settings = Object.assign({}, DEFAULTS, s);
+    if (s){
+      // a secret saved by an older build is lifted into this session and then
+      // removed from storage, so the device stops carrying it
+      settings = Object.assign({}, DEFAULTS, withSecrets(s));
+    }
   } catch(e){}
   if (!SKILLS[settings.skill] && settings.skill !== "auto") settings.skill = "auto";
   settings.skill = "auto";
   if (!["auto", "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/meta/llama-3.2-3b-instruct", "openrouter/free", "meta-llama/llama-3.3-70b-instruct:free"].includes(settings.aiModel)) settings.aiModel = "auto";
   // Remove legacy browser-side provider credentials; all model keys now belong in Cloudflare Secrets.
   ["apiKey", "apiKeys", "openrouterKey", "openRouterKey", "provider", "baseUrl", "model"].forEach(k => { try { delete settings[k]; } catch(e){} });
-  try { localStorage.setItem("amigo2_settings", JSON.stringify(settings)); } catch(e){}
+  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){}
   curSkill = "assistant";
   for (const id of Object.keys(SKILLS)) _histories[id] = histLoad(id);
   /* one-time repair: write the de-duplicated history back so old repeats stay gone */

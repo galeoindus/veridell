@@ -35,3 +35,32 @@ jobs:
       # are cheap, so they run on every push rather than only on Mondays.
       - name: Deep and drift checks
         run: npm run doctor
+
+  # P4-08 — browser evidence as a gate, not a local courtesy.
+  # The unit suite proves the code parses and the contracts hold; it cannot see
+  # that the composer is hidden behind the keyboard or that a phone scrolls
+  # sideways. This job loads the real page at the report's six device sizes and
+  # fails on the faults that only appear when it renders.
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Point the check at the installed browser
+        run: |
+          BIN=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux/chrome 2>/dev/null | head -1)
+          echo "CHROME_BIN=$BIN" >> "$GITHUB_ENV"
+          echo "using $BIN"
+      - name: Stamp the build
+        env:
+          BUILD_COMMIT: ${{ github.sha }}
+        run: npm run stamp:build
+      - name: Chat layout at six device sizes
+        run: npm run check:layout

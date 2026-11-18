@@ -23,7 +23,10 @@ const VIEWPORTS = [
   { name: '1280x800 desktop', width: 1280, height: 800 },
 ];
 
-const chrome = spawn('chromium', ['--headless=new', '--no-sandbox', '--disable-gpu',
+// CI installs Chromium through Playwright, which does not put a `chromium` on
+// PATH. Honour CHROME_BIN so the gate runs the browser it actually installed.
+const BROWSER = process.env.CHROME_BIN || 'chromium';
+const chrome = spawn(BROWSER, ['--headless=new', '--no-sandbox', '--disable-gpu',
   `--remote-debugging-port=${PORT}`, '--window-size=1280,900', 'about:blank'], { stdio: 'ignore' });
 
 let target;

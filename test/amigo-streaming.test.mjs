@@ -15,7 +15,7 @@ const html = readFileSync(new URL('../amigo/index.html', import.meta.url), 'utf8
 const { document } = new JSDOM(html).window;
 
 test('one object owns the active request', () => {
-  assert.match(app, /const REQUEST = \{ state: "idle", controller: null/);
+  assert.match(app, /const REQUEST = \{ state: "idle", id: 0, controller: null/);
   assert.match(app, /function stopActiveRequest\(/);
   assert.match(app, /REQUEST\.controller\.abort\(\)/);
 });
