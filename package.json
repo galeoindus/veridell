@@ -1,6 +1,6 @@
 {
   "name": "veridell",
-  "version": "6.10.8",
+  "version": "6.10.9",
   "private": true,
   "type": "module",
   "description": "Veridellindo — a privacy-first Wikimedia research and discovery platform with Amigo multi-turn AI conversation, cited answers and local chat history.",
@@ -39,7 +39,7 @@
     "stamp:build": "node scripts/stamp-build.mjs",
     "start": "python3 -m http.server 4173",
     "test": "node --test",
-    "test:core": "node --test test/ask.test.mjs test/api-date.test.mjs test/chat-atelier.test.mjs test/chat-ui.test.mjs test/conversation.test.mjs test/credits-page.test.mjs test/home-aotd.test.mjs test/i18n.test.mjs test/icons.test.mjs test/models.test.mjs test/parse.test.mjs test/research-answer.test.mjs test/router.test.mjs test/sources.test.mjs test/world-langs.test.mjs test/global-theme.test.mjs test/translate-provider.test.mjs test/amigo-memory.test.mjs test/amigo-files.test.mjs test/ollama-client.test.mjs test/live-research.test.mjs test/articles.test.mjs",
+    "test:core": "node --test test/amigo-document.test.mjs test/amigo-layout.test.mjs test/amigo-rendering.test.mjs test/amigo-theme.test.mjs test/api-date.test.mjs test/articles.test.mjs test/chat-endpoint.test.mjs test/css-layers.test.mjs test/global-theme.test.mjs test/home-aotd.test.mjs test/i18n.test.mjs test/icons.test.mjs test/identity.test.mjs test/ollama-client.test.mjs test/parse.test.mjs test/research-answer.test.mjs test/router.test.mjs test/search-view.test.mjs test/sources.test.mjs test/store.test.mjs test/translate-panel.test.mjs test/translate-provider.test.mjs test/world-langs.test.mjs",
     "verify": "npm run check && npm run test",
     "verify:live": "node scripts/post-deploy-check.mjs"
   },

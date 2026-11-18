@@ -58,7 +58,37 @@ function dharmaHTML(){ return '<span class="typing-mascot" aria-label="Amigo is 
 
 const AMP = String.fromCharCode(38);
 const $ = s => document.querySelector(s);
-const chatEl = $("#chat"), inputEl = $("#input"), sendEl = $("#send");
+
+/* The Amigo character is a state indicator, not decoration: one pose per
+ * interface state, and never the only signal of what is happening. */
+const AMIGO_POSE = {
+  wave: "/assets/img/amigo/amigo-wave.webp",
+  think: "/assets/img/amigo/amigo-think.webp",
+  insight: "/assets/img/amigo/amigo-insight.webp",
+  reading: "/assets/img/amigo/amigo-reading.webp",
+  celebrate: "/assets/img/amigo/amigo-celebrate.webp",
+  help: "/assets/img/amigo/amigo-help.webp"
+};
+function amigoPoseImg(state, cls){
+  const img = document.createElement("img");
+  img.src = AMIGO_POSE[state] || AMIGO_POSE.wave;
+  img.alt = "";
+  img.className = "amigo-mascot " + (cls || "");
+  img.width = 128; img.height = 128;
+  img.decoding = "async";
+  return img;
+}
+
+const chatEl = $("#chatMessages") || $("#chat"), inputEl = $("#input"), sendEl = $("#send");
+
+/* One short status region, separate from the message log, so token-by-token
+ * output does not make a screen reader announce every partial update. */
+const statusEl = $("#chatStatus");
+function announce(text){
+  if (!statusEl) return;
+  statusEl.textContent = "";
+  setTimeout(() => { statusEl.textContent = String(text || ""); }, 40);
+}
 
 /* All model credentials live server-side in Cloudflare Worker secrets.
    This browser app never receives or stores the OpenRouter or SerpApi keys. */
@@ -403,7 +433,9 @@ function addMsg(role, text, opts){
   const wrap = document.createElement("div");
   wrap.className = "msg " + (role === "user" ? "me" : "ai");
   const bub = document.createElement("div"); bub.className = "bubble";
-  if (opts && opts.typing){ bub.innerHTML = '<span class="typing">' + dharmaHTML() + '</span>'; }
+  if (opts && opts.typing){ bub.innerHTML = '<span class="typing">'
+    + '<img class="amigo-mascot mascot-status" src="' + AMIGO_POSE.think + '" alt="" width="48" height="48" decoding="async">'
+    + dharmaHTML() + '<span class="sr-only">Amigo is thinking</span></span>'; }
   else if (opts && opts.raw){ bub.textContent = text || ""; bub.style.whiteSpace = "pre-wrap"; }
   else { bub.innerHTML = mdLite(text); }
   if (opts && opts.attachments && opts.attachments.length) addMsgAtt(bub, opts.attachments);
@@ -1050,6 +1082,7 @@ async function send(){
   if (!isRetry){ _h.push({ role: "user", content: text || "Please look at what I attached.", attachments: atts.length ? atts : undefined }); addMsg("user", text || "Please look at what I attached.", atts.length ? { attachments: atts } : null); }
   histSave(); setBusy(true); scrollDown(true);
 
+  announce("Amigo is thinking");
   const bub = addMsg("assistant", "", { typing: true });
   const bubWrap = bub.parentElement; if (bubWrap) bubWrap.classList.add("answering");
 
@@ -1087,7 +1120,9 @@ async function send(){
     if (deep || wantsWeather(text) || wantsGithub(text) || wantsTrends(text) || wantsLive(text) || settings.liveMode || /https?:\/\//.test(text)){
       bub.innerHTML = '<span class="searching">' + dharmaHTML() + ' Researching live sources…</span>';
       sources = await runConnectors(text, deep);
-      if (!sources) bub.innerHTML = '<span class="typing">' + dharmaHTML() + '</span>';
+      if (!sources) bub.innerHTML = '<span class="typing">'
+        + '<img class="amigo-mascot mascot-status" src="' + AMIGO_POSE.think + '" alt="" width="48" height="48" decoding="async">'
+        + dharmaHTML() + '<span class="sr-only">Amigo is responding</span></span>';
     }
   } catch(e){ sources = null; }
   const sys = buildSystemPrompt() + researchBlock(sources);
