@@ -104,6 +104,10 @@
     // The chat route paints on its own palette, so the browser chrome colour has
     // to follow it there; every other route keeps the site colours.
     const chatPage = document.body?.classList.contains('amigo-chat');
+    // Amigo's own stylesheet and darkNow() still read body.dark, so the resolved
+    // shared theme is mirrored onto that class for this page only. The site
+    // keeps html[data-theme]; nothing else on the site is touched.
+    if (chatPage) document.body.classList.toggle('dark', theme === 'dark');
     const colour = chatPage
       ? (theme === 'dark' ? '#0c1120' : '#f5f6ff')
       : (theme === 'dark' ? '#0b1110' : '#f3f6f2');

@@ -66,7 +66,7 @@ const chatEl = $("#chat"), inputEl = $("#input"), sendEl = $("#send");
 const DEFAULTS = {
   workerUrl: "",
   aiModel: "auto",
-  skill: "auto", theme: "light", imageMode: false,
+  skill: "auto", imageMode: false,
   deepSearch: false,
   connectors: { web: true, google: false, gkey: "", gcx: "", stack: true, hn: true, books: true, github: true, weather: true, trends: true, ghToken: "" },
   liveMode: false
@@ -155,7 +155,25 @@ function routeSkill(t){
 /* ---------------- rendering ---------------- */
 function esc(t){
   t = String(t);
-  return t.replace(/&/g, AMP + "amp;").replace(/</g, AMP + "lt;").replace(/>/g, AMP + "gt;");
+  return t.replace(/&/g, AMP + "amp;")
+    .replace(/</g, AMP + "lt;")
+    .replace(/>/g, AMP + "gt;")
+    // quotes matter: a value dropped into a quoted attribute could otherwise
+    // close it and add its own attributes
+    .replace(/"/g, AMP + "quot;")
+    .replace(/'/g, AMP + "#39;");
+}
+
+/* Only http(s) without credentials is allowed as a link target. Anything else
+ * (javascript:, vbscript:, file:, data:) is refused and the label is rendered
+ * as inert text instead. */
+function safeExternalHref(raw){
+  try {
+    const url = new URL(String(raw), window.location.origin);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+    if (url.username || url.password) return null;
+    return url.href;
+  } catch (e) { return null; }
 }
 const EMOJI = {smile:"\u{1F604}",grin:"\u{1F601}",joy:"\u{1F602}",wink:"\u{1F609}",heart:"\u2764\uFE0F",thumbsup:"\u{1F44D}",thumbsdown:"\u{1F44E}",fire:"\u{1F525}",rocket:"\u{1F680}",star:"\u2B50",sparkles:"\u2728",check:"\u2705",x:"\u274C",warning:"\u26A0\uFE0F",bulb:"\u{1F4A1}",book:"\u{1F4D8}",memo:"\u{1F4DD}",chart:"\u{1F4CA}",lock:"\u{1F512}",globe:"\u{1F310}",tada:"\u{1F389}",eyes:"\u{1F440}",thinking:"\u{1F914}",pray:"\u{1F64F}",wave:"\u{1F44B}",point_right:"\u{1F449}",zap:"\u26A1",clock:"\u{1F550}",calendar:"\u{1F4C5}",email:"\u2709\uFE0F",phone:"\u{1F4DE}",search:"\u{1F50D}",link:"\u{1F517}",gear:"\u2699\uFE0F",bug:"\u{1F41B}",package:"\u{1F4E6}",pin:"\u{1F4CC}",note:"\u{1F5D2}\uFE0F",info:"\u2139\uFE0F"};
 
@@ -179,7 +197,10 @@ function mdLite(t){
   const inl = function(x){
     x = x.replace(/`([^`]+)`/g, "<code>$1</code>");
     x = x.replace(/!\[([^\]]*)\]\((https?:[^)\s]+)\)/g, '<img class="mdimg" src="$2" alt="$1" loading="lazy">');
-    x = x.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    x = x.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, label, href) => {
+      const safe = safeExternalHref(href);
+      return safe ? '<a href="' + esc(safe) + '" target="_blank" rel="noopener noreferrer">' + label + '</a>' : label;
+    });
     x = x.replace(/\[\^([^\]]+)\]/g, function(m, id){
       const k = noteIndex(id);
       return k < 0 ? m : '<sup class="fnref"><a href="#fn-' + k + '" title="' + id + '">' + (k + 1) + "</a></sup>";
@@ -481,11 +502,72 @@ function addSources(bub, groups){
   bub.append(wrap);
 }
 
+/* Rebuild a saved data card from its values. Every cell goes in as text, so a
+ * CSV cell containing markup stays visible text instead of becoming nodes. */
+/* One place that turns an analysed dataset into a stored record. The values are
+ * kept; the rendered markup is not, because a stored HTML string that is later
+ * assigned to innerHTML is executable markup waiting for a reason. */
+function pushDataCard(ds, text){
+  const cols = Array.isArray(ds && ds.cols) ? ds.cols : [];
+  const rows = Array.isArray(ds && ds.rows) ? ds.rows : [];
+  curHistory().push({
+    kind: "data",
+    content: text,
+    data: {
+      schemaVersion: 1,
+      title: String((ds && ds.fileName) || "Imported data"),
+      columns: cols.map(String),
+      rows: rows.slice(0, 200).map((row) => cols.map((c) => String((row || {})[c] ?? "")))
+    }
+  });
+  histSave();
+}
+
+function renderDataCard(m){
+  const card = document.createElement("div");
+  card.className = "datacard";
+  const data = m.data && typeof m.data === "object" ? m.data : null;
+  if (!data || !Array.isArray(data.columns) || !Array.isArray(data.rows)){
+    // an older record that only carries an HTML string: never inject it
+    const note = document.createElement("div");
+    note.className = "fnote";
+    note.textContent = "This older data card cannot be safely restored. Re-import the original file to rebuild it.";
+    card.append(note);
+    return card;
+  }
+  const head = document.createElement("div");
+  head.className = "dhead";
+  head.textContent = "\u{1F4CA} " + String(data.title || "Imported data") + " \u2014 "
+    + data.rows.length + " rows \u00b7 " + data.columns.length + " columns";
+  card.append(head);
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const hrow = document.createElement("tr");
+  for (const column of data.columns){
+    const th = document.createElement("th");
+    th.textContent = String(column);
+    hrow.append(th);
+  }
+  thead.append(hrow);
+  table.append(thead);
+  const tbody = document.createElement("tbody");
+  for (const row of data.rows){
+    const tr = document.createElement("tr");
+    for (const cell of row){
+      const td = document.createElement("td");
+      td.textContent = String(cell ?? "");
+      tr.append(td);
+    }
+    tbody.append(tr);
+  }
+  table.append(tbody);
+  card.append(table);
+  return card;
+}
+
 function renderMsg(m){
   if (m.kind === "data"){
-    const card = document.createElement("div"); card.className = "datacard";
-    card.innerHTML = m.html;
-    chatEl.append(card);
+    chatEl.append(renderDataCard(m));
   } else if (m.role === "user" || m.role === "assistant"){
     const o = {};
     if (m.sources) o.sources = m.sources;
@@ -1313,7 +1395,18 @@ function loadCSVFile(file){
       const { html, text } = dataCardHTML(dataState);
       const h = curHistory();
       if (h.length === 0) chatEl.innerHTML = "";
-      h.push({ kind: "data", content: text, html });
+      // Persist the values, not a rendered HTML blob: a stored string that is
+      // later assigned to innerHTML is executable markup waiting for a reason.
+      h.push({
+        kind: "data",
+        content: text,
+        data: {
+          schemaVersion: 1,
+          title: String(dataState.fileName || "Imported data"),
+          columns: dataState.cols.map(String),
+          rows: dataState.rows.slice(0, 200).map((row) => dataState.cols.map((c) => String(row[c] ?? "")))
+        }
+      });
       histSave();
       renderAll();
     } catch(err){ alert("CSV पढ़ने में दिक़्क़त: " + err.message); }
@@ -1507,8 +1600,7 @@ function computeTrend(card){
   if (anomalies.length){
     text += "Anomalies (>20% vs trailing 4-week same-weekday mean): " + anomalies.slice(0, 10).map(a => a.d + ": " + fmt(a.v) + " (" + pct(a.vs) + " vs mean)").join("; ") + (anomalies.length > 10 ? " …" : "") + "\n";
   }
-  curHistory().push({ kind: "data", content: text, html });
-  histSave();
+  pushDataCard(ds, text);
   const tcard = document.createElement("div"); tcard.className = "datacard"; tcard.innerHTML = html;
   chatEl.append(tcard);
   drawSpark(tcard.querySelector("canvas"), series, roll);
@@ -1603,8 +1695,7 @@ function computeSegments(card){
     text += (i+1) + ". " + s.seg + ": n=" + s.n + ", mean=" + (s.mean === null ? "—" : fmt(s.mean)) + ", median=" + (s.median === null ? "—" : fmt(s.median)) + ", sum=" + fmt(s.sum) + ", share of total " + (total ? (aggVal(s)/total*100).toFixed(1) : "0") + "% of " + agg + "\n";
   });
   if (stats.length > 12) text += "(" + (stats.length - 12) + " more segments not shown)\n";
-  curHistory().push({ kind: "data", content: text, html });
-  histSave();
+  pushDataCard(ds, text);
   const scard = document.createElement("div"); scard.className = "datacard"; scard.innerHTML = html;
   chatEl.append(scard);
   drawBars(scard.querySelector("canvas"), top.map(s => s.seg), top.map(s => aggVal(s) || 0));
@@ -1666,8 +1757,7 @@ function computeAB(card){
   html += "<tr><td>Significant at α=0.05</td><td>" + (sig ? "हाँ ✅" : "नहीं ❌") + "</td></tr></table>";
   html += '<div class="fnote">Two-proportion z-test (pooled), Wald 95% CI। Browser में computed — AI इसी पर बात करेगा।</div></div>';
   let text = "[Browser data analysis — A/B two-proportion z-test: control " + c + "/" + cn + " (" + (pc*100).toFixed(2) + "%), treatment " + t + "/" + tn + " (" + (pt*100).toFixed(2) + "%). Absolute lift " + pct(absLift) + ", relative lift " + (relLift === null ? "—" : pct(relLift)) + ", Wald 95% CI on difference [" + pct(ci[0]) + ", " + pct(ci[1]) + "], z=" + z.toFixed(3) + ", two-sided p=" + pv.toFixed(4) + ", significant at 0.05: " + (sig ? "yes" : "no") + "]";
-  curHistory().push({ kind: "data", content: text, html });
-  histSave();
+  pushDataCard(ds, text);
   const rcard = document.createElement("div"); rcard.className = "datacard"; rcard.innerHTML = html;
   chatEl.append(rcard);
   scrollDown();
@@ -1729,8 +1819,7 @@ function computeFunnel(card){
   const overall = pop ? res[res.length-1].users/pop : 0;
   text += "Overall conversion: " + (overall*100).toFixed(1) + "%\n";
   html += '<div class="fnote">Overall conversion: <b>' + (overall*100).toFixed(1) + "%</b> · population " + pop + " users</div></div>";
-  curHistory().push({ kind: "data", content: text, html });
-  histSave();
+  pushDataCard(ds, text);
   const fcard = document.createElement("div"); fcard.className = "datacard"; fcard.innerHTML = html;
   chatEl.append(fcard); scrollDown();
 }
@@ -1856,7 +1945,6 @@ $("#btnSave").addEventListener("click", () => {
     github: true, weather: true, trends: true, ghToken: $("#inGhTok").value.trim()
   };
   settings.skill = "auto";
-  settings.theme = document.body.classList.contains("dark") ? "dark" : "light";
   saveAllSettings(); overlay.classList.remove("open"); updateEngineStatus();
 });
 $("#btnClear").addEventListener("click", () => {
