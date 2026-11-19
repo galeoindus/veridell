@@ -39,6 +39,12 @@ for (let i = 0; i < 80; i += 1) {
   await sleep(250);
 }
 
+if (!target) {
+  console.error(`The browser could not be started. CHROME_BIN=${process.env.CHROME_BIN || '(unset)'} — install Chromium or set CHROME_BIN.`);
+  chrome.kill();
+  process.exit(1);
+}
+
 const ws = new WebSocket(target.webSocketDebuggerUrl, { perMessageDeflate: false, maxPayload: 64 * 1024 * 1024 });
 await new Promise((res, rej) => { ws.once('open', res); ws.once('error', rej); });
 

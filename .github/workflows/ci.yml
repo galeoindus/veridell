@@ -55,7 +55,13 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Point the check at the installed browser
         run: |
-          BIN=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux/chrome 2>/dev/null | head -1)
+          # The first attempt exported an empty path, so the script fell back to a
+          # `chromium` that is not on PATH and died with an obscure CDP error.
+          BIN=$(find "$HOME/.cache/ms-playwright" -name chrome -type f -path '*chrome-linux*' 2>/dev/null | head -1)
+          if [ -z "$BIN" ]; then
+            echo "Chromium was not found after install — refusing to run the gate." >&2
+            exit 1
+          fi
           echo "CHROME_BIN=$BIN" >> "$GITHUB_ENV"
           echo "using $BIN"
       - name: Stamp the build
