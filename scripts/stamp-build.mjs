@@ -145,6 +145,18 @@ for (const file of await walk(ROOT)) {
   if (!/assets\/js\/build-watch\.js/.test(html) && /<\/body>/i.test(html)) {
     html = html.replace(/<\/body>/i, `  <script type="module" src="/assets/js/build-watch.js?v=${build}"></script>\n</body>`);
   }
+  /* Error reporting: inert unless this deployment supplies a DSN. This sits
+     outside the first-build guard above, because that guard is skipped once
+     build-watch is already present — which is why the first attempt injected
+     nothing at all. */
+  const sentryDsn = String(process.env.SENTRY_DSN || '').trim();
+  if (sentryDsn && /<\/head>/i.test(html) && !/name="sentry-dsn"/.test(html)) {
+    html = html.replace(/<\/head>/i, `  <meta name="sentry-dsn" content="${sentryDsn}">\n</head>`);
+  }
+  if (/<\/body>/i.test(html) && !/error-report\.js/.test(html)) {
+    html = html.replace(/<\/body>/i, `  <script src="/assets/js/error-report.js?v=${build}"></script>\n</body>`);
+  }
+
   // The standalone article pages get the Translate control from
   // article-points.js, the module they already load — a separate tag for it
   // was fetched but never evaluated, so the button never appeared.
