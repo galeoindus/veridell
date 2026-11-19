@@ -119,6 +119,95 @@ function dedupeHistory(a){
   }
   return out;
 }
+
+/* ── P4-05: durable conversation storage ───────────────────────────────────
+ * localStorage is synchronous, small and silent when it fills up: a full quota
+ * throws inside a try/catch and the conversation simply stops being saved.
+ * Histories now live in IndexedDB, which is asynchronous, far larger, and can
+ * report a failure we can show. localStorage keeps only small preferences.
+ *
+ * The migration is non-destructive: an existing record is copied into the
+ * database the first time it is seen, and the local copy is only removed after
+ * the write has actually succeeded. */
+const IDB_NAME = "veridellindo-amigo";
+const IDB_STORE = "history";
+let _idbPromise = null;
+
+function idbOpen(){
+  if (_idbPromise) return _idbPromise;
+  _idbPromise = new Promise((resolve, reject) => {
+    if (!window.indexedDB) { reject(new Error("IndexedDB is not available")); return; }
+    const request = indexedDB.open(IDB_NAME, 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(IDB_STORE)) db.createObjectStore(IDB_STORE);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error("IndexedDB could not be opened"));
+  });
+  return _idbPromise;
+}
+
+async function idbGet(key){
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, "readonly");
+    const request = tx.objectStore(IDB_STORE).get(key);
+    request.onsuccess = () => resolve(request.result || null);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function idbPut(key, value){
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, "readwrite");
+    tx.objectStore(IDB_STORE).put(value, key);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error || new Error("IndexedDB write failed"));
+  });
+}
+
+/* A storage failure must be visible: silence is how a reader loses a
+   conversation without ever being told. */
+let _storageWarned = false;
+function storageProblem(message){
+  if (_storageWarned) return;
+  _storageWarned = true;
+  announce("Conversations could not be saved on this device.");
+  try {
+    const note = document.createElement("div");
+    note.className = "fallbacknote";
+    note.textContent = "This conversation could not be saved on this device: " + message
+      + " — export anything you need to keep.";
+    const host = document.querySelector("#chatMessages") || document.querySelector("#chat");
+    if (host) host.append(note);
+  } catch(e){}
+}
+
+/* Move a legacy localStorage record into the database, once, without deleting
+   anything until the write has succeeded. */
+async function migrateHistory(key){
+  try {
+    const existing = await idbGet(key);
+    if (existing) return existing;
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return null;
+    await idbPut(key, parsed);
+    localStorage.removeItem(key);          // only after the write landed
+    return parsed;
+  } catch(e){ return null; }
+}
+
+async function historyRefresh(id){
+  try {
+    const stored = await migrateHistory(hKey(id));
+    if (Array.isArray(stored)) _histories[id] = dedupeHistory(stored);
+  } catch(e){ /* the local copy stays in use */ }
+}
+
 function histLoad(id){
   try { const h = JSON.parse(localStorage.getItem(hKey(id)) || "[]"); return dedupeHistory(Array.isArray(h) ? h : []); }
   catch(e){ return []; }
@@ -141,7 +230,11 @@ function histSave(){
       }
       return m;
     });
-    localStorage.setItem(hKey(curSkill), JSON.stringify(h));
+    idbPut(hKey(curSkill), h).catch((err) => {
+      // keep the local copy as a fallback, but tell the reader it happened
+      try { localStorage.setItem(hKey(curSkill), JSON.stringify(h)); } catch(e){}
+      storageProblem(err && err.message ? err.message : "storage error");
+    });
   } catch(e){}
   try { sideListRender(); } catch(e){}
 }
@@ -861,7 +954,14 @@ async function streamAmigoAI(messages, onDelta){
     }
   }
   if (!answer.trim()) throw new Error("AI returned an empty answer.");
-  return { reply: answer, provider: meta.provider || route.provider, model: meta.model || route.model, streamed: true };
+  // `streamed` comes from the server: false means the provider produced the
+  // whole answer at once, which is a completed response, not a stream.
+  return {
+    reply: answer,
+    provider: meta.provider || route.provider,
+    model: meta.model || route.model,
+    streamed: meta.streamed !== false
+  };
 }
 
 async function callAmigoAI(messages, overrides){
@@ -2299,6 +2399,11 @@ $("#btnTest").addEventListener("click", async () => {
   try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){}
   curSkill = "assistant";
   for (const id of Object.keys(SKILLS)) _histories[id] = histLoad(id);
+  /* the synchronous local copy paints the page immediately; the database then
+     becomes the source of truth, and the migration runs for each skill */
+  for (const id of Object.keys(SKILLS)) {
+    historyRefresh(id).then(() => { try { sideListRender(); } catch(e){} });
+  }
   /* one-time repair: write the de-duplicated history back so old repeats stay gone */
   for (const id of Object.keys(SKILLS)){
     try {

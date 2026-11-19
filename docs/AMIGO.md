@@ -46,3 +46,27 @@ no second numeric scale.
   horizontal overflow, a hidden composer, a stream that cannot scroll, or an
   oversized drawer.
 - `npm run doctor` — modules, pages, deep audit, health, drift.
+
+## Storage
+
+Conversation history lives in IndexedDB (`veridellindo-amigo`, store `history`),
+keyed by skill. It is asynchronous and large enough to hold a real conversation,
+and a failed write is shown to the reader instead of being swallowed — silence is
+how someone loses a conversation without being told.
+
+The migration from the old localStorage records is non-destructive: a record is
+copied into the database the first time it is seen, and the local copy is removed
+only after the write has succeeded.
+
+Small preferences stay in localStorage. Personal credentials (the GitHub token,
+the Google key) are held in memory for the session only and are never written to
+localStorage, IndexedDB, exports or logs. Provider keys belong in Cloudflare
+secrets, server-side.
+
+## Streaming contract
+
+The endpoint emits `meta`, `delta`, `done` and `error` frames. `done` carries
+`streamed: true` only when deltas were actually emitted, so a provider that
+returns the whole answer at once is described as a completed response rather than
+a progressive stream. The client honours that flag instead of inventing a typing
+animation.

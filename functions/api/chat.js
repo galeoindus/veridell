@@ -294,9 +294,19 @@ export async function onRequestPost({ request, env = {} }) {
         const send = (event) => {
           controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
         };
+        let sawDelta = false;
+        const sendTracked = (event) => {
+          if (event && event.type === 'delta') sawDelta = true;
+          send(event);
+        };
         try {
-          const result = await runOnce(send);
-          send({ type: 'done', answer: result.text, provider: result.provider, model: result.model });
+          // A provider that returns the whole answer at once is a completed
+          // response, not a progressive stream. The flag tells the client which
+          // one it received, so it never pretends one is the other.
+          send({ type: 'meta', streaming: true, requestId: crypto.randomUUID().slice(0, 12) });
+          const result = await runOnce(sendTracked);
+          send({ type: 'done', answer: result.text, provider: result.provider,
+                 model: result.model, streamed: sawDelta });
         } catch (error) {
           send({ type: 'error', message: error?.message || 'The assistant could not answer.' });
         } finally {

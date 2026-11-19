@@ -43,5 +43,4 @@ binding = "AI"
 # needs ENABLE_PAID_AI=true (a secret, dashboard-only) plus
 # OPENROUTER_FREE_ONLY=false.
 [vars]
-AI_PROVIDER = "openrouter"
 OPENROUTER_FREE_ONLY = "true"
