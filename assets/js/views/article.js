@@ -381,6 +381,10 @@ function buildTabs() {
  * facts, sources and method note the breakdown uses. The numbered references
  * and the picture gallery are kept, because they belong to the article.
  */
+/* A deep ranking runs while the reader may already have navigated elsewhere;
+ * a slower, older paint must not overwrite a newer article. */
+let articlePaintGeneration = 0;
+
 async function repaintFull(ctx, state) {
   const mount = state.fullMount;
   if (!mount) return;
@@ -405,6 +409,7 @@ async function repaintFull(ctx, state) {
   // section is kept: an article is not a summary, and dropping the tail of a
   // long one was the difference between "the whole article" and "the first
   // twelve sections".
+  const generation = ++articlePaintGeneration;
   let composed = null;
   try {
     composed = await composeAnswer({
@@ -422,6 +427,7 @@ async function repaintFull(ctx, state) {
     composed = null; // the full text below still renders without it
   }
 
+  if (generation !== articlePaintGeneration) return;   // a newer article already started
   mount.innerHTML = '';
   mount.append(tocTop(state, { topics }, 'full-topic'));
   const content = el('div', { class: 'panel panel-wide' });

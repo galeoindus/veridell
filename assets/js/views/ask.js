@@ -128,7 +128,14 @@ async function load(ctx, mount, state, retry = 0) {
 
 /* ---------------------------------------------------------------- paint */
 
+/* Ranking by meaning is asynchronous, so two paints can be in flight at once —
+ * ask a second question while the first is still ranking and the slower answer
+ * would land last, overwriting the newer one. Each paint takes a generation
+ * number and refuses to draw if a newer paint has started since. */
+let paintGeneration = 0;
+
 async function paint(ctx, mount, state) {
+  const generation = ++paintGeneration;
   mount.innerHTML = '';
   mount.append(el('div', { class: 'state', html: `<span class="spinner" aria-hidden="true"></span><p>${esc(t('loading'))}</p>` }));
 
@@ -149,6 +156,7 @@ async function paint(ctx, mount, state) {
     mount.append(errorBox(err, { query: state.question, searchHref: searchHref(state.question) }));
     return;
   }
+  if (generation !== paintGeneration) return;   // a newer paint already started
   answer.wikiUrl = state.wikiUrl;
   answer.revid = state.data.revid;
   state.answer = answer;
