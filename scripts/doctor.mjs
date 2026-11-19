@@ -38,6 +38,11 @@ const STEPS = [
     args: ['scripts/deep-audit.mjs'],
   },
   {
+    name: 'scan',
+    what: 'inside the code — swallowed errors, form submits, dead references, aria targets',
+    args: ['scripts/deep-scan.mjs'],
+  },
+  {
     name: 'health',
     what: 'every page, sheet and script — ids, alt text, headings, anchors, meta',
     args: ['scripts/health-check.mjs'],

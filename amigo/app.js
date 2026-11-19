@@ -79,6 +79,21 @@ function amigoPoseImg(state, cls){
   return img;
 }
 
+
+/* A swallowed error is a bug nobody can see later. These are not fatal paths —
+ * a blocked storage write, a failed optional fetch — but they are recorded so a
+ * problem can be diagnosed instead of guessed at. The list is bounded so it can
+ * never grow without limit. */
+const RECENT_ERRORS = [];
+function noteError(err, where){
+  try {
+    RECENT_ERRORS.push({ at: new Date().toISOString(), where: String(where || "unknown"),
+      message: String((err && err.message) || err || "error") });
+    if (RECENT_ERRORS.length > 40) RECENT_ERRORS.shift();
+    if (window.__amigoDebug) console.warn("[amigo]", where, err);
+  } catch(e) { /* the recorder must never throw */ }
+}
+
 const chatEl = $("#chatMessages") || $("#chat"), inputEl = $("#input"), sendEl = $("#send");
 
 /* One short status region, separate from the message log, so token-by-token
@@ -182,7 +197,7 @@ function storageProblem(message){
       + " — export anything you need to keep.";
     const host = document.querySelector("#chatMessages") || document.querySelector("#chat");
     if (host) host.append(note);
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
 }
 
 /* Move a legacy localStorage record into the database, once, without deleting
@@ -232,11 +247,11 @@ function histSave(){
     });
     idbPut(hKey(curSkill), h).catch((err) => {
       // keep the local copy as a fallback, but tell the reader it happened
-      try { localStorage.setItem(hKey(curSkill), JSON.stringify(h)); } catch(e){}
+      try { localStorage.setItem(hKey(curSkill), JSON.stringify(h)); } catch(e){ noteError(e, "silent path"); }
       storageProblem(err && err.message ? err.message : "storage error");
     });
-  } catch(e){}
-  try { sideListRender(); } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
+  try { sideListRender(); } catch(e){ noteError(e, "silent path"); }
 }
 let _histories = {};
 function curHistory(){ return _histories[curSkill]; }
@@ -270,7 +285,7 @@ function withSecrets(source){
 }
 
 function saveAllSettings(){
-  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){}
+  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){ noteError(e, "silent path"); }
 }
 
 /* ---------------- auto skill routing ---------------- */
@@ -577,7 +592,7 @@ function copyToClipboard(text, btn){
   const fallback = () => {
     const ta = document.createElement("textarea"); ta.value = text;
     ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.append(ta); ta.select();
-    try { document.execCommand("copy"); done(); } catch(e){} ta.remove();
+    try { document.execCommand("copy"); done(); } catch(e){ noteError(e, "silent path"); } ta.remove();
   };
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
   else fallback();
@@ -642,7 +657,7 @@ function addSources(bub, groups){
     shown++;
     const a2 = document.createElement("a");
     a2.className = "src"; a2.href = it.url; a2.target = "_blank"; a2.rel = "noopener";
-    let host = ""; try { host = new URL(it.url).hostname.replace(/^www\./, ""); } catch(e){}
+    let host = ""; try { host = new URL(it.url).hostname.replace(/^www\./, ""); } catch(e){ noteError(e, "silent path"); }
     const t = String(it.title || "source");
     a2.textContent = "\u{1F517} " + (t.length > 42 ? t.slice(0, 42) + "\u2026" : t) + (host ? " \u00b7 " + host : "");
     row.append(a2);
@@ -940,7 +955,7 @@ async function streamAmigoAI(messages, onDelta){
   if (!response.ok){
     const raw = await response.text().catch(() => "");
     let message = "AI request failed (" + response.status + ")";
-    try { const parsed = JSON.parse(raw); message = parsed.message || parsed.error || message; } catch(e){}
+    try { const parsed = JSON.parse(raw); message = parsed.message || parsed.error || message; } catch(e){ noteError(e, "silent path"); }
     throw new Error(message);
   }
 
@@ -1123,9 +1138,9 @@ async function webItems(q){
       try { const sm = await wikiSummary(h.title); if (sm.text) items.push(sm); }
       catch(e){ if (h.snippet) items.push({ title: h.title, text: h.snippet, url: h.url }); }
     }
-  } catch(e){}
-  try { (await wikidataSearch(q)).slice(0, 2).forEach(x => items.push(x)); } catch(e){}
-  try { (await ddg(q)).slice(0, 4).forEach(x => items.push(x)); } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
+  try { (await wikidataSearch(q)).slice(0, 2).forEach(x => items.push(x)); } catch(e){ noteError(e, "silent path"); }
+  try { (await ddg(q)).slice(0, 4).forEach(x => items.push(x)); } catch(e){ noteError(e, "silent path"); }
   return items;
 }
 /* Wikidata — quick factual entities (keyless) */
@@ -1196,7 +1211,7 @@ async function booksSearch(q){
       text: "Open Library" + (d.first_publish_year ? " · first published " + d.first_publish_year : ""),
       url: "https://openlibrary.org" + (d.key || "")
     }));
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   try {
     const j = await fetchJSON("https://api.crossref.org/works?rows=3&query=" + encodeURIComponent(q));
     ((j.message && j.message.items) || []).slice(0, 3).forEach(w => {
@@ -1204,7 +1219,7 @@ async function booksSearch(q){
       const host = (w["container-title"] && w["container-title"][0]) || "";
       items.push({ title: t, text: (host ? host + " · " : "") + (w.published && w.published["date-parts"] ? w.published["date-parts"][0][0] : ""), url: w.URL || ("https://doi.org/" + w.DOI) });
     });
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   try {
     const j = await fetchJSON("https://api.openalex.org/works?per-page=3&search=" + encodeURIComponent(q));
     (j.results || []).slice(0, 3).forEach(w => {
@@ -1215,7 +1230,7 @@ async function booksSearch(q){
         url: (w.doi && String(w.doi).startsWith("http")) ? w.doi : (w.id || "")
       });
     });
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   return items;
 }
 async function trendItems(){
@@ -1231,7 +1246,7 @@ async function trendItems(){
           text: "Wikipedia · most-read today · " + Number(a.views || 0).toLocaleString() + " views",
           url: "https://en.wikipedia.org/wiki/" + a.article
         }));
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   try {
     const j = await fetchJSON("https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=5");
     (j.hits || []).slice(0, 5).forEach(h => out.push({
@@ -1239,8 +1254,8 @@ async function trendItems(){
       text: "Hacker News · front page" + (h.points ? " · " + h.points + " points" : ""),
       url: h.url || ("https://news.ycombinator.com/item?id=" + h.objectID)
     }));
-  } catch(e){}
-  try { (await gdeltSearch("trending OR breaking")).slice(0, 3).forEach(x => out.push(x)); } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
+  try { (await gdeltSearch("trending OR breaking")).slice(0, 3).forEach(x => out.push(x)); } catch(e){ noteError(e, "silent path"); }
   return out;
 }
 const wantsLive = t => /\b(latest|current|today|tonight|right now|nowadays|this (week|month|year)|recent|breaking|news|update|price|rate|score|match|trend|trending|live)\b|\u0906\u091c|\u0905\u092d\u0940|\u0924\u093e\u091c\u093c\u093e|\u0916\u093c\u092c\u0930|\u0938\u092e\u093e\u091a\u093e\u0930|\u0926\u093e\u092e|\u092d\u093e\u0935/i.test(t);
@@ -1258,14 +1273,14 @@ async function readUrl(url){
   try {
     const r = await fetch(url, { signal: t9(8000) });
     if (r.ok) { const text = stripTags(await r.text()); if (text.length > 120) return { title: url.replace(/^https?:\/\//, "").slice(0, 60), text: text.slice(0, 4000), url: url }; }
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   // 2. Wikipedia articles: read them through the CORS-enabled REST API
   const wm = url.match(/^https?:\/\/([a-z-]+)\.wikipedia\.org\/wiki\/(.+)$/i);
   if (wm){
     try {
       const sm = await wikiSummary(decodeURIComponent(wm[2]).replace(/_/g, " "));
       if (sm.text) return { title: sm.title, text: sm.text, url: sm.url };
-    } catch(e){}
+    } catch(e){ noteError(e, "silent path"); }
   }
   // 3. public CORS proxies as a last resort
   const proxies = ["https://api.allorigins.win/raw?url=", "https://corsproxy.io/?"];
@@ -1275,7 +1290,7 @@ async function readUrl(url){
       if (!r.ok) continue;
       const text = stripTags(await r.text());
       if (text.length > 120) return { title: url.replace(/^https?:\/\//, "").slice(0, 60), text: text.slice(0, 4000), url: url };
-    } catch(e){}
+    } catch(e){ noteError(e, "silent path"); }
   }
   throw new Error("could not read that page");
 }
@@ -1524,8 +1539,8 @@ function findBytes(hay, needle, from){
 async function inflateBytes(u8, fmt){
   const ds = new DecompressionStream(fmt);
   const w = ds.writable.getWriter();
-  try { w.write(u8); } catch(e){}
-  try { w.close(); } catch(e){}
+  try { w.write(u8); } catch(e){ noteError(e, "silent path"); }
+  try { w.close(); } catch(e){ noteError(e, "silent path"); }
   const rd = ds.readable.getReader(); const chunks = [];
   try {
     while (true){ const { done, value } = await rd.read(); if (done) break; if (value) chunks.push(value); }
@@ -1571,7 +1586,7 @@ function loadPdfJs(){
     const sc = document.createElement("script");
     sc.src = PDFJS + "pdf.min.js";
     sc.onload = () => {
-      try { if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js"; } catch(e){}
+      try { if (window.pdfjsLib && window.pdfjsLib.GlobalWorkerOptions) window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS + "pdf.worker.min.js"; } catch(e){ noteError(e, "silent path"); }
       res(window.pdfjsLib);
     };
     sc.onerror = () => rej(new Error("pdf.js could not load"));
@@ -1604,21 +1619,21 @@ async function handleFiles(files){
       continue;
     }
     if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)){
-      let _u = ""; try { _u = await readAsDataURL(file); } catch(e){}
+      let _u = ""; try { _u = await readAsDataURL(file); } catch(e){ noteError(e, "silent path"); }
       let t = "";
       try { t = await pdfTextWithLib(file); } catch(e){ t = ""; }
-      if (!t || t.length < 60){ try { const t2 = await extractPdfText(file); if (t2 && t2.length > (t || "").length) t = t2; } catch(e){} }
+      if (!t || t.length < 60){ try { const t2 = await extractPdfText(file); if (t2 && t2.length > (t || "").length) t = t2; } catch(e){ noteError(e, "silent path"); } }
       if (t && t.length > 60) _pending.push({ name: file.name, kind: "text", text: t.slice(0, 60000), url: _u });
       else _pending.push({ name: file.name, kind: "unsupported", url: _u });
       continue;
     }
     if (TEXT_EXT.test(file.name) || /^text\//i.test(file.type)){
       const t = await readAsText(file);
-      let _u = ""; try { _u = await readAsDataURL(file); } catch(e){}
+      let _u = ""; try { _u = await readAsDataURL(file); } catch(e){ noteError(e, "silent path"); }
       _pending.push({ name: file.name, kind: "text", text: String(t).slice(0, 60000), url: _u });
       continue;
     }
-    let _u2 = ""; try { _u2 = await readAsDataURL(file); } catch(e){}
+    let _u2 = ""; try { _u2 = await readAsDataURL(file); } catch(e){ noteError(e, "silent path"); }
     _pending.push({ name: file.name, kind: "unsupported", url: _u2 });
   }
   renderAttBar();
@@ -2190,7 +2205,7 @@ document.addEventListener("click", (e) => {
   rec.lang = voiceLang || (/^hi/i.test(device) ? "hi-IN" : "en-IN");
   rec.interimResults = false; rec.maxAlternatives = 1;
   let on = false;
-  b.addEventListener("click", () => { if (on){ try { rec.stop(); } catch(e){} return; } try { rec.start(); } catch(e){} });
+  b.addEventListener("click", () => { if (on){ try { rec.stop(); } catch(e){ noteError(e, "silent path"); } return; } try { rec.start(); } catch(e){ noteError(e, "silent path"); } });
   rec.onstart = () => { on = true; b.classList.add("on"); b.title = "Listening\u2026 tap to stop"; };
   rec.onend = () => { on = false; b.classList.remove("on"); b.title = "Speak your question"; };
   rec.onerror = () => { on = false; b.classList.remove("on"); b.title = "Speak your question"; };
@@ -2287,7 +2302,7 @@ $("#btnClear").addEventListener("click", () => {
 const titleKey = id => "amigo2_t_" + id;
 function chatTitle(id){
   let t = "";
-  try { t = localStorage.getItem(titleKey(id)) || ""; } catch(e){}
+  try { t = localStorage.getItem(titleKey(id)) || ""; } catch(e){ noteError(e, "silent path"); }
   if (!t){
     const h = _histories[id] || [];
     const m = h.find(x => x && x.role === "user" && x.content);
@@ -2311,7 +2326,7 @@ async function autoTitle(id){
     let t = String(result.reply || "").replace(/["'\u2018\u2019\u201c\u201d]/g, "").replace(/\s+/g, " ").trim();
     t = t.split(" ").slice(0, 6).join(" ").replace(/[.,;:]+$/, "");
     if (t){ localStorage.setItem(titleKey(id), t); sideListRender(); }
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
 }
 function skillChipHTML(){
   const sk = SKILLS[curSkill]; if (!sk) return "";
@@ -2370,7 +2385,7 @@ function chatListRender(){
     if (!confirm("Delete ALL saved chats? This cannot be undone.")) return;
     Object.keys(SKILLS).forEach(id => {
       _histories[id] = [];
-      try { localStorage.removeItem(hKey(id)); } catch(e){}
+      try { localStorage.removeItem(hKey(id)); } catch(e){ noteError(e, "silent path"); }
     });
     dataState = null; renderAll(); chatListRender();
   });
@@ -2381,7 +2396,7 @@ function deleteChat(id){
   const sk = SKILLS[id] || {};
   if (!confirm('Delete the chat "' + (sk.name || id) + '"? This cannot be undone.')) return;
   _histories[id] = [];
-  try { localStorage.removeItem(hKey(id)); } catch(e){}
+  try { localStorage.removeItem(hKey(id)); } catch(e){ noteError(e, "silent path"); }
   if (id === curSkill){ dataState = null; renderAll(); }
   chatListRender();
 }
@@ -2419,19 +2434,19 @@ $("#btnTest").addEventListener("click", async () => {
       // removed from storage, so the device stops carrying it
       settings = Object.assign({}, DEFAULTS, withSecrets(s));
     }
-  } catch(e){}
+  } catch(e){ noteError(e, "silent path"); }
   if (!SKILLS[settings.skill] && settings.skill !== "auto") settings.skill = "auto";
   settings.skill = "auto";
   if (!["auto", "@cf/meta/llama-3.3-70b-instruct-fp8-fast", "@cf/meta/llama-4-scout-17b-16e-instruct", "@cf/meta/llama-3.2-3b-instruct", "openrouter/free", "meta-llama/llama-3.3-70b-instruct:free"].includes(settings.aiModel)) settings.aiModel = "auto";
   // Remove legacy browser-side provider credentials; all model keys now belong in Cloudflare Secrets.
-  ["apiKey", "apiKeys", "openrouterKey", "openRouterKey", "provider", "baseUrl", "model"].forEach(k => { try { delete settings[k]; } catch(e){} });
-  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){}
+  ["apiKey", "apiKeys", "openrouterKey", "openRouterKey", "provider", "baseUrl", "model"].forEach(k => { try { delete settings[k]; } catch(e){ noteError(e, "silent path"); } });
+  try { localStorage.setItem("amigo2_settings", JSON.stringify(stripSecrets(settings))); } catch(e){ noteError(e, "silent path"); }
   curSkill = "assistant";
   for (const id of Object.keys(SKILLS)) _histories[id] = histLoad(id);
   /* the synchronous local copy paints the page immediately; the database then
      becomes the source of truth, and the migration runs for each skill */
   for (const id of Object.keys(SKILLS)) {
-    historyRefresh(id).then(() => { try { sideListRender(); } catch(e){} });
+    historyRefresh(id).then(() => { try { sideListRender(); } catch(e){ noteError(e, "silent path"); } });
   }
   /* one-time repair: write the de-duplicated history back so old repeats stay gone */
   for (const id of Object.keys(SKILLS)){
@@ -2439,7 +2454,7 @@ $("#btnTest").addEventListener("click", async () => {
       const raw = JSON.parse(localStorage.getItem(hKey(id)) || "[]");
       const clean = dedupeHistory(raw);
       if (Array.isArray(raw) && clean.length !== raw.length) localStorage.setItem(hKey(id), JSON.stringify(clean));
-    } catch(e){}
+    } catch(e){ noteError(e, "silent path"); }
   }
   /* One-time import of a very old chat store. It must never run twice: if it did,
      a chat the user had deleted would reappear on every visit. */
@@ -2455,7 +2470,7 @@ $("#btnTest").addEventListener("click", async () => {
       localStorage.removeItem(hKey("amigo"));
       localStorage.removeItem("amigo_history");
       localStorage.setItem("amigo_migrated_v1", "1");
-    } catch(e){}
+    } catch(e){ noteError(e, "silent path"); }
   }
   updateHeader();
   syncDeepBtn();
