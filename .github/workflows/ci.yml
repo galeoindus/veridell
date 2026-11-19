@@ -64,3 +64,8 @@ jobs:
         run: npm run stamp:build
       - name: Chat layout at six device sizes
         run: npm run check:layout
+      # Phase 7: every route, not just the chat page. Catches a script that
+      # throws, a duplicate id, a missing main landmark, a page that scrolls
+      # sideways and a theme control that does nothing.
+      - name: Site-wide sweep
+        run: npm run check:site
