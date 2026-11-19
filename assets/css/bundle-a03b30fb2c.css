@@ -4309,6 +4309,77 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* The research desk footer carries the same chip, inline with its own line. */
 .main-footer .foot-version { margin: 0; font-size: 12px; }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   Search card — the AI-mode shape.
+   One large, calm input that reads as the whole page: generous radius, a real
+   hit area, the mode choice inside the card rather than beside it, and the
+   action anchored to the trailing edge. Text is 16px so a phone does not zoom
+   when the field takes focus.
+   ══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  .searchbar {
+    border-radius: 26px;
+    padding: 10px 10px 8px;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 12px 32px -18px rgba(16, 24, 20, .28);
+    transition: border-color .16s ease, box-shadow .16s ease;
+  }
+  .searchbar:focus-within {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2));
+    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 16px 40px -18px rgba(16, 24, 20, .34);
+  }
+
+  /* the field itself: the largest, quietest thing on the page */
+  .searchbar input[type="search"],
+  .searchbar input[type="text"],
+  .searchbar textarea {
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .searchbar input::placeholder,
+  .searchbar textarea::placeholder { color: var(--muted); opacity: 1; }
+
+  /* the mode choice sits inside the card, as pills */
+  .searchbar .mode { background: transparent; padding: 0; gap: 4px; }
+  .searchbar .mode-btn {
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    border: 1px solid transparent;
+  }
+  .searchbar .mode-btn[aria-pressed="true"],
+  .searchbar .mode-btn.is-on {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+    color: var(--copper-ink);
+  }
+
+  /* the action, anchored to the trailing edge and unmistakable */
+  .searchbar button[type="submit"] {
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  @media (min-width: 861px) {
+    .searchbar { max-width: 760px; margin-inline: auto; }
+  }
+
+  @media (max-width: 560px) {
+    .searchbar { border-radius: 22px; padding: 8px 8px 6px; }
+    .searchbar button[type="submit"] { min-height: 40px; padding: 0 16px; }
+  }
+}
+
 }
 @layer responsive {
 /* ── responsive.css ── */
