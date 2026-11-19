@@ -1437,11 +1437,10 @@ async function send(){
     usedModel = result.model;
     fallbackReason = result.fallbackReason || "";
     const _chip = (reply && curSkill !== "assistant") ? skillChipHTML() : "";
-    if (result.streamed){
-      bub.innerHTML = mdLite(reply) + _chip;
-    } else {
-      await typeInto(bub, reply, _chip);
-    }
+    // A completed response is rendered at once. Revealing it word by word made
+    // a single payload look like a progressive stream, which the contract says
+    // it is not, and it kept long answers unreadable for seconds.
+    bub.innerHTML = mdLite(reply) + _chip;
     setRequestState("done");
     if (fallbackReason){
       const fn = document.createElement("div"); fn.className = "fallbacknote";

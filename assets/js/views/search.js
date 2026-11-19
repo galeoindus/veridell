@@ -89,7 +89,15 @@ async function runSearch(ctx, mount, query) {
       }));
       return;
     }
-    const found = await ctx.api.summaries(lang, hits.map((h) => h.title));
+    // Summaries are enrichment: thumbnails and a longer extract. If that second
+    // call fails or is rate-limited, the hits we already have are still a
+    // successful search and must still be shown.
+    let found = new Map();
+    try {
+      found = await ctx.api.summaries(lang, hits.map((h) => h.title));
+    } catch (enrichError) {
+      found = new Map();
+    }
 
     mount.innerHTML = '';
     mount.append(askOffer(query, lang));
@@ -132,7 +140,7 @@ function resultRow(hit, page, lang, rank) {
     html: `<span class="sres-dot" aria-hidden="true"></span>${esc(lang)}.wikipedia.org › ${esc(hit.title)}`,
   }));
   body.append(el('span', { class: 'sres-title', text: hit.title }));
-  const blurb = page.extract || page.description || '';
+  const blurb = page.extract || page.description || hit.snippet || '';
   if (blurb) body.append(el('span', { class: 'sres-snippet', text: clamp(blurb, 300) }));
   row.append(body);
 

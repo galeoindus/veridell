@@ -4,7 +4,7 @@
  */
 /* Veridellindo CSS cascade contract — keep identical across bundles. */
 @layer reset, tokens, base, components, layout, pages, responsive, utilities, overrides;
-@layer pages {
+@layer base {
 /* ── styles.css ── */
 :root { color-scheme: light dark; --ivory: #f5f0e6; --forest: #173b32; --charcoal: #242824; --copper: #b46a45; --sage: #c8d5c3; --sand: #e8dfd0; --bg: var(--ivory); --surface: #fbf8f1; --surface-2: var(--sand); --text: var(--charcoal); --muted: #5c6259; --faint: #5b6258; --ok: #1f5c48; --warn: #8a4a24; --danger: #9b2c2c; --border: #e0d6c4; --border-2: #cfc3ac; --focus: var(--copper-ink); --primary: var(--forest); --accent: var(--copper); --copper-ink: #9a5636; --copper-deep: #8a4f24; --forest-ink: #173b32; --accent-2: #44705f; --on-primary: #f7f4ec; --topbar-h: 62px; --radius-xl: 24px; --radius-lg: 20px; --radius: 16px; --radius-sm: 14px; --radius-xs: 12px; --shadow-sm: 0 1px 2px rgba(36, 40, 36, .06); --shadow: 0 1px 2px rgba(36, 40, 36, .05), 0 12px 28px -14px rgba(23, 59, 50, .22); --shadow-lg: 0 2px 6px rgba(36, 40, 36, .06), 0 34px 60px -30px rgba(23, 59, 50, .38); --maxw: 1200px; --font-head: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Tiro Devanagari Hindi', serif; --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Helvetica Neue', Arial, sans-serif; --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; }
 
@@ -1509,7 +1509,7 @@ body::before { animation-duration: 34s, 46s; }
 }
 
 }
-@layer pages {
+@layer components {
 /* ── app.css ── */
 /* Veridell — additions on top of the design system.
  *

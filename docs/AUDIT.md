@@ -167,7 +167,7 @@ its layout.
   material injected into the model prompt. A site question is now answered
   locally: no search, no provider call, no quota, and no chance of a model
   inventing a feature the site does not have.
-- **Question-aware model routing** in `functions/api/ask.js`. `routeFor()` reads
+- **Question-aware model routing** in `functions/api/chat.js`. The provider choice is validated server-side.
   the message and the depth, then names the band it will spend in: `light` for
   greetings and short conversation, `normal` for an everyday question, `heavy`
   for long, comparative or Deep questions. The chat path no longer hard-codes

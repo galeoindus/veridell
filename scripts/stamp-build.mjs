@@ -216,10 +216,20 @@ const SHEET_LAYER = {
   'responsive.css': 'responsive',
   'polish.css': 'utilities',
   'refine.css': 'utilities',
+  'styles.css': 'base',
+  'app.css': 'components',
+  'home-morph.css': 'pages',
+  'research-chat.css': 'pages',
+  'research-desk.css': 'pages',
+  'research-morph.css': 'pages',
 };
 
 function layerOf(sheet) {
-  return SHEET_LAYER[sheet] || 'pages';
+  const layer = SHEET_LAYER[sheet];
+  if (layer) return layer;
+  // A new sheet must be classified on purpose. Defaulting it to `pages` made a
+  // shared stylesheet silently outrank the layer it belonged to.
+  throw new Error(`stylesheet ${sheet} has no assigned cascade layer — add it to SHEET_LAYER`);
 }
 
 /** Wrap a source sheet's rules in its assigned layer, keeping its marker. */

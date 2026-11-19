@@ -9,7 +9,7 @@ Thanks for helping. A few things worth knowing before you start.
   preserved and an honest "not in the sources" answer when the passages are
   thin. A change that lets the app invent uncited facts is out of scope.
 - **Backend only for grounded AI.** The one server-side component is
-  `functions/api/ask.js`, the source-grounded AI endpoint. It may read
+  `functions/api/chat.js`, the assistant endpoint. It may read
   credentials from Cloudflare encrypted Secrets only — never from browser code,
   `.env.example`, commits or logs. No database, no accounts, no analytics.
 - **No tracking.** No analytics, no cookies, no third-party scripts beyond the

@@ -196,6 +196,20 @@ async function streamWorkersAI(env, messages, model, maxTokens, temperature, sen
       } catch { /* a partial frame; the next read completes it */ }
     }
   }
+  // The stream can close without a trailing newline, which left a complete
+  // final frame sitting in the buffer and turned a good answer into "empty".
+  buffer += decoder.decode();
+  for (const line of buffer.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith('data:')) continue;
+    const payload = trimmed.slice(5).trim();
+    if (!payload || payload === '[DONE]') continue;
+    try {
+      const event = JSON.parse(payload);
+      const piece = event.response ?? event.delta ?? '';
+      if (piece) { full += piece; send({ type: 'delta', text: piece }); }
+    } catch { /* a genuinely malformed tail is ignored, not fatal */ }
+  }
   if (!full.trim()) throw new Error('Workers AI streamed an empty answer');
   return { text: full, provider: 'workers-ai', model: chosen };
 }
@@ -209,7 +223,7 @@ async function runOpenRouter(env, messages, maxTokens, temperature, request) {
   let lastError = 'OpenRouter did not answer';
 
   for (const model of OPENROUTER_FREE) {
-    const key = keys[0];
+   for (const key of keys) {
     try {
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -237,14 +251,45 @@ async function runOpenRouter(env, messages, maxTokens, temperature, request) {
     } catch (error) {
       lastError = error?.message || lastError;
     }
+   }
   }
   throw new Error(lastError);
+}
+
+
+/* ── F-03: a caller rate limit ─────────────────────────────────────────────
+ * The same-origin check stops ordinary cross-site browser requests, but a
+ * script outside a browser can omit the Origin header entirely. These counters
+ * are per isolate — a fast local guard, not a global quota. A Cloudflare WAF
+ * rate limit in front of /api/* is still required for real traffic. */
+const CHAT_WINDOW_MS = 60_000;
+const CHAT_PER_MINUTE = 12;
+const chatHits = new Map();
+
+function callerKey(request) {
+  return request.headers.get('cf-connecting-ip')
+    || request.headers.get('x-forwarded-for')
+    || 'unknown';
+}
+
+function overLimit(request) {
+  const key = callerKey(request);
+  const now = Date.now();
+  const recent = (chatHits.get(key) || []).filter((t) => now - t < CHAT_WINDOW_MS);
+  recent.push(now);
+  chatHits.set(key, recent);
+  if (chatHits.size > 5000) chatHits.clear();   // bounded memory
+  return recent.length > CHAT_PER_MINUTE;
 }
 
 /* ── the handler ────────────────────────────────────────────────────────── */
 
 export async function onRequestPost({ request, env = {} }) {
   if (!sameOrigin(request)) return json({ error: 'forbidden_origin' }, 403);
+  if (overLimit(request)) {
+    return json({ error: 'rate_limited', message: 'Too many messages in a minute. Give it a moment.' },
+      429, { 'retry-after': '60' });
+  }
 
   const type = String(request.headers.get('content-type') || '').toLowerCase();
   if (!type.includes('application/json')) return json({ error: 'unsupported_media_type' }, 415);
@@ -269,20 +314,47 @@ export async function onRequestPost({ request, env = {} }) {
   // A 1024 default truncated long answers mid-sentence. The ceiling is what
   // the free models can actually emit, not an arbitrary small number.
   const maxTokens = Math.max(256, Math.min(Number(body.max_tokens) || 2048, 8192));
-  const temperature = Math.max(0, Math.min(Number(body.temperature) ?? 0.6, 1.5));
+  // Number(undefined) is NaN, and NaN is not nullish, so `?? 0.6` never fired and
+  // the provider received NaN. Validate after conversion, then clamp.
+  const rawTemperature = Number(body.temperature);
+  const temperature = Number.isFinite(rawTemperature)
+    ? Math.max(0, Math.min(rawTemperature, 1.5))
+    : 0.6;
   const model = String(body.model || '').slice(0, 120);
   const wantsStream = Boolean(body.stream);
 
   /* Auto: Workers AI first, OpenRouter only if Workers AI is unavailable. That
      order is deliberate — Workers AI is the free allocation this project
      already pays for, and a key should be a fallback, not a requirement. */
+  /* The picker in the UI sends provider and model. They used to be ignored: a
+     non-Workers model was quietly replaced by the default Workers model, so the
+     label could show one thing and the answer come from another. The requested
+     provider is honoured against server-owned allowlists now. */
+  const requestedProvider = String(body.provider || 'auto').toLowerCase();
+  const hasOpenRouter = openRouterKeys(env).length > 0;
+  let deltaSent = false;
+  const sawDelta = () => deltaSent;
+
+  const runWorkers = async (send) => (wantsStream && send
+    ? streamWorkersAI(env, messages, model, maxTokens, temperature, send)
+    : runWorkersAI(env, messages, model, maxTokens, temperature));
+
   const runOnce = async (send) => {
+    if (requestedProvider === 'openrouter') {
+      if (!hasOpenRouter) throw new Error('OpenRouter was requested but no key is configured');
+      return runOpenRouter(env, messages, maxTokens, temperature, request);
+    }
+    if (requestedProvider === 'workers-ai') {
+      return runWorkers(send);   // an explicit choice does not fall back silently
+    }
     try {
-      return wantsStream && send
-        ? await streamWorkersAI(env, messages, model, maxTokens, temperature, send)
-        : await runWorkersAI(env, messages, model, maxTokens, temperature);
+      return await runWorkers(send);
     } catch (workersError) {
-      if (!openRouterKeys(env).length) throw workersError;
+      if (!hasOpenRouter) throw workersError;
+      // F-08: once a delta has been shown, swapping to another provider would
+      // replace one answer with a different one under the same bubble. Stop and
+      // say so instead of pretending the text came from one place.
+      if (sawDelta()) throw new Error('The model stopped mid-answer. Send again to retry.');
       return runOpenRouter(env, messages, maxTokens, temperature, request);
     }
   };
@@ -294,9 +366,8 @@ export async function onRequestPost({ request, env = {} }) {
         const send = (event) => {
           controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
         };
-        let sawDelta = false;
         const sendTracked = (event) => {
-          if (event && event.type === 'delta') sawDelta = true;
+          if (event && event.type === 'delta') deltaSent = true;
           send(event);
         };
         try {
@@ -306,7 +377,7 @@ export async function onRequestPost({ request, env = {} }) {
           send({ type: 'meta', streaming: true, requestId: crypto.randomUUID().slice(0, 12) });
           const result = await runOnce(sendTracked);
           send({ type: 'done', answer: result.text, provider: result.provider,
-                 model: result.model, streamed: sawDelta });
+                 model: result.model, streamed: deltaSent });
         } catch (error) {
           send({ type: 'error', message: error?.message || 'The assistant could not answer.' });
         } finally {

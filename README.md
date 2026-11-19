@@ -101,7 +101,11 @@ OpenRouter runs in **free-only** mode by default: only model ids ending in `:fre
 Chat is a separate, clearly labelled mode. Auto reads the question before it spends anything: greetings and short conversation go to the lightest model that can hold a sentence, everyday questions to the cheap grounded path, and long, comparative or Deep questions to a heavier model. Model choice is by live OpenRouter price inside the allowed band, so the cheapest model that fits is the one that runs.
 
 A question about Veridellindo itself never reaches a model at all. `assets/js/site-knowledge.js` holds the product's facts — pages, sources, privacy, providers, limits, version — and the chat answers from that file, instantly and offline, with links to the pages it names. The same facts are injected into the AI prompt as context, so a model that is asked about the site answers from the product's own description.
- `/chat/` sends the question plus up to six source excerpts to `/api/ask`, which prompts a model to explain those excerpts only, cite each factual sentence with `[n]`, and say so when the passages do not contain the answer. If no provider is configured or the call fails, the page shows an honest source excerpt instead of pretending an AI answered.
+ `/amigo/` sends the conversation to this site's own `/api/chat`, which answers with
+ Cloudflare Workers AI first and falls back to OpenRouter free models only when a key is
+ configured. The old `/chat/` route and `/api/ask` endpoint no longer exist. Amigo keeps
+ conversation history in IndexedDB on the reader's device; site search and article requests
+ go to Wikimedia directly and are not sent to any model.
 
 ### Reading progress in the contents
 
@@ -376,7 +380,7 @@ Targets WCAG 2.2 AA. Keyboard-navigable throughout, a skip link, visible focus r
 
 ## Privacy
 
-No accounts, no analytics, no cookies, no tracking. Bookmarks, reading history, saved answers and preferences live in `localStorage` on the device. Search and article requests go from your browser directly to Wikimedia. When you use chat, the question and the selected source excerpts are sent to this site's own `/api/ask` function and on to the configured AI provider; nothing else about you is sent, and no credentials are ever exposed to the page.
+No accounts, no analytics, no cookies, no tracking. Bookmarks, reading preferences and saved answers live in `localStorage`; Amigo conversation history lives in IndexedDB, on the device. Search and article requests go from your browser directly to Wikimedia. When you use Amigo, your message is sent to this site's own `/api/chat` function and on to the configured AI provider; nothing else about you is sent, and no provider credential is ever exposed to the page.
 
 ## Licences
 

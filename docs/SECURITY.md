@@ -8,7 +8,7 @@ browser's own storage.
 
 The only thing that leaves the browser is what a question needs: the question,
 the passages it was answered from, and — if you attached one — the text of that
-file. That goes to this site's `/api/ask`, which forwards it to the configured
+file. That goes to this site's `/api/chat`, which forwards it to the configured
 model runtime and keeps nothing.
 
 ## Reporting a problem
