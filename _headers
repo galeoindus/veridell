@@ -154,3 +154,9 @@
 /llms.txt
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
+
+# Skill prompts are fetched on demand, one per skill, so they are worth caching;
+# a day keeps a deploy's change visible without re-downloading on every message.
+/assets/amigo/skills/*
+  Cache-Control: public, max-age=86400
+  CDN-Cache-Control: public, max-age=86400
