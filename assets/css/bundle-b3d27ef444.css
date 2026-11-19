@@ -6335,7 +6335,7 @@ img.image-fallback {
   --im-surface: #ffffff;
   --im-surface-2: #eaf0eb;
   --im-text: #17251f;
-  --im-muted: #52645a;
+  --im-muted: #43554b;   /* was #52645a — too faint on the pale surface */
   --im-faint: #64756b;
   --im-border: #d5e0d8;
   --im-border-strong: #bdcdc2;
