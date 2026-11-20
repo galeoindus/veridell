@@ -1262,50 +1262,7 @@ main#main {
 /* a small pointer still needs a comfortable target */
 .btn-icon { min-width: 36px; min-height: 36px; }
 
-/* ------------------------------------------------------- 3 · fields */
-
-/* 16 px on every field: below that, iOS Safari zooms the viewport on focus and
-   the reader loses their place. The old rule only did this under 700 px. */
-input,
-select,
-textarea,
-.searchbar textarea,
-.searchbar input {
-  font-size: max(16px, 1rem);
-}
-
 @media (max-width: 700px) {
-  /* the field: one row for the input, one for the tools — never three */
-  .searchbar:has(> .composer-tools) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-    padding: 10px 10px 8px 14px;
-    border-radius: 18px;
-  }
-  .searchbar:has(> .composer-tools) > textarea {
-    width: 100%;
-    min-height: 44px;
-    font-size: 16px;
-    padding: 8px 0 4px;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > .mode {
-    order: 1;
-    margin-right: auto;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-    order: 2;
-    min-height: 42px;
-    padding: 0 18px;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > .btn-icon { order: 0; }
-
   .mode { padding: 3px; }
   .mode-btn { padding: 0 10px; font-size: 12.5px; }
 }
@@ -1449,36 +1406,105 @@ textarea,
    one line, the mode switch and Send on the next — which made the field three
    rows tall in a 390 px column. The controls fit on one line at this size; they
    just have to be allowed to stay there. */
-@media (max-width: 700px) {
-  .searchbar:has(> .composer-tools) > .composer-tools {
-    flex-wrap: nowrap;
-    gap: 5px;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > .mode {
-    flex: 0 0 auto;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > .mode .mode-btn {
-    padding: 0 8px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-    flex: 0 0 auto;
-    min-height: 38px;
-    padding: 0 12px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-  .searchbar:has(> .composer-tools) > .composer-tools > .btn-icon {
-    flex: 0 0 auto;
-    width: 32px; height: 32px; min-height: 32px;
-  }
-}
+@media (max-width: 700px) {}
 
 /* A broken or still-loading picture must not reserve 360 px of empty card on
    a phone; the figure collapses to the size of its caption instead. */
 @media (max-width: 700px) {
   .lead-figure img, .art-figure img { max-height: 220px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THE search card. One shape, every page.
+   This is the only place the card's geometry is declared. Everything that used
+   to compete with it — eighteen rules in styles.css, seven in system.css,
+   eleven here, plus polish, refine, design-system, preferences and home-morph —
+   has been removed. Same layer, later source order, no competitors left, so the
+   card cannot depend on which page you are on any more.
+   ══════════════════════════════════════════════════════════════════════════ */
+.searchbar,
+.composer .searchbar,
+.dash-hero .searchbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  padding: 14px 14px 12px;
+  border-radius: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  box-shadow: 0 1px 2px rgba(16, 24, 20, .05), 0 14px 36px -20px rgba(16, 24, 20, .32);
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.searchbar:focus-within,
+.composer .searchbar:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2));
+  box-shadow: 0 1px 2px rgba(16, 24, 20, .05), 0 18px 44px -20px rgba(16, 24, 20, .38);
+}
+
+/* the field: the largest, quietest thing in the card */
+.searchbar > input[type="search"],
+.searchbar > input[type="text"],
+.searchbar > textarea,
+.composer .searchbar > textarea {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 46px;
+  padding: 8px 6px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+}
+.searchbar > input::placeholder,
+.searchbar > textarea::placeholder { color: var(--muted); opacity: 1; }
+
+/* the control row sits under the text, exactly as the assistant's composer does */
+.searchbar .composer-tools,
+.searchbar > .mode,
+.searchbar > button {
+  grid-column: 1 / -1;
+}
+.searchbar .composer-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.searchbar .composer-tools > .mode { margin-inline-start: 2px; }
+.searchbar .composer-tools > button[type="submit"],
+.searchbar > button[type="submit"] {
+  margin-inline-start: auto;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* the mode pills read as a segmented choice inside the card */
+.searchbar .mode { background: transparent; padding: 0; gap: 4px; }
+.searchbar .mode-btn {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  border: 1px solid transparent;
+}
+.searchbar .mode-btn[aria-pressed="true"],
+.searchbar .mode-btn.is-on {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  color: var(--copper-ink);
+}
+
+@media (min-width: 861px) {
+  .searchbar { max-width: 760px; margin-inline: auto; }
+}
+@media (max-width: 560px) {
+  .searchbar { padding: 12px 12px 10px; border-radius: 24px; }
+  .searchbar .composer-tools > button[type="submit"] { min-height: 42px; min-width: 42px; }
 }
 
 }
