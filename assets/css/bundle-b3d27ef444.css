@@ -5756,6 +5756,95 @@ section.dash-hero,
 }
 .bottom-nav .nav-more-sheet a:hover { background: var(--surface-2, rgba(0,0,0,.04)); }
 
+/* ── no boxes inside the box ──────────────────────────────────────────────
+   The card held a row of little boxed buttons: the mic had a white pill and a
+   border, both mode pills had borders, and the submit had its own white pill.
+   That is what read as a box in the middle of the search field. Google's AI
+   mode is one surface: borderless icons, a quiet text toggle, and exactly one
+   filled action. Nothing inside the card draws its own box. */
+.searchbar .btn,
+.searchbar button,
+.searchbar .mode-btn {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.searchbar .mic,
+.searchbar .btn-icon {
+  width: 40px; height: 40px; border-radius: 999px;
+  color: var(--muted);
+}
+.searchbar .mic:hover,
+.searchbar .btn-icon:hover { background: var(--surface-2, rgba(0,0,0,.05)); color: var(--ink); }
+
+/* the mode choice is text, not a segmented control */
+.searchbar .mode { background: transparent; padding: 0; gap: 2px; }
+.searchbar .mode-btn {
+  min-height: 36px; padding: 0 12px; border-radius: 999px;
+  color: var(--muted); font-weight: 500;
+}
+.searchbar .mode-btn:hover { background: var(--surface-2, rgba(0,0,0,.05)); color: var(--ink); }
+.searchbar .mode-btn.is-active,
+.searchbar .mode-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--copper-ink, var(--ink));
+  font-weight: 600;
+}
+
+/* exactly one filled element: the action */
+.searchbar button[type="submit"],
+.searchbar .btn-primary {
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  border: 0;
+  min-height: 42px; min-width: 42px;
+  padding: 0 18px; border-radius: 999px;
+  font-weight: 600;
+  box-shadow: none;
+}
+.searchbar button[type="submit"]:hover,
+.searchbar .btn-primary:hover { background: var(--accent-hover, var(--accent)); }
+
+/* nothing else inside the card may draw a surface */
+.searchbar .suggest,
+.searchbar .composer-tools { background: transparent; border: 0; box-shadow: none; }
+
+/* ── the hero carries no boxes ────────────────────────────────────────────
+   Under the heading sat a grid of bordered "intro-card" tiles — "Ask, don't
+   hunt" and its neighbours — each with its own surface, border and radius. With
+   the search card above them, the first screen was a stack of boxes, which is
+   the opposite of the one-field pattern. They are plain text now: an icon and a
+   short line, no surface of its own. The search card is the only box on the
+   page. */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 22px;
+}
+.intro-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.intro-card .ic {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--copper-ink, var(--accent));
+}
+.intro-card h2 { font-size: 1rem; margin: 0 0 2px; }
+.intro-card p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.55; }
+
+@media (min-width: 861px) {
+  .intro-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
