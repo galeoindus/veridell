@@ -1577,6 +1577,28 @@ section.dash-hero,
   .intro-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 }
 
+/* ── the field comes first on a phone ─────────────────────────────────────
+   The first screen was heading, a long paragraph, a trust pill and then the
+   search field — below the fold on a 390px phone, so the reader scrolled before
+   they could type. On a phone the hero keeps the heading and the field; the
+   essay-length lead and the badge are held back until there is room for them. */
+@media (max-width: 860px) {
+  .dash-hero { padding-top: 10px; }
+  .dash-hero .hero-badge,
+  .dash-hero .lead,
+  .dash-hero .dash-hero-badge { display: none; }
+  .dash-hero h1 { font-size: clamp(1.9rem, 8vw, 2.6rem); margin-bottom: 14px; }
+  .intro-grid { display: none; }        /* the tiles are supporting copy, not the entry point */
+}
+
+/* ── the floating launcher steps aside for the bottom bar ─────────────────
+   The green Amigo button sat on top of the "Library" tab: two fixed elements
+   fighting for the same corner. On a phone the bottom bar already offers Ask, so
+   the floating doorway is redundant there and is removed rather than nudged. */
+@media (max-width: 860px) {
+  .amigo-launcher { display: none; }
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */

@@ -174,3 +174,11 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
 @media (prefers-reduced-motion: reduce) {
   .amigo-launcher, .amigo-launcher:hover { transition: none; transform: none; }
 }
+
+/* The launcher lives in this sheet, so the rule that hides it has to live here
+   too: `utilities` loads after `responsive`, so the same declaration written in
+   mobile.css lost to this file's own display rule. On a phone the bottom bar
+   already offers Ask, and the green button sat on top of the Library tab. */
+@media (max-width: 860px) {
+  .amigo-launcher { display: none; }
+}
