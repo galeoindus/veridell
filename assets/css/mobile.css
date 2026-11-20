@@ -368,3 +368,52 @@
   .searchbar { padding: 12px 12px 10px; border-radius: 24px; }
   .searchbar .composer-tools > button[type="submit"] { min-height: 42px; min-width: 42px; }
 }
+
+/* ── One card, not four ────────────────────────────────────────────────────
+   The search form sat inside three wrappers, each with its own background,
+   border and radius: .composer, .dash-hero-ask and .dash-hero. That is the
+   stacked-box look — a card inside a card inside a card, with a darker band
+   showing along the left edge where the wrappers' padding met.
+   The form is the card now. The wrappers keep their layout job and lose every
+   surface: no background, no border, no shadow, no radius. */
+.dash-hero,
+.dash-hero-ask,
+.composer {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.dash-hero-ask { padding: 0; }
+.composer { padding: 0; }
+
+/* and the form itself carries the whole surface, matching the assistant */
+.searchbar {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 28px;
+  box-shadow: 0 1px 2px rgba(16, 24, 20, .05), 0 14px 36px -20px rgba(16, 24, 20, .30);
+  padding: 16px 16px 12px;
+}
+body.dark .searchbar,
+html[data-theme="dark"] .searchbar {
+  background: var(--surface-2, var(--surface));
+  border-color: rgba(255, 255, 255, .10);
+}
+
+/* the hero wrapper still carried its 1px outline because a later rule in the
+   bundle set it; this wins on source order and specificity together */
+section.dash-hero,
+.dash-hero.dash-hero {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* the field is a card input, not a draggable box: the browser's resize grip
+   showed as a stray mark in the corner of the card */
+.searchbar textarea,
+.composer .searchbar textarea {
+  resize: none;
+  overflow: auto;
+}
