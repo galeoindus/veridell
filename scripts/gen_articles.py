@@ -440,9 +440,9 @@ HEAD = """<!DOCTYPE html>
   <meta property="og:image" content="{imageUrl}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{imageUrl}">
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
-  <link rel="icon" href="/assets/img/brand/logo-192.png" sizes="192x192" type="image/png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/brand/favicon-mark-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/brand/favicon-mark-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/favicon-mark-192.png">
   <link rel="apple-touch-icon" href="/assets/img/brand/logo-180.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lora:ital,wght@0,500;0,600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css?v={version}">
@@ -868,6 +868,9 @@ def main():
   <meta name="theme-color" content="#101713">
   <link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
   <link rel="icon" href="/assets/img/brand/logo-192.png" sizes="192x192" type="image/png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/brand/favicon-mark-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/brand/favicon-mark-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/favicon-mark-192.png">
   <link rel="apple-touch-icon" href="/assets/img/brand/logo-180.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lora:ital,wght@0,500;0,600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css?v={VERSION}">
