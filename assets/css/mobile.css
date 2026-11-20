@@ -268,8 +268,6 @@
    one line, the mode switch and Send on the next — which made the field three
    rows tall in a 390 px column. The controls fit on one line at this size; they
    just have to be allowed to stay there. */
-@media (max-width: 700px) {}
-
 /* A broken or still-loading picture must not reserve 360 px of empty card on
    a phone; the figure collapses to the size of its caption instead. */
 @media (max-width: 700px) {
@@ -416,4 +414,18 @@ section.dash-hero,
 .composer .searchbar textarea {
   resize: none;
   overflow: auto;
+}
+
+/* ── F-02: the decorative pseudo-element behind the search panel is gone ───
+   It was a blurred 132px circle with a black inset shadow at a negative
+   offset. A later sheet moved it with `inset` but never reset its width,
+   border-radius, filter or box-shadow, so the dark crescent survived along the
+   left edge — the black mark on the card. A search panel does not need an
+   ornament behind it, so the whole layer is removed rather than restyled. */
+.dash-hero::before,
+.dash-hero::after,
+.dash-hero-ask::before,
+.dash-hero-ask::after {
+  content: none !important;
+  display: none !important;
 }

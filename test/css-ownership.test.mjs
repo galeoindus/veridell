@@ -1,49 +1,39 @@
 /* One component, one owner.
  *
- * The search card was styled from nine source sheets — 63 declarations in
- * app.css, 21 in system.css, 20 in styles.css, 13 in mobile.css and four more.
- * That is why the same card looked different on different pages: nothing owned
- * it, so the last stylesheet to load won.
- *
- * This test does not pretend the cleanup is finished. It records the sheets that
- * still carry rules for the card and fails when a tenth appears, so the mess
- * cannot grow while it is being unwound.
+ * The search card used to be declared from nine source stylesheets — 92 rules
+ * between them — so whichever loaded last won and the card changed shape by
+ * page. This test asserts the opposite now: exactly one source sheet may declare
+ * the card's rules. A second owner fails the build.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 
 const DIR = new URL('../assets/css/', import.meta.url);
-
-// Sheets still carrying search-card rules, in the order they are bundled.
-// Removing a sheet from this list is progress; adding one is a regression.
-const KNOWN_OWNERS = new Set([
-  'app.css', 'system.css', 'styles.css', 'mobile.css',
-  'polish.css', 'refine.css', 'design-system.css', 'preferences.css', 'home-morph.css',
-]);
+const OWNER = 'mobile.css';
 
 const sheets = readdirSync(DIR).filter((f) => f.endsWith('.css') && !f.startsWith('bundle-'));
 
-function mentions(file, selector) {
+function declaresCard(file) {
   const css = readFileSync(new URL(file, DIR), 'utf8');
-  return new RegExp(`\\${selector}\\b`).test(css);
+  return /\.searchbar\b/.test(css);
 }
 
-test('the search card does not gain a tenth owner', () => {
-  const owners = sheets.filter((f) => mentions(f, '.searchbar'));
-  const extra = owners.filter((f) => !KNOWN_OWNERS.has(f));
-  assert.deepEqual(extra, [], `new stylesheet(s) styling .searchbar: ${extra.join(', ')}`);
+test('exactly one stylesheet declares the search card', () => {
+  const owners = sheets.filter(declaresCard);
+  assert.deepEqual(owners, [OWNER], `the card must be owned by ${OWNER} alone, found: ${owners.join(', ')}`);
 });
 
-test('the recorded owner list does not describe files that no longer exist', () => {
-  const owners = new Set(sheets.filter((f) => mentions(f, '.searchbar')));
-  for (const known of KNOWN_OWNERS) {
-    if (!sheets.includes(known)) continue;   // the sheet was deleted: fine
-    assert.ok(owners.has(known), `${known} no longer styles the card — remove it from KNOWN_OWNERS`);
+test('the owner still carries the unified card rules', () => {
+  const css = readFileSync(new URL(OWNER, DIR), 'utf8');
+  assert.match(css, /THE search card/, 'the canonical block is missing');
+  assert.match(css, /\.searchbar[\s\S]{0,400}border-radius: 28px/);
+});
+
+test('no sheet styles the card through a pseudo-element', () => {
+  for (const sheet of sheets) {
+    const css = readFileSync(new URL(sheet, DIR), 'utf8');
+    assert.ok(!/\.dash-hero::before\s*\{[^}]*box-shadow[^}]*#000/.test(css),
+      `${sheet} still draws the dark ornament behind the search panel`);
   }
-});
-
-test('the page stylesheet keeps the authoritative card rules', () => {
-  const css = readFileSync(new URL('app.css', DIR), 'utf8');
-  assert.match(css, /AI-mode shape|\.searchbar \{[\s\S]{0,400}border-radius: 26px/);
 });

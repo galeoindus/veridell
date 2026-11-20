@@ -180,61 +180,6 @@ textarea { line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .spinner { animation: none; }
 }
-
-/* ==========================================================================
-   THE AUDIT'S PART II CORRECTIONS — surfaces, ink and states
-   ==========================================================================
-   The interface audit measured four complaints and traced all of them to one
-   habit: a component file declaring its own colour, and a state declaring a
-   background without declaring the foreground that sits on it. These rules
-   are the audit's patch list, applied in one place and loaded after the
-   sheets that paint the old versions, so the corrections win without a single
-   !important.
-
-   What they do, in the audit's own order:
-
-     F-05/F-06  the field is flat paper, not a pressed well
-     F-07/F-08  the hero card is an opaque surface with one quiet wash
-     F-09       no gradient sits behind text
-     F-10/F-11  every active state declares its ink with its fill
-     F-12       the primary button is a flat token pair
-     F-14       the dark theme's muted ink clears 4.5:1
-   ========================================================================== */
-
-/* ── F-05 / F-06 · the field ─────────────────────────────────────────────
-   A pressed well works for a button the reader presses. A text field is a
-   surface the reader reads on, and an inset shadow plus a 145° gradient
-   darkened the first two characters of every placeholder — 31 levels below
-   the page at the top-left corner. Flat surface, hairline border, one soft
-   shadow, and focus as the only state that changes the surface. */
-
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar,
-form.panel .select,
-.select,
-.langbar select,
-.langbar-inner input#langSelect,
-.feedback .fb-note textarea {
-  background: var(--surface);
-  background-image: none;
-  border: 1px solid var(--border-2);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent);
-}
-
-.searchbar:focus-within,
-.composer .searchbar:focus-within,
-.dash-hero .searchbar:focus-within,
-form.panel .searchbar:focus-within,
-.select:focus,
-.langbar select:focus,
-.feedback .fb-note textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
 /* The segmented controls were the same pressed well. They are a track with a
    raised thumb, which is a different material from a field. */
 .mode,
@@ -265,18 +210,6 @@ form.panel .searchbar:focus-within,
    One centred wash that cannot be mistaken for a rendering fault. The old
    pair of blooms was tuned against the light background and produced a pale
    top-right and a brown top-left in the dark one. */
-
-.dash-hero::before,
-.dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
-  opacity: 1;
-}
-[data-theme="dark"] .dash-hero::before,
-[data-theme="dark"] .dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
-}
 
 /* ── F-09 · no gradient behind text ──────────────────────────────────────
    `background-clip: text` with a transparent fill measured 1.07:1: in print,
@@ -371,26 +304,6 @@ a.skip-link {
   background: var(--primary);
   color: var(--on-primary);
 }
-
-/* ── the composer wrapper is not a field ─────────────────────────────────
-   `.composer` is only a positioning div on the app pages — the field is the
-   form inside it. But three sheets painted the wrapper as a second field, so
-   the search box rendered as a box inside a box, with the pressed-well shadow
-   on the outer one. The wrapper goes back to being invisible. The chat page's
-   composer *is* the field (it is a <form class="composer">), so this is
-   scoped to the wrapper only. */
-
-.composer:has(> form.searchbar) {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-}
-.composer:has(> form.searchbar):focus-within {
-  box-shadow: none;
-  border: 0;
-}
-
 /* ── `hidden` means hidden ───────────────────────────────────────────────
    The clear button, the offline notice and a dozen other elements are hidden
    by setting the `hidden` attribute, but any rule that gives the element a
@@ -485,17 +398,6 @@ a.skip-link {
 
 /* the timeline drew a vertical line down the whole list */
 .timeline li { border-left: 0; }
-
-/* ── fields: a hairline that belongs to the surface ────────────────────── */
-.searchbar,
-.composer .searchbar,
-.select,
-.langbar select,
-form.panel .searchbar,
-.feedback .fb-note textarea {
-  border: 1px solid var(--hair);
-}
-
 /* ── the left rail: a soft column, not a bordered sheet ────────────────── */
 .app-side {
   border: 0;
@@ -588,20 +490,6 @@ a, button, .btn, .chip, .pill, .side-link, .tab, .depth-btn, .mode-btn {
   color: var(--text);
 }
 .app-side .side-link:hover { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
-
-/* the field's own hairline, a shade softer again: it is a surface, not a box */
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar {
-  border-color: color-mix(in srgb, var(--border-2) 42%, transparent);
-}
-.searchbar:hover,
-.dash-hero .searchbar:hover {
-  border-color: color-mix(in srgb, var(--border-2) 62%, transparent);
-}
-
 /* The rail is not a panel.
    With the stroke gone it still read as a box, because the surface tone is
    lighter than the page and the rounded corner drew the rest of the outline

@@ -28,32 +28,6 @@ body {
   box-shadow: var(--polish-shadow);
   overflow: visible;
 }
-
-.searchbar:has(> .composer-tools) {
-  border: 1px solid var(--border-2);
-  border-radius: 26px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: 0 6px 22px color-mix(in srgb, var(--text) 6%, transparent);
-  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
-}
-
-.searchbar:has(> .composer-tools):focus-within {
-  border-color: color-mix(in srgb, var(--accent) 62%, var(--border-2));
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent), var(--polish-shadow);
-}
-
-.searchbar:has(> .composer-tools) > textarea {
-  min-height: 52px;
-  line-height: 1.55;
-  font-size: 16px;
-  resize: vertical;
-}
-
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-  border-radius: 999px;
-  min-height: 44px;
-}
-
 .suggest {
   border-radius: 20px;
   border: 1px solid var(--border-2);

@@ -7,7 +7,7 @@
   --im-surface-2: #eaf0eb;
   --im-text: #17251f;
   --im-muted: #43554b;   /* was #52645a — too faint on the pale surface */
-  --im-faint: #64756b;
+  --im-faint: #5f7066;   /* was #64756b — 4.48:1, just under AA */
   --im-border: #d5e0d8;
   --im-border-strong: #bdcdc2;
   --im-accent: #176b4c;
@@ -130,21 +130,6 @@ body { background-image: radial-gradient(70rem 35rem at 4% -12%, color-mix(in sr
 [data-comfort="opaque"] .top,
 [data-comfort="opaque"] .chat-header,
 [data-comfort="opaque"] .topbar-actions { background: var(--im-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
-
-/* Calm, tactile fields: subtle inset depth, with an unmistakable focus ring. */
-.searchbar, .search-box, .search-box input, .composer, .chat-composer, #prompt {
-  border-radius: var(--im-radius-md);
-}
-.searchbar, .search-box, .chat-composer {
-  box-shadow: var(--im-inset-shadow);
-  border: 1px solid var(--im-border-strong);
-  background: var(--im-surface);
-}
-.searchbar:focus-within, .search-box:focus-within, .chat-composer:focus-within {
-  border-color: var(--im-accent);
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 23%, transparent);
-}
-
 /* Claymorphism: one or two expressive areas per screen, not every card. */
 .dash-hero, .welcome-block, .aotd, .empty .empty-orb, .chat-empty-card {
   border: 1px solid var(--im-border);

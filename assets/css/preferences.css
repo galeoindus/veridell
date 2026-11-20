@@ -89,22 +89,6 @@ html[data-surface-style="glass"] .im-preferences-panel {
   -webkit-backdrop-filter: blur(22px) saturate(1.35);
   backdrop-filter: blur(22px) saturate(1.35);
 }
-
-/* Neumorphism: soft raised controls and inset input wells, never body copy. */
-html[data-surface-style="soft"] .composer,
-html[data-surface-style="soft"] .chat-composer,
-html[data-surface-style="soft"] .searchbar,
-html[data-surface-style="soft"] .rail-new,
-html[data-surface-style="soft"] .im-preferences-panel {
-  border-color: transparent;
-  box-shadow: var(--im-clay-shadow), inset 1px 1px 2px color-mix(in srgb, var(--im-text) 5%, transparent);
-}
-html[data-surface-style="soft"] .composer:focus-within,
-html[data-surface-style="soft"] .chat-composer:focus-within,
-html[data-surface-style="soft"] .searchbar:focus-within {
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 24%, transparent);
-}
-
 /* Claymorphism is a focal treatment, not a blanket card style. */
 html[data-surface-style="clay"] .empty-mark,
 html[data-surface-style="clay"] .dash-hero,

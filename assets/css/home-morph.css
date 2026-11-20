@@ -40,19 +40,6 @@
   isolation: isolate;
 }
 /* one soft bloom inside the slab, so the surface is not dead flat */
-.dash-hero::before {
-  content: "";
-  position: absolute;
-  inset: -40% -10% auto -30%;
-  height: 130%;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(38% 60% at 18% 8%, color-mix(in srgb, var(--copper) 16%, transparent), transparent 70%),
-    radial-gradient(42% 64% at 88% 0%, color-mix(in srgb, var(--sage) 26%, transparent), transparent 72%);
-  opacity: .9;
-}
-
 .dash-hero h1 {
   margin: 0 0 12px;
   font-family: var(--font-head);
@@ -94,18 +81,7 @@
 .dash-hero-badge svg { width: 14px; height: 14px; color: var(--accent-2); }
 
 /* the search field: a well pressed into the slab */
-.dash-hero-ask { margin: 0 0 14px; }
-.dash-hero .composer,
-.dash-hero .searchbar,
-.dash-hero form {
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--hm-clay-2);
-  box-shadow: var(--hm-press);
-  padding: 8px 8px 8px 18px;
-  transition: box-shadow .18s ease, border-color .18s ease;
-}
-.dash-hero .composer:focus-within,
+.dash-hero-ask { margin: 0 0 14px; }.dash-hero .composer:focus-within,
 .dash-hero form:focus-within {
   border-color: var(--accent-2);
   box-shadow: var(--hm-press), 0 0 0 3px color-mix(in srgb, var(--accent-2) 18%, transparent);

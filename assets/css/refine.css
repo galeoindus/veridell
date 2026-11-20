@@ -28,18 +28,6 @@
   --vd-lift-2: 0 2px 4px color-mix(in srgb, var(--charcoal, #242824) 5%, transparent),
                0 12px 24px -14px color-mix(in srgb, var(--forest, #173b32) 26%, transparent);
 }
-
-/* ── motion: one speed, one curve ──────────────────────────────────────── */
-a, button, .btn, .card, .q-card, .cat-card, .side-link, .mode-btn, .depth-btn,
-.chip, .src-chip, .followup, input, textarea, select, .searchbar {
-  transition:
-    background-color var(--vd-base) var(--vd-ease),
-    border-color var(--vd-base) var(--vd-ease),
-    color var(--vd-fast) var(--vd-ease),
-    box-shadow var(--vd-base) var(--vd-ease),
-    transform var(--vd-fast) var(--vd-ease);
-}
-
 /* A press should feel like a press, and never move the thing under the finger
    far enough to change what is being clicked. */
 button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY(1px) scale(.994); }
@@ -100,20 +88,6 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
-
-/* ── the composer ──────────────────────────────────────────────────────── */
-/* The composer is the one control a reader touches every turn, so it gets the
-   only shadow on the page that responds to focus. */
-.composer, .searchbar {
-  transition: border-color var(--vd-base) var(--vd-ease),
-              box-shadow var(--vd-base) var(--vd-ease),
-              background-color var(--vd-base) var(--vd-ease);
-}
-.composer:focus-within, .searchbar:focus-within {
-  border-color: color-mix(in srgb, var(--accent, #b46a45) 70%, var(--border-2, #cfc3ac));
-  box-shadow: var(--vd-ring), var(--vd-lift-1);
-}
-
 /* ── small type details ────────────────────────────────────────────────── */
 /* Numbers that change — counts, timings, versions — must not reflow the line
    they sit in as they change. */

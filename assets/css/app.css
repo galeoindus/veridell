@@ -80,21 +80,6 @@
 
 /* The bookmark toggle shows its on-state clearly. */
 .btn.is-on { border-color: var(--accent); color: var(--copper-ink); }
-
-/* Feedback form controls reuse the searchbar shell, full width. */
-form.panel .searchbar,
-form.panel .select {
-  width: 100%;
-  font: inherit;
-  font-size: 15px;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-2);
-  background: var(--surface);
-  color: var(--text);
-  resize: vertical;
-}
-
 form.panel .select { cursor: pointer; }
 
 /* A skeleton line used by the rail and cards. */
@@ -154,20 +139,7 @@ form.panel .select { cursor: pointer; }
   .topbar-inner { gap: 6px; }
   .topnav { margin-left: auto; }
   .topnav a { padding: 7px 8px; font-size: 12.5px; }
-}
-
-/* ======================================================================
-   The hero assumes a dark panel
-   ======================================================================
-   The design system styles every control inside .dash-hero for a dark
-   background — white text on translucent white. The hero itself is not
-   dark (it inherits the page background, and its own gradient was lost in
-   the capture), so in light mode the depth buttons, the meaning switch, the
-   chips and the clock were white on cream and effectively invisible.
-   Restore the theme-aware styling for all of them. */
-
-.dash-hero .searchbar { background: var(--surface); border-color: var(--border-2); }
-.dash-hero .depth-btn { background: var(--surface); border-color: var(--border-2); color: var(--text); }
+}.dash-hero .depth-btn { background: var(--surface); border-color: var(--border-2); color: var(--text); }
 .dash-hero .depth-btn:hover { background: var(--surface-2); color: var(--text); }
 .dash-hero .depth-btn.is-active,
 .dash-hero .depth-btn[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
@@ -445,9 +417,7 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 .toc-jump-list a, .side-link, .bottom-nav a { min-height: 40px; }
 
 /* iOS zooms the page when a focused input is under 16px. */
-@media (max-width: 700px) {
-  input, select, textarea, .searchbar textarea, .searchbar input { font-size: 16px; }
-}
+@media (max-width: 700px) {}
 
 /* Tap highlight follows the design rather than the platform default. */
 * { -webkit-tap-highlight-color: rgba(180, 106, 69, 0.18); }
@@ -462,10 +432,6 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 }
 .mode-help { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
 .composer-prompt { margin: 8px 2px 0; font-size: 13px; color: var(--danger); }
-.searchbar { flex-wrap: wrap; }
-.searchbar .composer-label { flex: 1 1 100%; }
-.searchbar .mode-help, .searchbar .composer-prompt { flex: 1 1 100%; }
-
 /* The mode control is a segmented choice, labelled in plain language. */
 .mode { background: var(--surface-2); border-radius: 999px; padding: 3px; display: inline-flex; gap: 2px; }
 .mode-btn { min-height: 34px; padding: 0 14px; border-radius: 999px; font-size: 13.5px; }
@@ -591,30 +557,6 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 }
 .article-grid { grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
 @media (min-width: 1560px) { .article-grid { grid-template-columns: minmax(0, 1fr) 360px; } }
-
-/* ======================================================================
-   The composer, the sidebar, and the width of the reading views
-   ====================================================================== */
-
-/* A composer reads top to bottom: label, the field, then the controls on one
-   line with the mode choice and the submit at the end. It was a wrapped flex
-   row, which put the controls in a different place on every page. */
-.searchbar:has(> .composer-tools) {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px;
-  align-items: stretch; padding: 14px 16px 12px;
-}
-.searchbar:has(> .composer-tools) > .composer-label { grid-column: 1 / -1; margin: 0; }
-.searchbar:has(> .composer-tools) > textarea { width: 100%; min-height: 42px; }
-.searchbar:has(> .composer-tools) > .composer-tools {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0;
-  justify-content: flex-start;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode { margin-left: auto; }
-.searchbar:has(> .composer-tools) > .composer-tools > .btn-icon { width: 40px; height: 40px; min-height: 40px; }
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] { min-height: 40px; padding: 0 22px; }
-.searchbar:has(> .composer-tools) > .mode-help,
-.searchbar:has(> .composer-tools) > .composer-prompt { grid-column: 1 / -1; margin: 0; }
-
 /* One icon size in the sidebar, so the list reads as a list. */
 .side-link { gap: 10px; padding: 9px 12px; font-size: 14.5px; }
 .side-link > svg { width: 18px; height: 18px; flex: 0 0 auto; }
@@ -633,26 +575,10 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 .toc-jump-list .topic-num { width: auto; min-width: 26px; padding: 0 5px; }
 .toc-jump-list a > .topic-num { flex: 0 0 auto; }
 .toc-jump-list .toc-label { flex: 1 1 auto; }
-
-/* ======================================================================
-   The composer: the suggestion list, and the field's height
-   ====================================================================== */
-
-/* The glass shell carries `contain: layout style paint`, and `paint` clips a
-   child to the shell's own box. The suggestion list is a child of the
-   composer that opens *below* it, so it was being clipped away — typing
-   looked like nothing was happening. Drop containment on the composer only. */
-.searchbar.glass { contain: none; }
-
-/* The suggestion list needs to sit above the answer beneath it. */
-.searchbar .suggest { z-index: 80; }
-
 /* An empty field must show its whole placeholder. It wraps to two lines on a
    phone, and the textarea was staying one line tall, so the second line was
    cut in half — the "squashed" search bar. */
-@media (max-width: 700px) {
-  .searchbar:has(> .composer-tools) > textarea { min-height: 54px; }
-}
+@media (max-width: 700px) {}
 
 /* ======================================================================
    The article reads across the whole width, contents at the top
@@ -1177,24 +1103,6 @@ body::after { opacity: 0; }   /* the old grid belongs to the glass era */
 .badge { color: var(--copper-ink); }
 .badge.accent, .badge.accent:hover { background: var(--clay-cta); color: #fff; border-color: transparent; box-shadow: var(--clay-cta-hi), var(--clay-cta-lo), var(--clay-cta-drop); }
 [data-theme="dark"] .badge { color: var(--sage); }
-
-/* Fields are pressed in, not raised, and keep a visible edge. */
-.searchbar, .composer .searchbar, .select, .langbar select,
-form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
-.langbar-inner input#langSelect {
-  background: var(--neo-face);
-  border: 1px solid var(--neo-edge);
-  border-radius: var(--clay-r);
-  box-shadow: var(--neo-in);
-  transition: box-shadow .24s var(--ease-out), border-color .24s var(--ease-out);
-}
-.searchbar:focus-within, .composer .searchbar:focus-within,
-.select:focus, .langbar select:focus,
-form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
-  border-color: var(--copper);
-  box-shadow: var(--neo-in), 0 0 0 3px color-mix(in srgb, var(--copper) 30%, transparent);
-}
-
 /* Segmented controls: a pressed track with a raised thumb. */
 .mode, .tabs { background: var(--neo-face); border: 1px solid var(--neo-edge); box-shadow: var(--neo-in); border-radius: var(--clay-r-pill); }
 .tabs { padding: 5px; }
@@ -1213,13 +1121,7 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
   border-radius: var(--clay-r-lg);
   box-shadow: var(--clay-hi), var(--clay-lo), var(--clay-drop);
 }
-.dash-hero::after { display: none; }
-.dash-hero .searchbar, .dash-hero-ask .searchbar {
-  background: var(--neo-face);
-  border: 1px solid var(--neo-edge);
-  box-shadow: var(--neo-in);
-}
-.dash-hero .depth-btn, .dash-hero .chip-btn, .dash-hero .chips .chip,
+.dash-hero::after { display: none; }.dash-hero .depth-btn, .dash-hero .chip-btn, .dash-hero .chips .chip,
 .dash-hero .example-prompts button {
   background: var(--clay-face);
   border: 1px solid color-mix(in srgb, var(--border-2) 62%, transparent);
@@ -1244,18 +1146,7 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
 .dash-hero .trust-strip li::before { color: var(--copper-ink); }
 
 /* Two small clay pebbles, low-contrast, tucked into the corners. */
-.dash-hero::before {
-  content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none;
-  width: 132px; height: 132px; top: -46px; left: -58px;
-  filter: blur(1.5px); opacity: .55;
-  background: radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--sage) 96%, #fff), color-mix(in srgb, var(--sage) 68%, var(--forest)));
-  box-shadow: inset 8px 8px 18px color-mix(in srgb, #ffffff 40%, transparent),
-              inset -10px -10px 22px color-mix(in srgb, #000000 16%, transparent),
-              0 26px 44px -30px color-mix(in srgb, var(--forest) 55%, transparent);
-}
-[data-theme="dark"] .dash-hero::before { opacity: .3; }
-
-.dash-hero-badge {
+[data-theme="dark"] .dash-hero-badge {
   background: var(--clay-face);
   border: 1px solid color-mix(in srgb, var(--border-2) 50%, transparent);
   box-shadow: inset 3px 3px 7px color-mix(in srgb, #ffffff 80%, transparent),
@@ -1455,30 +1346,8 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
 }
 
 /* Increased contrast: firm up every control edge and every hairline. */
-@media (prefers-contrast: more) {
-  .btn, .chip, .pill, .depth-btn, .chip-btn, .badge, .example-prompts button,
-  .searchbar, .composer .searchbar, .select, .mode, .tabs {
-    border-color: var(--text) !important;
-  }
-  .topbar-inner, .app-side, .bottom-nav { border-color: var(--text) !important; }
-}
-
-/* The in-app reading-comfort switch (data-comfort="opaque"): flatten the
-   translucency and the clay gradient, keep the shapes. */
-[data-comfort="opaque"] .topbar-inner,
-[data-comfort="opaque"] .app-side,
-[data-comfort="opaque"] .bottom-nav,
-[data-comfort="opaque"] .suggest,
-[data-comfort="opaque"] .lang-menu,
-[data-comfort="opaque"] .toast,
-[data-comfort="opaque"] .composer .searchbar {
-  background: var(--surface) !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  border: 1px solid var(--border-2) !important;
-  box-shadow: none !important;
-}
-[data-comfort="opaque"] body::before { display: none !important; }
+@media (prefers-contrast: more) {  .topbar-inner, .app-side, .bottom-nav { border-color: var(--text) !important; }
+}[data-comfort="opaque"] body::before { display: none !important; }
 
 @media print {
   .topbar-inner, .app-side, .bottom-nav, .site-intro { box-shadow: none !important; }
@@ -1752,25 +1621,6 @@ body::before {
   color: #fff; border-color: transparent;
   box-shadow: 0 14px 26px -16px color-mix(in srgb, var(--aura-1) 80%, transparent);
 }
-
-/* Fields are wells, not slabs. */
-.searchbar, .composer .searchbar, .select, .langbar select,
-form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
-.langbar-inner input#langSelect, .mode, .tabs {
-  background: color-mix(in srgb, #000000 18%, transparent);
-  border: 1px solid var(--glass-line);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent);
-}
-[data-theme="light"] .searchbar, [data-theme="light"] .composer .searchbar,
-[data-theme="light"] .select, [data-theme="light"] .mode, [data-theme="light"] .tabs {
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-}
-.searchbar:focus-within, .composer .searchbar:focus-within,
-.select:focus, form.panel .searchbar:focus-within {
-  border-color: color-mix(in srgb, var(--aura-2) 70%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--aura-2) 26%, transparent);
-}
-
 /* Chrome. */
 .topbar {
   background: color-mix(in srgb, var(--bg) 72%, transparent);
@@ -1798,7 +1648,6 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
   background: linear-gradient(120deg, var(--aura-3), var(--aura-2) 45%, var(--aura-1));
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
 }
-.dash-hero::before { background: radial-gradient(circle at 32% 28%, var(--aura-2), color-mix(in srgb, var(--aura-2) 40%, #000)); }
 .hero-clock, .kicker, .dash-hero-badge { background: var(--glass-bg); border: 1px solid var(--glass-line); box-shadow: var(--glass-hi); }
 
 /* Icon tiles: the glyph inherited the card's text colour, which left it
@@ -2191,10 +2040,6 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
 
 .sresults .sbar { margin: 0 0 20px; }
 .sresults .composer { margin: 0; }
-/* A taller field on the results page: the query is long here, and a one-line
-   strip of text in the middle of the page was the complaint. */
-.sresults .searchbar:has(> .composer-tools) > textarea { min-height: 56px; padding: 10px 4px; font-size: 16px; }
-
 .sres-head { margin: 0 0 14px; }
 .sres-head h1 {
   margin: 0;
@@ -2309,103 +2154,7 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
 
 /* The search skeleton uses a shorter first line than the card grid does. */
 .sres-row .sk-40 { width: 40%; }
-
-/* ======================================================================
-   20 · THE COMPOSER, SIZED LIKE A SEARCH BOX AND NOT A FORM
-   ======================================================================
-   The composer had grown into a four-row panel: an uppercase label, the
-   field, a control row, then a line of help text. On the home page and on
-   the results page that read as a card bigger than the content under it,
-   and the text a reader typed sat in a thin strip in the middle of it —
-   nothing like the one-line box an AI search page puts in front of you.
-
-   So: one rounded box, the field is the box, and the controls sit inside
-   its lower edge at their natural size. The label stays in the document
-   for screen readers (it is the field's only visible name) but it no
-   longer takes a row of its own. */
-
-.searchbar:has(> .composer-tools) {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2px;
-  padding: 8px 10px 8px 14px;
-  border-radius: 26px;
-}
-
-/* The label is still there for assistive technology; it is not a heading
-   a sighted reader needs to see above a search box. */
-.searchbar:has(> .composer-tools) > .composer-label {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.searchbar:has(> .composer-tools) > textarea,
-.sresults .searchbar:has(> .composer-tools) > textarea {
-  min-height: 46px;
-  padding: 11px 2px 6px;
-  font-size: 16.5px;
-  line-height: 1.5;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  resize: none;
-}
-.searchbar:has(> .composer-tools) > textarea:focus { outline: none; }
-
-/* The controls sit on the box's own baseline, small and out of the way. */
-.searchbar:has(> .composer-tools) > .composer-tools {
-  gap: 6px;
-  padding: 0 0 2px;
-  align-items: center;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .btn-icon {
-  width: 34px; height: 34px; min-height: 34px; padding: 7px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode {
-  margin-left: 0;
-  padding: 2px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode .mode-btn {
-  min-height: 30px;
-  padding: 0 12px;
-  font-size: 13px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-  margin-left: auto;
-  min-height: 36px;
-  padding: 0 18px;
-  border-radius: 999px;
-  font-size: 14px;
-}
-
-/* The help line was a third row of prose under a search box. It stays
-   available to a screen reader through aria-describedby, and is shown
-   only when the field is focused, where it explains the two modes. */
-.searchbar:has(> .composer-tools) > .mode-help {
-  grid-column: 1 / -1;
-  margin: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  font-size: 12px;
-  transition: max-height .18s ease, opacity .18s ease;
-}
-.searchbar:has(> .composer-tools):focus-within > .mode-help {
-  max-height: 40px;
-  opacity: 1;
-  padding: 2px 2px 4px;
-}
-
-@media (max-width: 700px) {
-  .searchbar:has(> .composer-tools) { padding: 6px 8px 6px 12px; border-radius: 22px; }
-  .searchbar:has(> .composer-tools) > textarea { min-height: 42px; font-size: 16px; padding: 10px 2px 4px; }
-  .searchbar:has(> .composer-tools) > .composer-tools > .mode .mode-btn { padding: 0 10px; }
-  .searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] { padding: 0 14px; }
-}
+@media (max-width: 700px) {}
 
 /* The "ask this instead" card was a second panel above the results; it is
    now one compact line that does not compete with the list. */
@@ -2804,65 +2553,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
    when the field takes focus.
    ══════════════════════════════════════════════════════════════════════════ */
 @layer components {
-  .searchbar {
-    border-radius: 26px;
-    padding: 10px 10px 8px;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 12px 32px -18px rgba(16, 24, 20, .28);
-    transition: border-color .16s ease, box-shadow .16s ease;
-  }
-  .searchbar:focus-within {
-    border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2));
-    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 16px 40px -18px rgba(16, 24, 20, .34);
-  }
+  @media (min-width: 861px) {  }
 
-  /* the field itself: the largest, quietest thing on the page */
-  .searchbar input[type="search"],
-  .searchbar input[type="text"],
-  .searchbar textarea {
-    font-size: 16px;
-    line-height: 1.5;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-  .searchbar input::placeholder,
-  .searchbar textarea::placeholder { color: var(--muted); opacity: 1; }
-
-  /* the mode choice sits inside the card, as pills */
-  .searchbar .mode { background: transparent; padding: 0; gap: 4px; }
-  .searchbar .mode-btn {
-    min-height: 36px;
-    padding: 0 14px;
-    border-radius: 999px;
-    font-size: 13.5px;
-    border: 1px solid transparent;
-  }
-  .searchbar .mode-btn[aria-pressed="true"],
-  .searchbar .mode-btn.is-on {
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
-    border-color: color-mix(in srgb, var(--accent) 34%, transparent);
-    color: var(--copper-ink);
-  }
-
-  /* the action, anchored to the trailing edge and unmistakable */
-  .searchbar button[type="submit"] {
-    min-height: 42px;
-    padding: 0 18px;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-
-  @media (min-width: 861px) {
-    .searchbar { max-width: 760px; margin-inline: auto; }
-  }
-
-  @media (max-width: 560px) {
-    .searchbar { border-radius: 22px; padding: 8px 8px 6px; }
-    .searchbar button[type="submit"] { min-height: 40px; padding: 0 16px; }
-  }
+  @media (max-width: 560px) {  }
 }

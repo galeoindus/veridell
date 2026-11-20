@@ -893,61 +893,6 @@ textarea { line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .spinner { animation: none; }
 }
-
-/* ==========================================================================
-   THE AUDIT'S PART II CORRECTIONS — surfaces, ink and states
-   ==========================================================================
-   The interface audit measured four complaints and traced all of them to one
-   habit: a component file declaring its own colour, and a state declaring a
-   background without declaring the foreground that sits on it. These rules
-   are the audit's patch list, applied in one place and loaded after the
-   sheets that paint the old versions, so the corrections win without a single
-   !important.
-
-   What they do, in the audit's own order:
-
-     F-05/F-06  the field is flat paper, not a pressed well
-     F-07/F-08  the hero card is an opaque surface with one quiet wash
-     F-09       no gradient sits behind text
-     F-10/F-11  every active state declares its ink with its fill
-     F-12       the primary button is a flat token pair
-     F-14       the dark theme's muted ink clears 4.5:1
-   ========================================================================== */
-
-/* ── F-05 / F-06 · the field ─────────────────────────────────────────────
-   A pressed well works for a button the reader presses. A text field is a
-   surface the reader reads on, and an inset shadow plus a 145° gradient
-   darkened the first two characters of every placeholder — 31 levels below
-   the page at the top-left corner. Flat surface, hairline border, one soft
-   shadow, and focus as the only state that changes the surface. */
-
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar,
-form.panel .select,
-.select,
-.langbar select,
-.langbar-inner input#langSelect,
-.feedback .fb-note textarea {
-  background: var(--surface);
-  background-image: none;
-  border: 1px solid var(--border-2);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent);
-}
-
-.searchbar:focus-within,
-.composer .searchbar:focus-within,
-.dash-hero .searchbar:focus-within,
-form.panel .searchbar:focus-within,
-.select:focus,
-.langbar select:focus,
-.feedback .fb-note textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
 /* The segmented controls were the same pressed well. They are a track with a
    raised thumb, which is a different material from a field. */
 .mode,
@@ -978,18 +923,6 @@ form.panel .searchbar:focus-within,
    One centred wash that cannot be mistaken for a rendering fault. The old
    pair of blooms was tuned against the light background and produced a pale
    top-right and a brown top-left in the dark one. */
-
-.dash-hero::before,
-.dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
-  opacity: 1;
-}
-[data-theme="dark"] .dash-hero::before,
-[data-theme="dark"] .dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
-}
 
 /* ── F-09 · no gradient behind text ──────────────────────────────────────
    `background-clip: text` with a transparent fill measured 1.07:1: in print,
@@ -1084,26 +1017,6 @@ a.skip-link {
   background: var(--primary);
   color: var(--on-primary);
 }
-
-/* ── the composer wrapper is not a field ─────────────────────────────────
-   `.composer` is only a positioning div on the app pages — the field is the
-   form inside it. But three sheets painted the wrapper as a second field, so
-   the search box rendered as a box inside a box, with the pressed-well shadow
-   on the outer one. The wrapper goes back to being invisible. The chat page's
-   composer *is* the field (it is a <form class="composer">), so this is
-   scoped to the wrapper only. */
-
-.composer:has(> form.searchbar) {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-}
-.composer:has(> form.searchbar):focus-within {
-  box-shadow: none;
-  border: 0;
-}
-
 /* ── `hidden` means hidden ───────────────────────────────────────────────
    The clear button, the offline notice and a dozen other elements are hidden
    by setting the `hidden` attribute, but any rule that gives the element a
@@ -1198,17 +1111,6 @@ a.skip-link {
 
 /* the timeline drew a vertical line down the whole list */
 .timeline li { border-left: 0; }
-
-/* ── fields: a hairline that belongs to the surface ────────────────────── */
-.searchbar,
-.composer .searchbar,
-.select,
-.langbar select,
-form.panel .searchbar,
-.feedback .fb-note textarea {
-  border: 1px solid var(--hair);
-}
-
 /* ── the left rail: a soft column, not a bordered sheet ────────────────── */
 .app-side {
   border: 0;
@@ -1301,20 +1203,6 @@ a, button, .btn, .chip, .pill, .side-link, .tab, .depth-btn, .mode-btn {
   color: var(--text);
 }
 .app-side .side-link:hover { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
-
-/* the field's own hairline, a shade softer again: it is a surface, not a box */
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar {
-  border-color: color-mix(in srgb, var(--border-2) 42%, transparent);
-}
-.searchbar:hover,
-.dash-hero .searchbar:hover {
-  border-color: color-mix(in srgb, var(--border-2) 62%, transparent);
-}
-
 /* The rail is not a panel.
    With the stroke gone it still read as a box, because the surface tone is
    lighter than the page and the rounded corner drew the rest of the outline
@@ -2111,8 +1999,6 @@ main#main {
    one line, the mode switch and Send on the next — which made the field three
    rows tall in a 390 px column. The controls fit on one line at this size; they
    just have to be allowed to stay there. */
-@media (max-width: 700px) {}
-
 /* A broken or still-loading picture must not reserve 360 px of empty card on
    a phone; the figure collapses to the size of its caption instead. */
 @media (max-width: 700px) {
@@ -2261,6 +2147,20 @@ section.dash-hero,
   overflow: auto;
 }
 
+/* ── F-02: the decorative pseudo-element behind the search panel is gone ───
+   It was a blurred 132px circle with a black inset shadow at a negative
+   offset. A later sheet moved it with `inset` but never reset its width,
+   border-radius, filter or box-shadow, so the dark crescent survived along the
+   left edge — the black mark on the card. A search panel does not need an
+   ornament behind it, so the whole layer is removed rather than restyled. */
+.dash-hero::before,
+.dash-hero::after,
+.dash-hero-ask::before,
+.dash-hero-ask::after {
+  content: none !important;
+  display: none !important;
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
@@ -2294,32 +2194,6 @@ body {
   box-shadow: var(--polish-shadow);
   overflow: visible;
 }
-
-.searchbar:has(> .composer-tools) {
-  border: 1px solid var(--border-2);
-  border-radius: 26px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: 0 6px 22px color-mix(in srgb, var(--text) 6%, transparent);
-  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
-}
-
-.searchbar:has(> .composer-tools):focus-within {
-  border-color: color-mix(in srgb, var(--accent) 62%, var(--border-2));
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent), var(--polish-shadow);
-}
-
-.searchbar:has(> .composer-tools) > textarea {
-  min-height: 52px;
-  line-height: 1.55;
-  font-size: 16px;
-  resize: vertical;
-}
-
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-  border-radius: 999px;
-  min-height: 44px;
-}
-
 .suggest {
   border-radius: 20px;
   border: 1px solid var(--border-2);
@@ -2537,7 +2411,7 @@ img.image-fallback {
   --im-surface-2: #eaf0eb;
   --im-text: #17251f;
   --im-muted: #43554b;   /* was #52645a — too faint on the pale surface */
-  --im-faint: #64756b;
+  --im-faint: #5f7066;   /* was #64756b — 4.48:1, just under AA */
   --im-border: #d5e0d8;
   --im-border-strong: #bdcdc2;
   --im-accent: #176b4c;
@@ -2660,21 +2534,6 @@ body { background-image: radial-gradient(70rem 35rem at 4% -12%, color-mix(in sr
 [data-comfort="opaque"] .top,
 [data-comfort="opaque"] .chat-header,
 [data-comfort="opaque"] .topbar-actions { background: var(--im-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
-
-/* Calm, tactile fields: subtle inset depth, with an unmistakable focus ring. */
-.searchbar, .search-box, .search-box input, .composer, .chat-composer, #prompt {
-  border-radius: var(--im-radius-md);
-}
-.searchbar, .search-box, .chat-composer {
-  box-shadow: var(--im-inset-shadow);
-  border: 1px solid var(--im-border-strong);
-  background: var(--im-surface);
-}
-.searchbar:focus-within, .search-box:focus-within, .chat-composer:focus-within {
-  border-color: var(--im-accent);
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 23%, transparent);
-}
-
 /* Claymorphism: one or two expressive areas per screen, not every card. */
 .dash-hero, .welcome-block, .aotd, .empty .empty-orb, .chat-empty-card {
   border: 1px solid var(--im-border);
@@ -2947,22 +2806,6 @@ html[data-surface-style="glass"] .im-preferences-panel {
   -webkit-backdrop-filter: blur(22px) saturate(1.35);
   backdrop-filter: blur(22px) saturate(1.35);
 }
-
-/* Neumorphism: soft raised controls and inset input wells, never body copy. */
-html[data-surface-style="soft"] .composer,
-html[data-surface-style="soft"] .chat-composer,
-html[data-surface-style="soft"] .searchbar,
-html[data-surface-style="soft"] .rail-new,
-html[data-surface-style="soft"] .im-preferences-panel {
-  border-color: transparent;
-  box-shadow: var(--im-clay-shadow), inset 1px 1px 2px color-mix(in srgb, var(--im-text) 5%, transparent);
-}
-html[data-surface-style="soft"] .composer:focus-within,
-html[data-surface-style="soft"] .chat-composer:focus-within,
-html[data-surface-style="soft"] .searchbar:focus-within {
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 24%, transparent);
-}
-
 /* Claymorphism is a focal treatment, not a blanket card style. */
 html[data-surface-style="clay"] .empty-mark,
 html[data-surface-style="clay"] .dash-hero,
@@ -3908,18 +3751,6 @@ body.amigo-chat .a-actions button:focus-visible {
   --vd-lift-2: 0 2px 4px color-mix(in srgb, var(--charcoal, #242824) 5%, transparent),
                0 12px 24px -14px color-mix(in srgb, var(--forest, #173b32) 26%, transparent);
 }
-
-/* ── motion: one speed, one curve ──────────────────────────────────────── */
-a, button, .btn, .card, .q-card, .cat-card, .side-link, .mode-btn, .depth-btn,
-.chip, .src-chip, .followup, input, textarea, select, .searchbar {
-  transition:
-    background-color var(--vd-base) var(--vd-ease),
-    border-color var(--vd-base) var(--vd-ease),
-    color var(--vd-fast) var(--vd-ease),
-    box-shadow var(--vd-base) var(--vd-ease),
-    transform var(--vd-fast) var(--vd-ease);
-}
-
 /* A press should feel like a press, and never move the thing under the finger
    far enough to change what is being clicked. */
 button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY(1px) scale(.994); }
@@ -3980,20 +3811,6 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
-
-/* ── the composer ──────────────────────────────────────────────────────── */
-/* The composer is the one control a reader touches every turn, so it gets the
-   only shadow on the page that responds to focus. */
-.composer, .searchbar {
-  transition: border-color var(--vd-base) var(--vd-ease),
-              box-shadow var(--vd-base) var(--vd-ease),
-              background-color var(--vd-base) var(--vd-ease);
-}
-.composer:focus-within, .searchbar:focus-within {
-  border-color: color-mix(in srgb, var(--accent, #b46a45) 70%, var(--border-2, #cfc3ac));
-  box-shadow: var(--vd-ring), var(--vd-lift-1);
-}
-
 /* ── small type details ────────────────────────────────────────────────── */
 /* Numbers that change — counts, timings, versions — must not reflow the line
    they sit in as they change. */

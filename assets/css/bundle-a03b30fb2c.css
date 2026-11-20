@@ -81,21 +81,6 @@ h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: -0.01em; line-he
 .brand-text strong { font-family: var(--font-head); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
 
 .brand-text small { color: var(--faint); font-size: 10.5px; letter-spacing: 0.03em; }
-
-.searchbar { flex: 1 1 320px; display: flex; align-items: flex-end; gap: 8px; background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--radius); padding: 7px 8px 7px 14px; min-width: 200px; box-shadow: var(--shadow-sm); transition: border-color 0.18s, box-shadow 0.18s; }
-
-.searchbar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
-
-.searchbar textarea, .searchbar input { flex: 1 1 0%; border: 0px; background: transparent; color: var(--text); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-family: var(--font-body); font-size: 15px; min-width: 50px; padding: 6px 2px; resize: none; max-height: 140px; overflow-y: auto; }
-
-.searchbar textarea::placeholder, .searchbar input::placeholder { color: var(--faint); }
-
-.searchbar textarea:focus, .searchbar input:focus { outline: none; }
-
-.searchbar:has(textarea:focus-visible), .searchbar:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
-
-.searchbar input::-webkit-search-cancel-button { appearance: none; }
-
 .mode { display: inline-flex; gap: 2px; padding: 3px; border-radius: var(--radius-xs); background: var(--surface-2); flex: 0 0 auto; align-self: center; }
 
 .mode-btn { font-style: inherit; font-variant: inherit; font-stretch: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-family: var(--font-body); font-size: 12.5px; font-weight: 500; cursor: pointer; border: 0px; background: transparent; color: var(--muted); padding: 6px 10px; border-radius: var(--radius-xs); line-height: 1; }
@@ -561,11 +546,6 @@ a.card { text-decoration: none; }
 .src-credit a { color: inherit; text-decoration: underline; }
 
 .composer { position: relative; max-width: 760px; margin: 0px auto; text-align: left; }
-
-.composer .searchbar { display: block; padding: 15px 16px 12px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border-2); box-shadow: var(--shadow); transition: border-color 0.18s, box-shadow 0.18s; }
-
-.composer .searchbar textarea { display: block; width: 100%; font-size: 16.5px; line-height: 1.6; min-height: 30px; max-height: 200px; padding: 2px 0px; resize: none; }
-
 .composer-tools { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
 .composer .suggest { left: 0px; transform: none; width: 100%; top: 100%; margin-top: 8px; }.article-grid { max-width: 780px; margin-left: auto; margin-right: auto; }
@@ -901,11 +881,6 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 .btn:not(:disabled):active { transform: translateY(0px); }
 
 :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-xs); }
-
-.composer .searchbar { transition: box-shadow .24s var(--ease), border-color .24s var(--ease); }
-
-.composer .searchbar:focus-within { border-color: color-mix(in srgb, var(--copper) 55%, var(--border-2)); box-shadow: var(--glow); }
-
 .topbar { box-shadow: rgba(0, 0, 0, 0.55) 0px 8px 24px -22px; }
 
 .prose a, .md a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
@@ -995,9 +970,6 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 @media (max-width: 900px) {
   .bottom-nav { backdrop-filter: saturate(1.4) blur(18px); background: color-mix(in srgb, var(--bg) 78%, transparent); }
 }
-
-.composer .searchbar { border-radius: var(--radius-xl); }
-
 @media (prefers-reduced-motion: reduce) {
   .suggest, .fb-note:not([hidden]) { animation: auto ease 0s 1 normal none running none; }
 }
@@ -1062,21 +1034,10 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass { background: var(--bg); border: 1px solid var(--border-2); }
 }
-
-.topbar, .bottom-nav, .status-strip, .composer .searchbar, .toast { border-radius: 0px; }
-
 .topbar { border-radius: 0px; }
-
-.composer .searchbar, .toast { border-radius: var(--radius-xl); }
-
 .panel, .answer-card, .source-card, .sec:has(> .sec-head), .prose, .topic-block { background: var(--surface); backdrop-filter: none; }
 
-@media (prefers-reduced-transparency: reduce) {
-  .glass, .topbar, .bottom-nav, .status-strip, .composer .searchbar, .toast { background-image: none !important; backdrop-filter: none !important; border: 1px solid var(--border-2) !important; box-shadow: none !important; }
-}
-
-[data-comfort="opaque"] .glass, [data-comfort="opaque"] .topbar, [data-comfort="opaque"] .bottom-nav, [data-comfort="opaque"] .status-strip, [data-comfort="opaque"] .composer .searchbar, [data-comfort="opaque"] .toast { background-image: none !important; backdrop-filter: none !important; border: 1px solid var(--border-2) !important; box-shadow: none !important; }
-
+@media (prefers-reduced-transparency: reduce) {}
 [data-comfort="opaque"] body::before { display: none !important; }
 
 [data-comfort="opaque"] body::after { opacity: 0.25 !important; }
@@ -1165,9 +1126,6 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 .dash-hero p { margin: 0px 0px 18px; color: var(--muted); font-size: 15px; line-height: 1.55; max-width: 56ch; }
 
 .dash-hero-ask { max-width: 720px; }
-
-.dash-hero-ask .searchbar { background: rgba(255, 255, 255, 0.96); border-color: rgba(255, 255, 255, 0.5); }
-
 .dash-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
 
 .dash-action { display: flex; flex-direction: column; gap: 4px; padding: 15px 16px 16px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; transition: transform .16s var(--ease), border-color .16s var(--ease), box-shadow .16s var(--ease); }
@@ -1428,11 +1386,6 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 :root { --glow-a: color-mix(in srgb, var(--copper) 40%, transparent); --glow-b: color-mix(in srgb, var(--sage) 50%, transparent); --glow-c: color-mix(in srgb, var(--forest) 26%, transparent); }
 
 [data-theme="dark"] { --glow-a: color-mix(in srgb, var(--copper) 52%, transparent); --glow-b: color-mix(in srgb, var(--sage) 42%, transparent); --glow-c: color-mix(in srgb, var(--sage) 22%, transparent); }
-
-.dash-hero .searchbar::after, .composer .searchbar::after { content: ""; position: absolute; inset: 0px; border-radius: inherit; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.5) 48%, transparent 66%) 130% 0px / 260% 100%; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease), background-position .9s var(--ease); }
-
-.dash-hero .searchbar:focus-within::after, .composer .searchbar:focus-within::after { opacity: 1; background-position: -30% 0px; }
-
 .bottom-nav a::before { content: ""; position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%); height: 2px; width: 0px; border-radius: 2px; background: linear-gradient(90deg, var(--copper), var(--sage)); transition: width .22s var(--ease); }
 
 .bottom-nav a[aria-current="page"]::before { width: 22px; }
@@ -1462,9 +1415,7 @@ a.card:hover, .topic-card:hover { transform: translateY(-3px); box-shadow: var(-
 body::before { animation-duration: 34s, 46s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .dash-hero-badge { animation: auto ease 0s 1 normal none running none; }
-  .dash-hero .searchbar::after, .composer .searchbar::after { transition: none; }
-  .btn-primary:hover, .depth-btn:hover { transform: none; }
+  .dash-hero-badge { animation: auto ease 0s 1 normal none running none; }  .btn-primary:hover, .depth-btn:hover { transform: none; }
   .dash-action:hover .ic, .cat-card:hover .ic { transform: none; }
   .bottom-nav a::before { transition: none; }
 }.art-figure { margin: 0px; display: grid; justify-items: center; gap: 7px; }
@@ -1593,21 +1544,6 @@ body::before { animation-duration: 34s, 46s; }
 
 /* The bookmark toggle shows its on-state clearly. */
 .btn.is-on { border-color: var(--accent); color: var(--copper-ink); }
-
-/* Feedback form controls reuse the searchbar shell, full width. */
-form.panel .searchbar,
-form.panel .select {
-  width: 100%;
-  font: inherit;
-  font-size: 15px;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-2);
-  background: var(--surface);
-  color: var(--text);
-  resize: vertical;
-}
-
 form.panel .select { cursor: pointer; }
 
 /* A skeleton line used by the rail and cards. */
@@ -1667,20 +1603,7 @@ form.panel .select { cursor: pointer; }
   .topbar-inner { gap: 6px; }
   .topnav { margin-left: auto; }
   .topnav a { padding: 7px 8px; font-size: 12.5px; }
-}
-
-/* ======================================================================
-   The hero assumes a dark panel
-   ======================================================================
-   The design system styles every control inside .dash-hero for a dark
-   background — white text on translucent white. The hero itself is not
-   dark (it inherits the page background, and its own gradient was lost in
-   the capture), so in light mode the depth buttons, the meaning switch, the
-   chips and the clock were white on cream and effectively invisible.
-   Restore the theme-aware styling for all of them. */
-
-.dash-hero .searchbar { background: var(--surface); border-color: var(--border-2); }
-.dash-hero .depth-btn { background: var(--surface); border-color: var(--border-2); color: var(--text); }
+}.dash-hero .depth-btn { background: var(--surface); border-color: var(--border-2); color: var(--text); }
 .dash-hero .depth-btn:hover { background: var(--surface-2); color: var(--text); }
 .dash-hero .depth-btn.is-active,
 .dash-hero .depth-btn[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
@@ -1958,9 +1881,7 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 .toc-jump-list a, .side-link, .bottom-nav a { min-height: 40px; }
 
 /* iOS zooms the page when a focused input is under 16px. */
-@media (max-width: 700px) {
-  input, select, textarea, .searchbar textarea, .searchbar input { font-size: 16px; }
-}
+@media (max-width: 700px) {}
 
 /* Tap highlight follows the design rather than the platform default. */
 * { -webkit-tap-highlight-color: rgba(180, 106, 69, 0.18); }
@@ -1975,10 +1896,6 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 }
 .mode-help { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
 .composer-prompt { margin: 8px 2px 0; font-size: 13px; color: var(--danger); }
-.searchbar { flex-wrap: wrap; }
-.searchbar .composer-label { flex: 1 1 100%; }
-.searchbar .mode-help, .searchbar .composer-prompt { flex: 1 1 100%; }
-
 /* The mode control is a segmented choice, labelled in plain language. */
 .mode { background: var(--surface-2); border-radius: 999px; padding: 3px; display: inline-flex; gap: 2px; }
 .mode-btn { min-height: 34px; padding: 0 14px; border-radius: 999px; font-size: 13.5px; }
@@ -2104,30 +2021,6 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 }
 .article-grid { grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
 @media (min-width: 1560px) { .article-grid { grid-template-columns: minmax(0, 1fr) 360px; } }
-
-/* ======================================================================
-   The composer, the sidebar, and the width of the reading views
-   ====================================================================== */
-
-/* A composer reads top to bottom: label, the field, then the controls on one
-   line with the mode choice and the submit at the end. It was a wrapped flex
-   row, which put the controls in a different place on every page. */
-.searchbar:has(> .composer-tools) {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px;
-  align-items: stretch; padding: 14px 16px 12px;
-}
-.searchbar:has(> .composer-tools) > .composer-label { grid-column: 1 / -1; margin: 0; }
-.searchbar:has(> .composer-tools) > textarea { width: 100%; min-height: 42px; }
-.searchbar:has(> .composer-tools) > .composer-tools {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0;
-  justify-content: flex-start;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode { margin-left: auto; }
-.searchbar:has(> .composer-tools) > .composer-tools > .btn-icon { width: 40px; height: 40px; min-height: 40px; }
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] { min-height: 40px; padding: 0 22px; }
-.searchbar:has(> .composer-tools) > .mode-help,
-.searchbar:has(> .composer-tools) > .composer-prompt { grid-column: 1 / -1; margin: 0; }
-
 /* One icon size in the sidebar, so the list reads as a list. */
 .side-link { gap: 10px; padding: 9px 12px; font-size: 14.5px; }
 .side-link > svg { width: 18px; height: 18px; flex: 0 0 auto; }
@@ -2146,26 +2039,10 @@ button, .btn, [role="button"], .tab, .chip, .depth-btn, .chip-btn {
 .toc-jump-list .topic-num { width: auto; min-width: 26px; padding: 0 5px; }
 .toc-jump-list a > .topic-num { flex: 0 0 auto; }
 .toc-jump-list .toc-label { flex: 1 1 auto; }
-
-/* ======================================================================
-   The composer: the suggestion list, and the field's height
-   ====================================================================== */
-
-/* The glass shell carries `contain: layout style paint`, and `paint` clips a
-   child to the shell's own box. The suggestion list is a child of the
-   composer that opens *below* it, so it was being clipped away — typing
-   looked like nothing was happening. Drop containment on the composer only. */
-.searchbar.glass { contain: none; }
-
-/* The suggestion list needs to sit above the answer beneath it. */
-.searchbar .suggest { z-index: 80; }
-
 /* An empty field must show its whole placeholder. It wraps to two lines on a
    phone, and the textarea was staying one line tall, so the second line was
    cut in half — the "squashed" search bar. */
-@media (max-width: 700px) {
-  .searchbar:has(> .composer-tools) > textarea { min-height: 54px; }
-}
+@media (max-width: 700px) {}
 
 /* ======================================================================
    The article reads across the whole width, contents at the top
@@ -2690,24 +2567,6 @@ body::after { opacity: 0; }   /* the old grid belongs to the glass era */
 .badge { color: var(--copper-ink); }
 .badge.accent, .badge.accent:hover { background: var(--clay-cta); color: #fff; border-color: transparent; box-shadow: var(--clay-cta-hi), var(--clay-cta-lo), var(--clay-cta-drop); }
 [data-theme="dark"] .badge { color: var(--sage); }
-
-/* Fields are pressed in, not raised, and keep a visible edge. */
-.searchbar, .composer .searchbar, .select, .langbar select,
-form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
-.langbar-inner input#langSelect {
-  background: var(--neo-face);
-  border: 1px solid var(--neo-edge);
-  border-radius: var(--clay-r);
-  box-shadow: var(--neo-in);
-  transition: box-shadow .24s var(--ease-out), border-color .24s var(--ease-out);
-}
-.searchbar:focus-within, .composer .searchbar:focus-within,
-.select:focus, .langbar select:focus,
-form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
-  border-color: var(--copper);
-  box-shadow: var(--neo-in), 0 0 0 3px color-mix(in srgb, var(--copper) 30%, transparent);
-}
-
 /* Segmented controls: a pressed track with a raised thumb. */
 .mode, .tabs { background: var(--neo-face); border: 1px solid var(--neo-edge); box-shadow: var(--neo-in); border-radius: var(--clay-r-pill); }
 .tabs { padding: 5px; }
@@ -2726,13 +2585,7 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
   border-radius: var(--clay-r-lg);
   box-shadow: var(--clay-hi), var(--clay-lo), var(--clay-drop);
 }
-.dash-hero::after { display: none; }
-.dash-hero .searchbar, .dash-hero-ask .searchbar {
-  background: var(--neo-face);
-  border: 1px solid var(--neo-edge);
-  box-shadow: var(--neo-in);
-}
-.dash-hero .depth-btn, .dash-hero .chip-btn, .dash-hero .chips .chip,
+.dash-hero::after { display: none; }.dash-hero .depth-btn, .dash-hero .chip-btn, .dash-hero .chips .chip,
 .dash-hero .example-prompts button {
   background: var(--clay-face);
   border: 1px solid color-mix(in srgb, var(--border-2) 62%, transparent);
@@ -2757,18 +2610,7 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
 .dash-hero .trust-strip li::before { color: var(--copper-ink); }
 
 /* Two small clay pebbles, low-contrast, tucked into the corners. */
-.dash-hero::before {
-  content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none;
-  width: 132px; height: 132px; top: -46px; left: -58px;
-  filter: blur(1.5px); opacity: .55;
-  background: radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--sage) 96%, #fff), color-mix(in srgb, var(--sage) 68%, var(--forest)));
-  box-shadow: inset 8px 8px 18px color-mix(in srgb, #ffffff 40%, transparent),
-              inset -10px -10px 22px color-mix(in srgb, #000000 16%, transparent),
-              0 26px 44px -30px color-mix(in srgb, var(--forest) 55%, transparent);
-}
-[data-theme="dark"] .dash-hero::before { opacity: .3; }
-
-.dash-hero-badge {
+[data-theme="dark"] .dash-hero-badge {
   background: var(--clay-face);
   border: 1px solid color-mix(in srgb, var(--border-2) 50%, transparent);
   box-shadow: inset 3px 3px 7px color-mix(in srgb, #ffffff 80%, transparent),
@@ -2968,30 +2810,8 @@ form.panel .searchbar:focus-within, .feedback .fb-note textarea:focus {
 }
 
 /* Increased contrast: firm up every control edge and every hairline. */
-@media (prefers-contrast: more) {
-  .btn, .chip, .pill, .depth-btn, .chip-btn, .badge, .example-prompts button,
-  .searchbar, .composer .searchbar, .select, .mode, .tabs {
-    border-color: var(--text) !important;
-  }
-  .topbar-inner, .app-side, .bottom-nav { border-color: var(--text) !important; }
-}
-
-/* The in-app reading-comfort switch (data-comfort="opaque"): flatten the
-   translucency and the clay gradient, keep the shapes. */
-[data-comfort="opaque"] .topbar-inner,
-[data-comfort="opaque"] .app-side,
-[data-comfort="opaque"] .bottom-nav,
-[data-comfort="opaque"] .suggest,
-[data-comfort="opaque"] .lang-menu,
-[data-comfort="opaque"] .toast,
-[data-comfort="opaque"] .composer .searchbar {
-  background: var(--surface) !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  border: 1px solid var(--border-2) !important;
-  box-shadow: none !important;
-}
-[data-comfort="opaque"] body::before { display: none !important; }
+@media (prefers-contrast: more) {  .topbar-inner, .app-side, .bottom-nav { border-color: var(--text) !important; }
+}[data-comfort="opaque"] body::before { display: none !important; }
 
 @media print {
   .topbar-inner, .app-side, .bottom-nav, .site-intro { box-shadow: none !important; }
@@ -3265,25 +3085,6 @@ body::before {
   color: #fff; border-color: transparent;
   box-shadow: 0 14px 26px -16px color-mix(in srgb, var(--aura-1) 80%, transparent);
 }
-
-/* Fields are wells, not slabs. */
-.searchbar, .composer .searchbar, .select, .langbar select,
-form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
-.langbar-inner input#langSelect, .mode, .tabs {
-  background: color-mix(in srgb, #000000 18%, transparent);
-  border: 1px solid var(--glass-line);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 6%, transparent);
-}
-[data-theme="light"] .searchbar, [data-theme="light"] .composer .searchbar,
-[data-theme="light"] .select, [data-theme="light"] .mode, [data-theme="light"] .tabs {
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-}
-.searchbar:focus-within, .composer .searchbar:focus-within,
-.select:focus, form.panel .searchbar:focus-within {
-  border-color: color-mix(in srgb, var(--aura-2) 70%, transparent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--aura-2) 26%, transparent);
-}
-
 /* Chrome. */
 .topbar {
   background: color-mix(in srgb, var(--bg) 72%, transparent);
@@ -3311,7 +3112,6 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
   background: linear-gradient(120deg, var(--aura-3), var(--aura-2) 45%, var(--aura-1));
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
 }
-.dash-hero::before { background: radial-gradient(circle at 32% 28%, var(--aura-2), color-mix(in srgb, var(--aura-2) 40%, #000)); }
 .hero-clock, .kicker, .dash-hero-badge { background: var(--glass-bg); border: 1px solid var(--glass-line); box-shadow: var(--glass-hi); }
 
 /* Icon tiles: the glyph inherited the card's text colour, which left it
@@ -3704,10 +3504,6 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
 
 .sresults .sbar { margin: 0 0 20px; }
 .sresults .composer { margin: 0; }
-/* A taller field on the results page: the query is long here, and a one-line
-   strip of text in the middle of the page was the complaint. */
-.sresults .searchbar:has(> .composer-tools) > textarea { min-height: 56px; padding: 10px 4px; font-size: 16px; }
-
 .sres-head { margin: 0 0 14px; }
 .sres-head h1 {
   margin: 0;
@@ -3822,103 +3618,7 @@ form.panel .searchbar, form.panel .select, .feedback .fb-note textarea,
 
 /* The search skeleton uses a shorter first line than the card grid does. */
 .sres-row .sk-40 { width: 40%; }
-
-/* ======================================================================
-   20 · THE COMPOSER, SIZED LIKE A SEARCH BOX AND NOT A FORM
-   ======================================================================
-   The composer had grown into a four-row panel: an uppercase label, the
-   field, a control row, then a line of help text. On the home page and on
-   the results page that read as a card bigger than the content under it,
-   and the text a reader typed sat in a thin strip in the middle of it —
-   nothing like the one-line box an AI search page puts in front of you.
-
-   So: one rounded box, the field is the box, and the controls sit inside
-   its lower edge at their natural size. The label stays in the document
-   for screen readers (it is the field's only visible name) but it no
-   longer takes a row of its own. */
-
-.searchbar:has(> .composer-tools) {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2px;
-  padding: 8px 10px 8px 14px;
-  border-radius: 26px;
-}
-
-/* The label is still there for assistive technology; it is not a heading
-   a sighted reader needs to see above a search box. */
-.searchbar:has(> .composer-tools) > .composer-label {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.searchbar:has(> .composer-tools) > textarea,
-.sresults .searchbar:has(> .composer-tools) > textarea {
-  min-height: 46px;
-  padding: 11px 2px 6px;
-  font-size: 16.5px;
-  line-height: 1.5;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  resize: none;
-}
-.searchbar:has(> .composer-tools) > textarea:focus { outline: none; }
-
-/* The controls sit on the box's own baseline, small and out of the way. */
-.searchbar:has(> .composer-tools) > .composer-tools {
-  gap: 6px;
-  padding: 0 0 2px;
-  align-items: center;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .btn-icon {
-  width: 34px; height: 34px; min-height: 34px; padding: 7px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode {
-  margin-left: 0;
-  padding: 2px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > .mode .mode-btn {
-  min-height: 30px;
-  padding: 0 12px;
-  font-size: 13px;
-}
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-  margin-left: auto;
-  min-height: 36px;
-  padding: 0 18px;
-  border-radius: 999px;
-  font-size: 14px;
-}
-
-/* The help line was a third row of prose under a search box. It stays
-   available to a screen reader through aria-describedby, and is shown
-   only when the field is focused, where it explains the two modes. */
-.searchbar:has(> .composer-tools) > .mode-help {
-  grid-column: 1 / -1;
-  margin: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  font-size: 12px;
-  transition: max-height .18s ease, opacity .18s ease;
-}
-.searchbar:has(> .composer-tools):focus-within > .mode-help {
-  max-height: 40px;
-  opacity: 1;
-  padding: 2px 2px 4px;
-}
-
-@media (max-width: 700px) {
-  .searchbar:has(> .composer-tools) { padding: 6px 8px 6px 12px; border-radius: 22px; }
-  .searchbar:has(> .composer-tools) > textarea { min-height: 42px; font-size: 16px; padding: 10px 2px 4px; }
-  .searchbar:has(> .composer-tools) > .composer-tools > .mode .mode-btn { padding: 0 10px; }
-  .searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] { padding: 0 14px; }
-}
+@media (max-width: 700px) {}
 
 /* The "ask this instead" card was a second panel above the results; it is
    now one compact line that does not compete with the list. */
@@ -4317,67 +4017,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
    when the field takes focus.
    ══════════════════════════════════════════════════════════════════════════ */
 @layer components {
-  .searchbar {
-    border-radius: 26px;
-    padding: 10px 10px 8px;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 12px 32px -18px rgba(16, 24, 20, .28);
-    transition: border-color .16s ease, box-shadow .16s ease;
-  }
-  .searchbar:focus-within {
-    border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2));
-    box-shadow: 0 1px 2px rgba(16, 24, 20, .04), 0 16px 40px -18px rgba(16, 24, 20, .34);
-  }
+  @media (min-width: 861px) {  }
 
-  /* the field itself: the largest, quietest thing on the page */
-  .searchbar input[type="search"],
-  .searchbar input[type="text"],
-  .searchbar textarea {
-    font-size: 16px;
-    line-height: 1.5;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-  .searchbar input::placeholder,
-  .searchbar textarea::placeholder { color: var(--muted); opacity: 1; }
-
-  /* the mode choice sits inside the card, as pills */
-  .searchbar .mode { background: transparent; padding: 0; gap: 4px; }
-  .searchbar .mode-btn {
-    min-height: 36px;
-    padding: 0 14px;
-    border-radius: 999px;
-    font-size: 13.5px;
-    border: 1px solid transparent;
-  }
-  .searchbar .mode-btn[aria-pressed="true"],
-  .searchbar .mode-btn.is-on {
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
-    border-color: color-mix(in srgb, var(--accent) 34%, transparent);
-    color: var(--copper-ink);
-  }
-
-  /* the action, anchored to the trailing edge and unmistakable */
-  .searchbar button[type="submit"] {
-    min-height: 42px;
-    padding: 0 18px;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-
-  @media (min-width: 861px) {
-    .searchbar { max-width: 760px; margin-inline: auto; }
-  }
-
-  @media (max-width: 560px) {
-    .searchbar { border-radius: 22px; padding: 8px 8px 6px; }
-    .searchbar button[type="submit"] { min-height: 40px; padding: 0 16px; }
-  }
+  @media (max-width: 560px) {  }
 }
 
 }
@@ -4672,61 +4314,6 @@ textarea { line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .spinner { animation: none; }
 }
-
-/* ==========================================================================
-   THE AUDIT'S PART II CORRECTIONS — surfaces, ink and states
-   ==========================================================================
-   The interface audit measured four complaints and traced all of them to one
-   habit: a component file declaring its own colour, and a state declaring a
-   background without declaring the foreground that sits on it. These rules
-   are the audit's patch list, applied in one place and loaded after the
-   sheets that paint the old versions, so the corrections win without a single
-   !important.
-
-   What they do, in the audit's own order:
-
-     F-05/F-06  the field is flat paper, not a pressed well
-     F-07/F-08  the hero card is an opaque surface with one quiet wash
-     F-09       no gradient sits behind text
-     F-10/F-11  every active state declares its ink with its fill
-     F-12       the primary button is a flat token pair
-     F-14       the dark theme's muted ink clears 4.5:1
-   ========================================================================== */
-
-/* ── F-05 / F-06 · the field ─────────────────────────────────────────────
-   A pressed well works for a button the reader presses. A text field is a
-   surface the reader reads on, and an inset shadow plus a 145° gradient
-   darkened the first two characters of every placeholder — 31 levels below
-   the page at the top-left corner. Flat surface, hairline border, one soft
-   shadow, and focus as the only state that changes the surface. */
-
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar,
-form.panel .select,
-.select,
-.langbar select,
-.langbar-inner input#langSelect,
-.feedback .fb-note textarea {
-  background: var(--surface);
-  background-image: none;
-  border: 1px solid var(--border-2);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent);
-}
-
-.searchbar:focus-within,
-.composer .searchbar:focus-within,
-.dash-hero .searchbar:focus-within,
-form.panel .searchbar:focus-within,
-.select:focus,
-.langbar select:focus,
-.feedback .fb-note textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
 /* The segmented controls were the same pressed well. They are a track with a
    raised thumb, which is a different material from a field. */
 .mode,
@@ -4757,18 +4344,6 @@ form.panel .searchbar:focus-within,
    One centred wash that cannot be mistaken for a rendering fault. The old
    pair of blooms was tuned against the light background and produced a pale
    top-right and a brown top-left in the dark one. */
-
-.dash-hero::before,
-.dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
-  opacity: 1;
-}
-[data-theme="dark"] .dash-hero::before,
-[data-theme="dark"] .dash-hero-ask::before {
-  background: radial-gradient(60% 50% at 50% -10%,
-    color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
-}
 
 /* ── F-09 · no gradient behind text ──────────────────────────────────────
    `background-clip: text` with a transparent fill measured 1.07:1: in print,
@@ -4863,26 +4438,6 @@ a.skip-link {
   background: var(--primary);
   color: var(--on-primary);
 }
-
-/* ── the composer wrapper is not a field ─────────────────────────────────
-   `.composer` is only a positioning div on the app pages — the field is the
-   form inside it. But three sheets painted the wrapper as a second field, so
-   the search box rendered as a box inside a box, with the pressed-well shadow
-   on the outer one. The wrapper goes back to being invisible. The chat page's
-   composer *is* the field (it is a <form class="composer">), so this is
-   scoped to the wrapper only. */
-
-.composer:has(> form.searchbar) {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  padding: 0;
-}
-.composer:has(> form.searchbar):focus-within {
-  box-shadow: none;
-  border: 0;
-}
-
 /* ── `hidden` means hidden ───────────────────────────────────────────────
    The clear button, the offline notice and a dozen other elements are hidden
    by setting the `hidden` attribute, but any rule that gives the element a
@@ -4977,17 +4532,6 @@ a.skip-link {
 
 /* the timeline drew a vertical line down the whole list */
 .timeline li { border-left: 0; }
-
-/* ── fields: a hairline that belongs to the surface ────────────────────── */
-.searchbar,
-.composer .searchbar,
-.select,
-.langbar select,
-form.panel .searchbar,
-.feedback .fb-note textarea {
-  border: 1px solid var(--hair);
-}
-
 /* ── the left rail: a soft column, not a bordered sheet ────────────────── */
 .app-side {
   border: 0;
@@ -5080,20 +4624,6 @@ a, button, .btn, .chip, .pill, .side-link, .tab, .depth-btn, .mode-btn {
   color: var(--text);
 }
 .app-side .side-link:hover { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
-
-/* the field's own hairline, a shade softer again: it is a surface, not a box */
-.searchbar,
-.composer .searchbar,
-.dash-hero .searchbar,
-.dash-hero-ask .searchbar,
-form.panel .searchbar {
-  border-color: color-mix(in srgb, var(--border-2) 42%, transparent);
-}
-.searchbar:hover,
-.dash-hero .searchbar:hover {
-  border-color: color-mix(in srgb, var(--border-2) 62%, transparent);
-}
-
 /* The rail is not a panel.
    With the stroke gone it still read as a box, because the surface tone is
    lighter than the page and the rounded corner drew the rest of the outline
@@ -5890,8 +5420,6 @@ main#main {
    one line, the mode switch and Send on the next — which made the field three
    rows tall in a 390 px column. The controls fit on one line at this size; they
    just have to be allowed to stay there. */
-@media (max-width: 700px) {}
-
 /* A broken or still-loading picture must not reserve 360 px of empty card on
    a phone; the figure collapses to the size of its caption instead. */
 @media (max-width: 700px) {
@@ -6040,6 +5568,20 @@ section.dash-hero,
   overflow: auto;
 }
 
+/* ── F-02: the decorative pseudo-element behind the search panel is gone ───
+   It was a blurred 132px circle with a black inset shadow at a negative
+   offset. A later sheet moved it with `inset` but never reset its width,
+   border-radius, filter or box-shadow, so the dark crescent survived along the
+   left edge — the black mark on the card. A search panel does not need an
+   ornament behind it, so the whole layer is removed rather than restyled. */
+.dash-hero::before,
+.dash-hero::after,
+.dash-hero-ask::before,
+.dash-hero-ask::after {
+  content: none !important;
+  display: none !important;
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
@@ -6073,32 +5615,6 @@ body {
   box-shadow: var(--polish-shadow);
   overflow: visible;
 }
-
-.searchbar:has(> .composer-tools) {
-  border: 1px solid var(--border-2);
-  border-radius: 26px;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: 0 6px 22px color-mix(in srgb, var(--text) 6%, transparent);
-  transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
-}
-
-.searchbar:has(> .composer-tools):focus-within {
-  border-color: color-mix(in srgb, var(--accent) 62%, var(--border-2));
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent), var(--polish-shadow);
-}
-
-.searchbar:has(> .composer-tools) > textarea {
-  min-height: 52px;
-  line-height: 1.55;
-  font-size: 16px;
-  resize: vertical;
-}
-
-.searchbar:has(> .composer-tools) > .composer-tools > button[type="submit"] {
-  border-radius: 999px;
-  min-height: 44px;
-}
-
 .suggest {
   border-radius: 20px;
   border: 1px solid var(--border-2);
@@ -6316,7 +5832,7 @@ img.image-fallback {
   --im-surface-2: #eaf0eb;
   --im-text: #17251f;
   --im-muted: #43554b;   /* was #52645a — too faint on the pale surface */
-  --im-faint: #64756b;
+  --im-faint: #5f7066;   /* was #64756b — 4.48:1, just under AA */
   --im-border: #d5e0d8;
   --im-border-strong: #bdcdc2;
   --im-accent: #176b4c;
@@ -6439,21 +5955,6 @@ body { background-image: radial-gradient(70rem 35rem at 4% -12%, color-mix(in sr
 [data-comfort="opaque"] .top,
 [data-comfort="opaque"] .chat-header,
 [data-comfort="opaque"] .topbar-actions { background: var(--im-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
-
-/* Calm, tactile fields: subtle inset depth, with an unmistakable focus ring. */
-.searchbar, .search-box, .search-box input, .composer, .chat-composer, #prompt {
-  border-radius: var(--im-radius-md);
-}
-.searchbar, .search-box, .chat-composer {
-  box-shadow: var(--im-inset-shadow);
-  border: 1px solid var(--im-border-strong);
-  background: var(--im-surface);
-}
-.searchbar:focus-within, .search-box:focus-within, .chat-composer:focus-within {
-  border-color: var(--im-accent);
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 23%, transparent);
-}
-
 /* Claymorphism: one or two expressive areas per screen, not every card. */
 .dash-hero, .welcome-block, .aotd, .empty .empty-orb, .chat-empty-card {
   border: 1px solid var(--im-border);
@@ -6726,22 +6227,6 @@ html[data-surface-style="glass"] .im-preferences-panel {
   -webkit-backdrop-filter: blur(22px) saturate(1.35);
   backdrop-filter: blur(22px) saturate(1.35);
 }
-
-/* Neumorphism: soft raised controls and inset input wells, never body copy. */
-html[data-surface-style="soft"] .composer,
-html[data-surface-style="soft"] .chat-composer,
-html[data-surface-style="soft"] .searchbar,
-html[data-surface-style="soft"] .rail-new,
-html[data-surface-style="soft"] .im-preferences-panel {
-  border-color: transparent;
-  box-shadow: var(--im-clay-shadow), inset 1px 1px 2px color-mix(in srgb, var(--im-text) 5%, transparent);
-}
-html[data-surface-style="soft"] .composer:focus-within,
-html[data-surface-style="soft"] .chat-composer:focus-within,
-html[data-surface-style="soft"] .searchbar:focus-within {
-  box-shadow: var(--im-inset-shadow), 0 0 0 3px color-mix(in srgb, var(--im-accent) 24%, transparent);
-}
-
 /* Claymorphism is a focal treatment, not a blanket card style. */
 html[data-surface-style="clay"] .empty-mark,
 html[data-surface-style="clay"] .dash-hero,
@@ -7687,18 +7172,6 @@ body.amigo-chat .a-actions button:focus-visible {
   --vd-lift-2: 0 2px 4px color-mix(in srgb, var(--charcoal, #242824) 5%, transparent),
                0 12px 24px -14px color-mix(in srgb, var(--forest, #173b32) 26%, transparent);
 }
-
-/* ── motion: one speed, one curve ──────────────────────────────────────── */
-a, button, .btn, .card, .q-card, .cat-card, .side-link, .mode-btn, .depth-btn,
-.chip, .src-chip, .followup, input, textarea, select, .searchbar {
-  transition:
-    background-color var(--vd-base) var(--vd-ease),
-    border-color var(--vd-base) var(--vd-ease),
-    color var(--vd-fast) var(--vd-ease),
-    box-shadow var(--vd-base) var(--vd-ease),
-    transform var(--vd-fast) var(--vd-ease);
-}
-
 /* A press should feel like a press, and never move the thing under the finger
    far enough to change what is being clicked. */
 button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY(1px) scale(.994); }
@@ -7759,20 +7232,6 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
-
-/* ── the composer ──────────────────────────────────────────────────────── */
-/* The composer is the one control a reader touches every turn, so it gets the
-   only shadow on the page that responds to focus. */
-.composer, .searchbar {
-  transition: border-color var(--vd-base) var(--vd-ease),
-              box-shadow var(--vd-base) var(--vd-ease),
-              background-color var(--vd-base) var(--vd-ease);
-}
-.composer:focus-within, .searchbar:focus-within {
-  border-color: color-mix(in srgb, var(--accent, #b46a45) 70%, var(--border-2, #cfc3ac));
-  box-shadow: var(--vd-ring), var(--vd-lift-1);
-}
-
 /* ── small type details ────────────────────────────────────────────────── */
 /* Numbers that change — counts, timings, versions — must not reflow the line
    they sit in as they change. */
