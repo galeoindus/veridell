@@ -481,7 +481,7 @@ HEAD = """<!DOCTYPE html>
     <div class="article-actions">
       <a class="btn btn-primary" href="/#/article/{slug_enc}">Open in Veridell</a>
       <a class="btn btn-ghost" href="/#/ask?q={title_enc}">Ask about it</a>
-      <a class="btn btn-ghost" href="/chat/?q={title_enc}">Chat about it</a>
+      <a class="btn btn-ghost" href="/amigo/">Ask about it</a>
       <a class="btn btn-ghost" href="{wikiUrl}" target="_blank" rel="noopener noreferrer">Read on Wikipedia ↗</a>
     </div>
 """
@@ -637,7 +637,7 @@ def page_html(art, related, article_map=None):
                    f'<div class="pill-row">{pills}</div></div></div>\n')
 
     out.append(FOOT.format(wikiUrl=art["wikiUrl"], lang=LANG, version=VERSION, points=POINTS_SCRIPT))
-    return ensure_image_alt("".join(out), art["title"])
+    return prune_broken_anchors(ensure_image_alt("".join(out), art["title"]))
 
 
 # ── every picture says what it shows ──────────────────────────────────────
@@ -659,6 +659,23 @@ def _shorten(text, limit=110):
         return text
     cut = text[:limit]
     return (cut[:cut.rfind(" ")] if " " in cut else cut).rstrip(" ,.;:—-") + "…"
+
+
+
+def prune_broken_anchors(body_html):
+    """Drop href="#x" links whose target id is not on the page.
+
+    Wikipedia content carries intra-page anchors such as #Check. The section ids
+    are regenerated here, so those anchors point at nothing and the health check
+    rightly fails. The link text is kept; only the dead href is removed.
+    """
+    soup = BeautifulSoup(body_html, "lxml")
+    ids = {el.get("id") for el in soup.find_all(id=True)}
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if href.startswith("#") and len(href) > 1 and href[1:] not in ids:
+            a.unwrap()
+    return str(soup)
 
 
 def ensure_image_alt(markup, title):
