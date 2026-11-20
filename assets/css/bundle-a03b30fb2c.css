@@ -5147,6 +5147,41 @@ main#main {
   overflow: visible;
 }
 
+/* ── one reading measure, one fluid type scale ────────────────────────────
+   The proposal asked for a single article contract instead of one-off sizes in
+   app.css, styles.css and responsive.css. The prose column is capped in
+   characters, not pixels, so it stays readable at every width, and the type
+   scales with the viewport instead of stepping at breakpoints. Figures and
+   tables may run wider than the text. */
+.art-body,
+.prose {
+  max-width: 74ch;
+  margin-inline: auto;
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.2rem);
+  line-height: 1.72;
+}
+.art-body > p,
+.prose > p { max-width: 100%; }
+
+/* a wide figure keeps the full column; only the text is measured */
+.art-body > figure,
+.prose > figure,
+.art-body > table,
+.prose > table,
+.panel-wide > .art-figure {
+  max-width: min(100%, 96ch);
+  margin-inline: auto;
+}
+
+@media (max-width: 600px) {
+  .art-body,
+  .prose {
+    max-width: 100%;
+    font-size: 1.0625rem;      /* 17px: comfortable on a phone, no zoom on focus */
+    line-height: 1.75;
+  }
+}
+
 }
 @layer responsive {
 /* ── mobile.css ── */
