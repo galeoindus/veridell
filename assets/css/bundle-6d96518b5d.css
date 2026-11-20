@@ -2161,6 +2161,38 @@ section.dash-hero,
   display: none !important;
 }
 
+/* ── the phone's "More" sheet ──────────────────────────────────────────────
+   The bottom bar carried five of the desktop destinations; the rest simply did
+   not exist on a phone. A native <details> gives a labelled, keyboard-operable
+   disclosure without any JavaScript: Enter or Space opens it, Escape closes it,
+   and the links are ordinary tab stops. */
+.bottom-nav .nav-more { position: relative; flex: 1 1 0; }
+.bottom-nav .nav-more > summary {
+  list-style: none;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 2px; cursor: pointer;
+  font-size: 11px; color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav .nav-more > summary::-webkit-details-marker { display: none; }
+.bottom-nav .nav-more > summary svg { width: 22px; height: 22px; }
+.bottom-nav .nav-more[open] > summary { color: var(--accent); }
+.bottom-nav .nav-more-sheet {
+  position: absolute; bottom: calc(100% + 8px); right: 8px;
+  min-width: 190px; padding: 8px;
+  display: grid; gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px -20px rgba(16, 24, 20, .45);
+  z-index: var(--z-popover, 20);
+}
+.bottom-nav .nav-more-sheet a {
+  padding: 10px 12px; border-radius: 10px;
+  font-size: 14px; color: var(--text, var(--ink)); text-decoration: none;
+}
+.bottom-nav .nav-more-sheet a:hover { background: var(--surface-2, rgba(0,0,0,.04)); }
+
 }
 @layer utilities {
 /* ── polish.css ── */

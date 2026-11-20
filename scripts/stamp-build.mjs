@@ -125,6 +125,17 @@ for (const file of await walk(ROOT)) {
     <a href="/topics/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Topics</span></a>
     <a href="/#/library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h5v14H4zM11 5h5v14h-5zM18 6l3 12-3 1z"/></svg><span>Library</span></a>
     <a href="/#/bookmarks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Saved</span></a>
+    <details class="nav-more">
+      <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span>More</span></summary>
+      <div class="nav-more-sheet">
+        <a href="/research/">Research Desk</a>
+        <a href="/#/history">Reading history</a>
+        <a href="/#/sources">Sources</a>
+        <a href="/how-it-works/">How it works</a>
+        <a href="/help/">Help</a>
+        <a href="/#/on-this-day">On this day</a>
+      </div>
+    </details>
   </nav>
 </body>`;
     html = html.replace(/<\/body>/i, nav);
