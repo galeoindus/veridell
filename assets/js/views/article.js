@@ -145,37 +145,27 @@ function render(ctx, mount, state) {
 
   mount.append(languageBar(state));
 
-  const tabs = buildTabs();
-  mount.append(tabs.bar);
-  state.tabs = tabs;
-
-  const panelFull = el('div', { class: 'tabpanel', role: 'tabpanel', id: 'tab-panel-full', 'aria-labelledby': 'tab-full', tabindex: '0' });
-  const panelTr = el('div', { class: 'tabpanel', role: 'tabpanel', id: 'tab-panel-tr', 'aria-labelledby': 'tab-tr', hidden: true });
-  const panelMd = el('div', { class: 'tabpanel', role: 'tabpanel', id: 'tab-panel-md', 'aria-labelledby': 'tab-md', hidden: true });
+  /* One continuous reader. The page opened on a three-tab bar — breakdown,
+     translated copy, raw Markdown — so the reader met a choice before meeting
+     the article. The article is the page now; export and translation are
+     actions, not competing tabs. */
+  const panelFull = el('div', { class: 'tabpanel', role: 'region', id: 'tab-panel-full', 'aria-label': 'Article', tabindex: '0' });
+  state.tabs = null;
 
   // The article — filled by repaintFull, in the site's own architecture.
   const fullMount = el('div');
   panelFull.append(fullMount);
   state.fullMount = fullMount;
 
-  // Markdown
-  const md = el('div', { class: 'md' });
-  const pre = el('pre', { class: 'md-raw' });
-  pre.textContent = articleToMarkdown(root, { title: data.title, url: wikiUrl });
-  md.append(markdownActions({
-    getText: () => pre.textContent,
+  // Export stays available as an action, built on demand instead of being
+  // rendered into a hidden panel on every article view.
+  const exportRow = el('div', { class: 'article-export' });
+  exportRow.append(markdownActions({
+    getText: () => articleToMarkdown(root, { title: data.title, url: wikiUrl }),
     filename: data.title,
-  }), pre);
-  panelMd.append(md);
+  }));
 
-  // Translate — the whole article, in any language, pictures and all.
-  const translator = translatePanel(state, ctx);
-  panelTr.append(translator);
-  ctx.onCleanup(() => translator.abortTranslation?.());
-
-  mount.append(panelFull, panelTr, panelMd);
-  tabs.panels = { full: panelFull, tr: panelTr, md: panelMd };
-  tabs.show('full');
+  mount.append(panelFull, exportRow);
 
   repaintFull(ctx, state);
   loadRelated(ctx, mount, { title: data.title, lang });

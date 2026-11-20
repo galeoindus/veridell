@@ -104,27 +104,10 @@ const ABBREV = /\b(?:Mr|Mrs|Ms|Dr|Prof|St|vs|etc|e\.g|i\.e|No|Fig|approx|ca|cf|S
 export function paragraphsToPoints(root) {
   const skip = 'figure, figcaption, table, .infobox, .thumb, .gallery, .gallerybox, .article-gallery-grid, .reflist, .references, .navbox, blockquote';
 
-  for (const p of [...root.querySelectorAll('p')]) {
-    if (p.closest(skip)) continue;
-    if ((p.textContent || '').trim().length < MIN_SENTENCE) continue;
-
-    const points = splitPoints(p);
-    if (points.length < 2) continue; // a single sentence reads better as prose
-
-    const ul = document.createElement('ul');
-    ul.className = 'line-list points-prose';
-    for (const nodes of points) {
-      // Trim the whitespace that separated the point from the one before it.
-      const first = nodes[0];
-      if (first && first.nodeType === 3) first.nodeValue = first.nodeValue.replace(/^\s+/, '');
-      const last = nodes[nodes.length - 1];
-      if (last && last.nodeType === 3) last.nodeValue = last.nodeValue.replace(/\s+$/, '');
-      const li = document.createElement('li');
-      nodes.forEach((n) => li.append(n));
-      ul.append(li);
-    }
-    p.replaceWith(ul);
-  }
+  /* Paragraphs stay paragraphs. This used to split every sentence out of a
+     paragraph into a bullet, so a reference article arrived as a wall of
+     fragments — the reader lost the argument the prose was making. A paragraph
+     is now rendered as a paragraph; lists in the source are still lists. */
   return root;
 }
 

@@ -441,10 +441,9 @@ HEAD = """<!DOCTYPE html>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{imageUrl}">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/assets/img/brand/facet.svg" type="image/svg+xml">
-  <link rel="icon" href="/assets/img/brand/facet-48.png" sizes="48x48" type="image/png">
-  <link rel="icon" href="/assets/img/brand/facet-192.png" sizes="192x192" type="image/png">
-  <link rel="apple-touch-icon" href="/assets/img/brand/facet-180.png">
+  <link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/assets/img/brand/logo-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/logo-180.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lora:ital,wght@0,500;0,600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css?v={version}">
   <link rel="stylesheet" href="/assets/css/app.css?v={version}">
@@ -457,9 +456,7 @@ HEAD = """<!DOCTYPE html>
   <header class="topbar">
     <div class="topbar-inner">
       <a class="brand" href="/#/">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 40 40"><defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#173b32"></stop><stop offset="1" stop-color="#b46a45"></stop></linearGradient></defs><rect width="40" height="40" rx="12" fill="url(#bm)"></rect><g fill="none" stroke="#f5f0e6" stroke-width="2.7" stroke-linecap="round"><path d="M10.2 16.5c2.85-3.5 5.7-3.5 8.55 0s5.7 3.5 8.55 0"></path><path d="M12.4 23.5c2.85-3.5 5.7-3.5 8.55 0s5.7 3.5 8.55 0"></path></g></svg>
-        </span>
+        <img class="brand-mark" src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async">
         <span class="brand-text"><strong>Veridell</strong><small>Wikipedia, understood</small></span>
       </a>
 {nav}
@@ -521,7 +518,7 @@ FOOT = """  </main>
     <div class="foot-legal">
       <p>Wikipedia article text is available under the Creative Commons Attribution-ShareAlike Licence (CC BY-SA 4.0). Wikidata data is released under CC0 1.0. Files on Wikimedia Commons carry their own licence, shown with each image. Veridell is an independent reader and is not affiliated with or endorsed by the Wikimedia Foundation.</p>
       <p>Veridell reformats, condenses and reorders this text for reading. The original, with its full edit history, is at <a href="{wikiUrl}" target="_blank" rel="noopener noreferrer">{lang}.wikipedia.org</a>.</p>
-      <p class="foot-version">Veridell v{version}</p>
+      <p class="foot-version">Veridellindo <span id="appVersion">v{version}</span> <span id="appBuild" class="foot-build"></span></p>
     </div>
   </footer>
 {points}</body>
@@ -852,20 +849,22 @@ def main():
   <meta name="twitter:description" content="Thirteen curated Veridell article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
   <meta name="twitter:image" content="{ORIGIN}/assets/img/brand/og-card.png">
   <meta name="theme-color" content="#101713">
-  <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/assets/img/brand/facet.svg" type="image/svg+xml">
-  <link rel="icon" href="/assets/img/brand/facet-48.png" sizes="48x48" type="image/png">
-  <link rel="icon" href="/assets/img/brand/facet-192.png" sizes="192x192" type="image/png">
-  <link rel="apple-touch-icon" href="/assets/img/brand/facet-180.png">
+  <link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/assets/img/brand/logo-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/img/brand/logo-180.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lora:ital,wght@0,500;0,600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
   <link rel="stylesheet" href="/assets/css/styles.css?v={VERSION}">
   <link rel="stylesheet" href="/assets/css/app.css?v={VERSION}">
   <link rel="stylesheet" href="/assets/css/responsive.css?v={VERSION}">
+  <script type="application/ld+json">
+  {{"@context":"https://schema.org","@type":"CollectionPage","name":"Articles — Veridellindo","url":"{ORIGIN}/articles/"}}
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <div class="grain" aria-hidden="true"></div>
   <header class="topbar"><div class="topbar-inner">
-    <a class="brand" href="/#/"><span class="brand-text"><strong>Veridell</strong><small>Wikipedia, understood</small></span></a>
+    <a class="brand" href="/#/"><img src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async"><span class="brand-text"><strong>Veridell</strong><small>Wikipedia, understood</small></span></a>
 {NAV}
   </div></header>
   <main id="main" class="wrap" tabindex="-1">
