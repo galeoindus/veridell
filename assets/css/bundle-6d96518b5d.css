@@ -2339,6 +2339,81 @@ section.dash-hero,
   .amigo-launcher { display: none; }
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   Search: one open composer, not a card full of controls.
+   From the Hindi redesign brief — remove the outer card, keep one border, one
+   round send, three suggestions, and push mode/depth out of the first screen.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. the outer card is gone: no surface, no padding, no shadow.
+   The earlier owner block declares `.searchbar, .composer .searchbar,
+   .dash-hero .searchbar` together, so a bare `.searchbar` here loses on
+   specificity. The same selector list is repeated to match it. */
+.searchbar,
+.composer .searchbar,
+.dash-hero .searchbar {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+/* 2. the field carries the single border, and the focus ring is the only ring */
+.searchbar > textarea,
+.searchbar > input[type="search"],
+.searchbar > input[type="text"] {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  box-shadow: none;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.searchbar:focus-within > textarea,
+.searchbar:focus-within > input[type="search"],
+.searchbar:focus-within > input[type="text"] {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border-2));
+  outline: 2px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  outline-offset: 1px;
+}
+
+/* 3. the extra heading above the field is redundant with the placeholder */
+.searchbar .composer-label { display: none; }
+
+/* 4. one action: the send becomes a round arrow, not a labelled button */
+.searchbar button[type="submit"] {
+  width: 46px; height: 46px; min-width: 46px; padding: 0;
+  border-radius: 999px;
+  font-size: 0;                       /* the icon carries the meaning */
+  position: relative;
+}
+.searchbar button[type="submit"]::after {
+  content: "↑";
+  font-size: 20px; font-weight: 700; line-height: 1;
+}
+
+/* 5. mode and depth stay, but quiet: a compact row under the field */
+.searchbar .composer-tools {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  order: 2;
+}
+.searchbar .mode-btn { font-size: 13px; min-height: 32px; padding: 0 10px; }
+.searchbar .composer-tools > button[type="submit"] { margin-inline-start: auto; }
+
+/* 6. the helper line is supporting text, not a second paragraph */
+.searchbar .mode-help,
+.searchbar .composer-prompt { font-size: 12.5px; color: var(--muted); }
+
+/* 7. three suggestions, not a wall of chips */
+.hero .chips > *:nth-child(n+4),
+.dash-hero .chips > *:nth-child(n+4) { display: none; }
+
 }
 @layer utilities {
 /* ── polish.css ── */
