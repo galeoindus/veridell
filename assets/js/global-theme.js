@@ -131,9 +131,22 @@
       .find((el) => el.getClientRects().length > 0);
   }
   function addMissingControl() {
-    if (visibleControl()) return;
+    /* A fallback is injected when no usable control is on screen — a phone,
+       where the header's control is hidden. Growing the window brings the real
+       control back, and the injected one was never removed, so the reader ended
+       up with two theme buttons. The injected control is marked now, and it is
+       taken away the moment a native one becomes visible again. */
+    const native = [...document.querySelectorAll('#themeBtn,[data-action="theme"],[data-theme-toggle]')]
+      .find((el) => el.getClientRects().length > 0 && !el.hasAttribute('data-theme-fallback'));
+    const injected = document.querySelector('[data-theme-fallback]');
+    if (native) {
+      if (injected) injected.remove();
+      return;
+    }
+    if (injected) return;                       // one fallback is enough
     const button = document.createElement('button');
     button.type = 'button';
+    button.setAttribute('data-theme-fallback', '');
     if (!document.getElementById('themeBtn')) button.id = 'themeBtn';
     button.setAttribute('data-theme-toggle', '');
     button.className = 'im-theme-toggle';
