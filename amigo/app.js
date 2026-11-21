@@ -45,7 +45,7 @@ function iconFor(value, size){
   const d = ICON_PATHS[String(value || "").trim()] || ICON_PATHS["\u{1F4AC}"];
   const px = size || 18;
   return '<svg class="ic" viewBox="0 0 24 24" width="' + px + '" height="' + px + '" fill="none" '
-    + 'stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '
+    + 'stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" '
     + 'aria-hidden="true">' + d + '</svg>';
 }
 
@@ -604,7 +604,7 @@ function resetSpeechButton(button){
   button.classList.remove("speaking");
   button.title = "Read this answer aloud";
   button.setAttribute("aria-label", "Read this answer aloud");
-  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
+  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
 }
 function speechLanguageFor(text){
   const selected = String(settings.voiceLang || "auto");
@@ -647,7 +647,7 @@ function speakAnswer(value, button){
   activeSpeechButton = button;
   button.classList.add("speaking"); button.title = "Stop reading";
   button.setAttribute("aria-label", "Stop reading");
-  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> Stop';
+  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> Stop';
   utterance.onend = () => { resetSpeechButton(button); if (activeSpeechButton === button) activeSpeechButton = null; announce("Finished reading the answer."); };
   utterance.onerror = (event) => { resetSpeechButton(button); if (activeSpeechButton === button) activeSpeechButton = null; if (event && event.error !== "canceled" && event.error !== "interrupted") announce("Could not play speech on this device."); };
   try { synth.speak(utterance); announce("Reading the answer aloud."); }
@@ -659,14 +659,14 @@ function addCopy(wrap, text, withSpeech){
   const row = document.createElement("div"); row.className = "copyrow";
 
   const btn = document.createElement("button"); btn.className = "copybtn"; btn.type = "button"; btn.title = "Copy this message";
-  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M6 15H5.5A2.5 2.5 0 0 1 3 12.5v-7A2.5 2.5 0 0 1 5.5 3h7A2.5 2.5 0 0 1 15 5.5V6"/></svg> Copy';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M6 15H5.5A2.5 2.5 0 0 1 3 12.5v-7A2.5 2.5 0 0 1 5.5 3h7A2.5 2.5 0 0 1 15 5.5V6"/></svg> Copy';
   btn.addEventListener("click", () => copyToClipboard(text, btn));
 
   if (withSpeech){
     const speak = document.createElement("button");
     speak.className = "copybtn speakbtn"; speak.type = "button";
     speak.title = "Read this answer aloud"; speak.setAttribute("aria-label", "Read this answer aloud");
-    speak.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
+    speak.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
     const supported = !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
     speak.disabled = !supported;
     if (!supported){ speak.title = "Speech playback is not supported in this browser"; speak.setAttribute("aria-label", speak.title); }
@@ -676,9 +676,9 @@ function addCopy(wrap, text, withSpeech){
 
   const thumbs = '<path d="M7 21V10.5l4.4-6.9A1.7 1.7 0 0 1 14.3 4.5V10h4.1a1.8 1.8 0 0 1 1.8 2.2l-1.2 6.2A2 2 0 0 1 17 21H7Z"/><path d="M7 10.5H4.6A1.6 1.6 0 0 0 3 12.1v7.3A1.6 1.6 0 0 0 4.6 21H7"/>';
   const up = document.createElement("button"); up.className = "copybtn vote"; up.type = "button"; up.title = "Good answer";
-  up.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + thumbs + '</svg>';
+  up.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' + thumbs + '</svg>';
   const dn = document.createElement("button"); dn.className = "copybtn vote"; dn.type = "button"; dn.title = "Not helpful";
-  dn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(180 12 12)">' + thumbs + '</g></svg>';
+  dn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(180 12 12)">' + thumbs + '</g></svg>';
   up.addEventListener("click", () => { up.classList.toggle("on"); dn.classList.remove("on"); });
   dn.addEventListener("click", () => { dn.classList.toggle("on"); up.classList.remove("on"); });
 
@@ -711,7 +711,7 @@ function addSources(bub, groups){
   const btn = document.createElement("button"); btn.type = "button"; btn.className = "srcbtn";
   btn.title = "Show the sources this answer used";
   btn.innerHTML =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13.4 13.4 0 0 1 0 17.2 13.4 13.4 0 0 1 0-17.2Z"/></svg>' +
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13.4 13.4 0 0 1 0 17.2 13.4 13.4 0 0 1 0-17.2Z"/></svg>' +
     '<span class="srclabel">Web search</span>' +
     '<span class="srccount">' + total + ' result' + (total === 1 ? "" : "s") + ' \u00b7 ' + sites + ' source' + (sites === 1 ? "" : "s") + '</span>' +
     '<svg class="srcchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';

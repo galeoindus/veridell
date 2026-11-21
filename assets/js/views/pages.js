@@ -670,8 +670,11 @@ export function renderCredits() {
     personAvatar.append(el('span', { class: 'credit-person-initials', text: person.initials }));
     if (person.avatar) {
       const image = el('img', { src: person.avatar, alt: '', loading: 'lazy', decoding: 'async' });
-      image.addEventListener('error', () => image.remove());
-      card.dataset.hasAvatar = 'true';
+      /* The initials are the fallback, and they are hidden only once a picture
+         has actually arrived. Setting the flag before the load meant a blocked
+         or failed image left an empty circle where the initials should be. */
+      image.addEventListener('load', () => { card.dataset.hasAvatar = 'true'; });
+      image.addEventListener('error', () => { image.remove(); delete card.dataset.hasAvatar; });
       personAvatar.append(image);
     }
     card.append(personAvatar);

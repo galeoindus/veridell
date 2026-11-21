@@ -2493,8 +2493,22 @@ html, body { max-width: 100%; overflow-x: hidden; }
    so on the project mark — a ring with a transparent centre — the initials read
    straight through the hole as if the word were printed behind the logo. */
 .credit-person-avatar-v2:has(img) .credit-person-initials { opacity: 0; }
+/* The same rule without :has(). A browser that does not support :has() (an
+   older Android WebView, Chrome below 105) dropped the rule above and printed
+   the initials straight through the mark's open centre — the word behind the
+   logo. The card already carries data-has-avatar from the renderer, so the
+   hiding does not depend on a selector the browser may not know. */
+[data-has-avatar="true"] .credit-person-initials,
+.credit-person-avatar-v2.has-avatar .credit-person-initials {
+  opacity: 0;
+  visibility: hidden;
+}
 .credit-person-initials { position: relative; z-index: 0; }
 .credit-person-avatar-v2 img { z-index: 1; }
+/* Same fallback rule for the third-party logo wells: the initials sit under the
+   picture by design, so a mark with a transparent field let them read through. */
+.credit-logo-frame.has-image .credit-logo-fallback { visibility: hidden; }
+.credit-person-avatar-v2.has-avatar .credit-person-initials { display: none; }
 .credit-person-kind { grid-column: 2; align-self: center; color: var(--accent); font-size: 10px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
 .credit-person-card .credit-person-name { grid-column: 2; margin: 2px 0 4px; font-size: 14px; line-height: 1.35; }
 .credit-person-card .credit-person-role { grid-column: 2; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }

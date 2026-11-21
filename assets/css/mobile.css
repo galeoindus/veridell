@@ -569,9 +569,8 @@ section.dash-hero,
    The green Amigo button sat on top of the "Library" tab: two fixed elements
    fighting for the same corner. On a phone the bottom bar already offers Ask, so
    the floating doorway is redundant there and is removed rather than nudged. */
-@media (max-width: 860px) {
-  .amigo-launcher { display: none; }
-}
+/* The launcher is no longer hidden on a phone: it is lifted clear of the
+   bottom bar and can be dragged up or down. See refine.css. */
 
 /* ══════════════════════════════════════════════════════════════════════════
    Search: one open composer, not a card full of controls.
@@ -917,7 +916,7 @@ body:not(.amigo-chat) .composer,
 .searchbar .composer-tools .mic { width: 36px; padding: 0; }
 
 /* the floating Amigo button sat on top of the Saved tab */
-@media (max-width: 860px) { .amigo-launcher { display: none !important; } }
+@media (max-width: 860px) { .amigo-launcher { display: inline-flex !important; } }
 
 /* ── multimorphism, cleared where it does not belong ──────────────────────
    The surface styles were reaching the reading surfaces: a blurred glass panel

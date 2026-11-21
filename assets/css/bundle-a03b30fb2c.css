@@ -3957,8 +3957,22 @@ html, body { max-width: 100%; overflow-x: hidden; }
    so on the project mark — a ring with a transparent centre — the initials read
    straight through the hole as if the word were printed behind the logo. */
 .credit-person-avatar-v2:has(img) .credit-person-initials { opacity: 0; }
+/* The same rule without :has(). A browser that does not support :has() (an
+   older Android WebView, Chrome below 105) dropped the rule above and printed
+   the initials straight through the mark's open centre — the word behind the
+   logo. The card already carries data-has-avatar from the renderer, so the
+   hiding does not depend on a selector the browser may not know. */
+[data-has-avatar="true"] .credit-person-initials,
+.credit-person-avatar-v2.has-avatar .credit-person-initials {
+  opacity: 0;
+  visibility: hidden;
+}
 .credit-person-initials { position: relative; z-index: 0; }
 .credit-person-avatar-v2 img { z-index: 1; }
+/* Same fallback rule for the third-party logo wells: the initials sit under the
+   picture by design, so a mark with a transparent field let them read through. */
+.credit-logo-frame.has-image .credit-logo-fallback { visibility: hidden; }
+.credit-person-avatar-v2.has-avatar .credit-person-initials { display: none; }
 .credit-person-kind { grid-column: 2; align-self: center; color: var(--accent); font-size: 10px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
 .credit-person-card .credit-person-name { grid-column: 2; margin: 2px 0 4px; font-size: 14px; line-height: 1.35; }
 .credit-person-card .credit-person-role { grid-column: 2; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
@@ -5756,9 +5770,8 @@ section.dash-hero,
    The green Amigo button sat on top of the "Library" tab: two fixed elements
    fighting for the same corner. On a phone the bottom bar already offers Ask, so
    the floating doorway is redundant there and is removed rather than nudged. */
-@media (max-width: 860px) {
-  .amigo-launcher { display: none; }
-}
+/* The launcher is no longer hidden on a phone: it is lifted clear of the
+   bottom bar and can be dragged up or down. See refine.css. */
 
 /* ══════════════════════════════════════════════════════════════════════════
    Search: one open composer, not a card full of controls.
@@ -6104,7 +6117,7 @@ body:not(.amigo-chat) .composer,
 .searchbar .composer-tools .mic { width: 36px; padding: 0; }
 
 /* the floating Amigo button sat on top of the Saved tab */
-@media (max-width: 860px) { .amigo-launcher { display: none !important; } }
+@media (max-width: 860px) { .amigo-launcher { display: inline-flex !important; } }
 
 /* ── multimorphism, cleared where it does not belong ──────────────────────
    The surface styles were reaching the reading surfaces: a blurred glass panel

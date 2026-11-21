@@ -140,7 +140,7 @@ export function trendRow(item, rank) {
         <span class="trend-meta">${item.views ? `${compactNumber(item.views)} views` : esc(item.meta || '')}</span>
       </span>
       <svg class="trend-spark" viewBox="0 0 46 20" fill="none" aria-hidden="true">
-        <polyline points="${points}" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        <polyline points="${points}" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></polyline>
       </svg>`,
   });
 }

@@ -24,7 +24,7 @@ import { clean } from '../parse.js';
 import { composeAnswer } from '../answer.js';
 import { answerToMarkdown } from '../markdown.js';
 import {
-  evidenceStrip, pointsBlocks, methodNote, factsBox,
+  evidenceStrip, pointsBlocks, methodNote, factsBox, sourcesGroup,
   scopeNote, feedback, markdownActions, selectedNote,
 } from '../answerui.js';
 import { sectionHead, card, errorBox, emptyState, toast } from '../components.js';
@@ -224,6 +224,20 @@ async function paint(ctx, mount, state) {
   // Facts.
   const facts = factsBox(answer.facts, answer.title);
   if (facts) content.append(facts);
+
+  /* Sources, in the answer column — part 6 of the answer architecture.
+     They used to be reachable only from an action in the rail, so the page that
+     claims "every answer with its source" was the one page where the source was
+     not on the page. The group states plainly what was read and what was only
+     linked, and it carries the licence and the revision the answer came from. */
+  content.append(sourcesGroup({
+    lang: state.lang,
+    title: answer.title,
+    wikiUrl: answer.wikiUrl,
+    citations: state.root?.citations || [],
+    project: 'wikipedia',
+    revision: state.data?.revid ? { revid: state.data.revid } : null,
+  }));
 
   // How it was made, and what it does not claim. The numbered Wikipedia
   // reference list is deliberately not repeated here — it belongs to the full

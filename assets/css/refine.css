@@ -175,10 +175,105 @@ button:active:not(:disabled), .btn:active:not(:disabled) { transform: translateY
   .amigo-launcher, .amigo-launcher:hover { transition: none; transform: none; }
 }
 
-/* The launcher lives in this sheet, so the rule that hides it has to live here
-   too: `utilities` loads after `responsive`, so the same declaration written in
-   mobile.css lost to this file's own display rule. On a phone the bottom bar
-   already offers Ask, and the green button sat on top of the Library tab. */
+/* The launcher stays on a phone instead of being hidden.
+   It used to be removed below 860 px because the green button sat on top of the
+   Library tab. Hiding the only doorway into the assistant on the device most
+   people use was the wrong answer to that collision: the button is lifted clear
+   of the bottom bar, and it can now be dragged up or down (launcher-drag.js) so
+   a reader can move it off whatever it is covering. The position is remembered
+   and clamped back into the viewport on a resize or a rotation. */
 @media (max-width: 860px) {
-  .amigo-launcher { display: none; }
+  .amigo-launcher { display: inline-flex; }
+}
+
+/* ── the launcher can be moved ──────────────────────────────────────────────
+   The offset is one custom property, so the drag moves the button without
+   rewriting its layout and the hover lift keeps working on top of it. */
+.amigo-launcher {
+  --launcher-y: 0px;
+  transform: translateY(var(--launcher-y));
+  touch-action: none;                    /* the drag owns the vertical gesture */
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.amigo-launcher:hover { transform: translateY(calc(var(--launcher-y) - 2px)); }
+.amigo-launcher.is-dragging,
+.amigo-launcher.is-dragging:hover {
+  transform: translateY(var(--launcher-y));
+  transition: none;                    /* follow the finger, not the easing */
+  cursor: grabbing;
+  box-shadow: 0 16px 34px -8px rgba(23, 59, 50, .55);
+}
+/* a small grip, so the button reads as something that can be moved */
+.amigo-launcher.is-moved::before {
+  content: "";
+  position: absolute; left: 50%; top: 3px;
+  width: 18px; height: 2px; margin-left: -9px; border-radius: 2px;
+  background: currentColor; opacity: .35;
+}
+.amigo-launcher { position: fixed; }
+@media (prefers-reduced-motion: reduce) {
+  .amigo-launcher, .amigo-launcher:hover, .amigo-launcher.is-dragging { transform: translateY(var(--launcher-y)); }
+}
+
+/* ── multimorphism, kept to the surfaces that mean something ───────────────
+   A morph is a container treatment: glass says "this floats above the page",
+   clay says "this is a raised tile". Both stop meaning anything when they are
+   repeated on the rows inside the container — a card inside a card, each with
+   its own blur and shadow — and both are wrong on a reading surface, where the
+   reader is looking through the treatment at the text.
+
+   The rules below are the discipline, not a new style: the chosen treatment
+   still applies to cards, panels, the composer, the launcher and the navigation
+   (brand-refresh.css and preferences.css own those). Everything nested inside
+   them, and every surface that carries prose, loses it. */
+.card .card,
+.panel .panel,
+.panel .card,
+.card .panel,
+.answer-card .card,
+.credit-stack-card .card,
+.src-group .source-card .card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  border-color: var(--border);
+}
+/* rows and wells inside a container are separators, not surfaces */
+.card .sres-row,
+.panel .sres-row,
+.src-group .source-card,
+.credit-stack-card .credit-logo-frame,
+.credit-person-card .credit-person-avatar-v2,
+.factbox .row,
+.rail-card .sres-row {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+/* reading surfaces: never glass, never clay */
+.prose,
+.art-body,
+.answer-body,
+.qa-answer .line-list,
+.points-list,
+.method-note,
+.scope-note,
+.credit-section p,
+.credit-disclosure-note,
+.credit-stack-description,
+.article-shell p {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* the answer's own card keeps its border, and loses the float that made it read
+   as a second page sitting on the first */
+.qa-answer { box-shadow: none !important; }
+/* and the glass preset is only transparent where something is behind it */
+:root[data-surface-style="glass"] .qa-answer,
+:root[data-surface-style="glass"] .topic-block,
+:root[data-surface-style="glass"] .src-group {
+  background: var(--surface) !important;
 }

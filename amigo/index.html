@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="veridell-build" content="6.10.44-eebd52c">
-  <meta name="veridell-version" content="6.10.44">
+  <meta name="veridell-build" content="6.10.45-fd9a69a">
+  <meta name="veridell-version" content="6.10.45">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Amigo — Veridellindo</title>
@@ -34,11 +34,11 @@
   "description": "The assistant interface on Veridellindo, answered by Cloudflare Workers AI through this site's own endpoint."
 }
 </script>
-  <script src="/assets/js/image-fallback.js?v=6.10.44-eebd52c"></script>
-  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.44-eebd52c">
-  <link rel="stylesheet" href="/assets/css/brand-refresh.css?v=6.10.44-eebd52c">
+  <script src="/assets/js/image-fallback.js?v=6.10.45-fd9a69a"></script>
+  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.45-fd9a69a">
+  <link rel="stylesheet" href="/assets/css/brand-refresh.css?v=6.10.45-fd9a69a">
   <link rel="stylesheet" href="/amigo/redesign.css">
-  <script src="/assets/js/global-theme.js?v=6.10.44-eebd52c"></script>
+  <script src="/assets/js/global-theme.js?v=6.10.45-fd9a69a"></script>
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/brand/favicon-mark-48.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/brand/favicon-mark-96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/favicon-mark-192.png">
@@ -52,10 +52,10 @@
 <aside id="side">
   <div class="sTop">
     <a class="sBrand" href="/" title="Back to Veridellindo"><img src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async" srcset="/assets/img/brand/logo-48.png 48w, /assets/img/brand/logo-96.png 96w, /assets/img/brand/logo-192.png 192w" sizes="26px"><span>Amigo</span></a>
-    <button id="sideClose" class="hbtn" type="button" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button id="sideClose" class="hbtn" type="button" title="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <input id="sideSearch" class="sSearch" type="text" placeholder="Search chats" autocomplete="off">
-  <button id="sideNew" class="sNew" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg><span>New chat</span></button>
+  <button id="sideNew" class="sNew" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg><span>New chat</span></button>
   <div class="sList" id="sideList"></div>
   <div class="sFoot">
   </div>
@@ -63,17 +63,17 @@
 
 <div class="app">
   <header>
-    <button class="hbtn" id="btnMenu" type="button" title="Your chats" aria-label="Open saved chats" aria-controls="side" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="hbtn" id="btnMenu" type="button" title="Your chats" aria-label="Open saved chats" aria-controls="side" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="brand">
       <div class="star"><img class="lgimg" id="brandLogo" alt="Veridellindo logo"></div>
       <h1>Amigo</h1>
     </div>
     <span class="engine-status" id="engineStatus">Connect Cloudflare</span>
     <div class="hbtns">
-      <button type="button" class="hbtn" id="btnNew" title="New chat" aria-label="Start a new chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.6 3.4a2.1 2.1 0 0 1 3 3L7.5 18.5 3 20l1.5-4.5Z"/></svg></button>
-      <button type="button" class="hbtn" id="btnDel" title="Delete this chat" aria-label="Delete this chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6.5h17"/><path d="M8.5 6.5V4.2h7v2.3"/><path d="M6 6.5l1 13h10l1-13"/><path d="M10 10.5v6M14 10.5v6"/></svg></button>
-      <button class="hbtn" id="btnTheme" type="button" data-theme-toggle title="Light / dark theme" aria-label="Change theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8Z"/></svg></button>
-      <button type="button" class="hbtn" id="btnSet" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9"/><path d="M18.5 6H20"/><circle cx="15.5" cy="6" r="2.2"/><path d="M4 12h3"/><path d="M12.5 12H20"/><circle cx="9.5" cy="12" r="2.2"/><path d="M4 18h9"/><path d="M18.5 18H20"/><circle cx="15.5" cy="18" r="2.2"/></svg></button>
+      <button type="button" class="hbtn" id="btnNew" title="New chat" aria-label="Start a new chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.6 3.4a2.1 2.1 0 0 1 3 3L7.5 18.5 3 20l1.5-4.5Z"/></svg></button>
+      <button type="button" class="hbtn" id="btnDel" title="Delete this chat" aria-label="Delete this chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 6.5h17"/><path d="M8.5 6.5V4.2h7v2.3"/><path d="M6 6.5l1 13h10l1-13"/><path d="M10 10.5v6M14 10.5v6"/></svg></button>
+      <button class="hbtn" id="btnTheme" type="button" data-theme-toggle title="Light / dark theme" aria-label="Change theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8Z"/></svg></button>
+      <button type="button" class="hbtn" id="btnSet" title="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9"/><path d="M18.5 6H20"/><circle cx="15.5" cy="6" r="2.2"/><path d="M4 12h3"/><path d="M12.5 12H20"/><circle cx="9.5" cy="12" r="2.2"/><path d="M4 18h9"/><path d="M18.5 18H20"/><circle cx="15.5" cy="18" r="2.2"/></svg></button>
     </div>
   </header>
 
@@ -89,25 +89,25 @@
 
   <div class="attbar" id="attBar"></div>
   <div class="composer">
-    <button id="plusBtn" class="toolbtn plus" type="button" title="Add a file, or switch a mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg></button>
+    <button id="plusBtn" class="toolbtn plus" type="button" title="Add a file, or switch a mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5v13M5.5 12h13"/></svg></button>
     <label class="sr-only" for="input">Message Amigo</label>
         <textarea id="input" rows="1" placeholder="Message Amigo…" aria-describedby="inputHelp"></textarea>
         <span id="inputHelp" class="sr-only">Press Enter to send. Press Shift and Enter for a new line.</span>
-    <button id="micBtn" class="toolbtn" type="button" title="Speak your question" aria-label="Speak your question" aria-pressed="false" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
+    <button id="micBtn" class="toolbtn" type="button" title="Speak your question" aria-label="Speak your question" aria-pressed="false" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
     <button id="stop" type="button" class="toolbtn" aria-label="Stop response" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
         <button type="button" id="send" title="Send" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M6 12l6-6 6 6"/></svg></button>
     <div class="menu" id="toolMenu">
-      <button id="attach" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.5h7A2 2 0 0 1 20.5 10v6.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/></svg><span>Upload a file or photo</span></button>
-      <button id="abBtn" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v6.2L5.3 18a1.7 1.7 0 0 0 1.5 2.6h10.4a1.7 1.7 0 0 0 1.5-2.6L13.5 9.2V3"/><path d="M7.6 14.5h8.8"/></svg><span>A/B test calculator</span></button>
+      <button id="attach" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.5h7A2 2 0 0 1 20.5 10v6.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/></svg><span>Upload a file or photo</span></button>
+      <button id="abBtn" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v6.2L5.3 18a1.7 1.7 0 0 0 1.5 2.6h10.4a1.7 1.7 0 0 0 1.5-2.6L13.5 9.2V3"/><path d="M7.6 14.5h8.8"/></svg><span>A/B test calculator</span></button>
       <div class="mdiv"></div>
-      <button id="btnImg" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.9 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-3.9-4-6.7-9-6.7Z"/><circle cx="7.6" cy="11" r="1.2"/><circle cx="10" cy="7.6" r="1.2"/><circle cx="14.5" cy="7.6" r="1.2"/><circle cx="16.9" cy="11" r="1.2"/></svg><span>Create images</span><span class="chk">✓</span></button>
-      <button id="btnLive" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M21 8v5h-5"/></svg><span>Live trends</span><span class="chk">✓</span></button>
-      <button id="btnDeep" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13.4 13.4 0 0 1 0 17.2 13.4 13.4 0 0 1 0-17.2Z"/></svg><span>Deep search the web</span><span class="chk">✓</span></button>
+      <button id="btnImg" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.9 2-2 0-.6-.3-1-.6-1.4-.3-.4-.5-.8-.5-1.3 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-3.9-4-6.7-9-6.7Z"/><circle cx="7.6" cy="11" r="1.2"/><circle cx="10" cy="7.6" r="1.2"/><circle cx="14.5" cy="7.6" r="1.2"/><circle cx="16.9" cy="11" r="1.2"/></svg><span>Create images</span><span class="chk">✓</span></button>
+      <button id="btnLive" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M21 8v5h-5"/></svg><span>Live trends</span><span class="chk">✓</span></button>
+      <button id="btnDeep" class="mitem" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2"/><path d="M12 3.4a13.4 13.4 0 0 1 0 17.2 13.4 13.4 0 0 1 0-17.2Z"/></svg><span>Deep search the web</span><span class="chk">✓</span></button>
     </div>
   </div>
 
 
-  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.44</span> <span id="appBuild" class="foot-build"></span></span></div>
+  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.45</span> <span id="appBuild" class="foot-build"></span></span></div>
   <input type="file" id="fileInput" multiple style="display:none">
 </div>
 </div>
@@ -176,6 +176,6 @@
 <script src="/amigo/app.js"></script>
 <script src="/amigo/boot.js"></script>
 <script type="module" src="/assets/js/build-watch.js"></script>
-  <script src="/assets/js/error-report.js?v=6.10.44-eebd52c"></script>
+  <script src="/assets/js/error-report.js?v=6.10.45-fd9a69a"></script>
 </body>
 </html>
