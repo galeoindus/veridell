@@ -98,7 +98,7 @@
   const assistantTurn = make('div', 'rc-assistant-turn');
   const assistantMark = make('span', 'rc-assistant-mark');
   assistantMark.setAttribute('aria-hidden', 'true');
-  assistantMark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="m19 16 .7 2.1L22 19l-2.3.8L19 22l-.8-2.2L16 19l2.1-.8Z"/></svg>';
+  assistantMark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="m19 16 .7 2.1L22 19l-2.3.8L19 22l-.8-2.2L16 19l2.1-.8Z"/></svg>';
   const assistantCopy = make('div', 'rc-assistant-copy');
   assistantCopy.append(make('div', 'rc-assistant-label', 'Evidence trail'));
   const status = make('p', 'rc-assistant-status', 'Finding relevant references and original excerpts…');
