@@ -2499,6 +2499,65 @@ body.amigo-chat .composer textarea,
   box-shadow: none !important;
 }
 
+/* ── rounded, like the AI-mode field ──────────────────────────────────────
+   The input is a soft pill, not a hard line: a 26px radius on a light surface
+   with a hairline, and the radius stays when it has focus so the field does not
+   change shape under the cursor. */
+.searchbar textarea,
+.searchbar input[type="search"],
+.searchbar input[type="text"] {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-bottom-width: 1px;
+  border-radius: 26px;
+  padding: 16px 20px;
+  box-shadow: none;
+}
+.searchbar:focus-within textarea,
+.searchbar:focus-within input[type="search"],
+.searchbar:focus-within input[type="text"] {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+  outline: none;
+}
+@media (max-width: 560px) {
+  .searchbar textarea,
+  .searchbar input[type="search"],
+  .searchbar input[type="text"] { border-radius: 22px; padding: 14px 16px; }
+}
+
+/* the assistant's composer, same pill */
+body.amigo-chat .composer,
+.composer {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-2) !important;
+  border-radius: 26px !important;
+  padding: 8px 8px 8px 16px !important;
+  box-shadow: none !important;
+}
+body.amigo-chat .composer:focus-within,
+.composer:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+
+/* The square box in the screenshot is the field's own border: the earlier rule
+   in this sheet and the bundle's both set it, and the last one won with square
+   corners. This is the final word, with the radius stated on both the field and
+   its wrapper so nothing can square it off again. */
+.searchbar,
+.composer {
+  border-radius: 26px !important;
+}
+.searchbar textarea,
+.searchbar input,
+.composer textarea {
+  border-radius: 26px !important;
+  border: 1px solid var(--border-2) !important;
+  background: var(--surface) !important;
+  padding: 16px 20px !important;
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
