@@ -2018,6 +2018,86 @@ body:not(.amigo-chat) .composer,
 .searchbar .mic-btn svg,
 .composer .mic-btn svg { width: 20px; height: 20px; display: block; }
 
+/* ── the send control belongs inside the card, centred in its own circle ───
+   Measured, not assumed: the "no outer card" block above had reset the card's
+   padding to 0 while the field kept its own 16/20 px inner padding. The control
+   row therefore had no inset of its own, and the 46 px send circle landed 3 px
+   from the bottom-right corner — where a 26 px corner curve cuts across it, so
+   the circle read as if it had fallen out of the box.
+
+   The card now carries real padding, the circle is a 44 px touch target inset
+   12 px from both edges, and the card's radius is large enough (32 px) that the
+   circle sits wholly inside the curve instead of breaking it: with r = 32 and
+   a 22 px circle 12 px in, the circle clears the arc by 7 px. */
+.searchbar,
+.composer .searchbar,
+.dash-hero .searchbar {
+  padding: 12px !important;
+  border-radius: 32px !important;
+}
+@media (max-width: 560px) {
+  .searchbar,
+  .composer .searchbar,
+  .dash-hero .searchbar {
+    padding: 12px !important;
+    border-radius: 32px !important;
+  }
+}
+
+/* the field's own inset shrinks by the card's padding so the text keeps the
+   same distance from the card's edge as before */
+.searchbar textarea,
+.searchbar input,
+.searchbar input[type="search"],
+.searchbar input[type="text"],
+.composer .searchbar textarea {
+  padding: 10px 8px !important;
+}
+
+/* the row sits inside the padding, level on one axis, with no stray inset */
+.searchbar .composer-tools,
+.composer .searchbar .composer-tools {
+  padding: 0 !important;
+  margin-top: 8px !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* the circle: one size everywhere, and a box that centres its contents */
+.searchbar button[type="submit"],
+.composer .searchbar button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  padding: 0 !important;
+  margin: 0 0 0 auto !important;
+  line-height: 1 !important;
+  border-radius: 999px !important;
+  flex: 0 0 auto !important;
+}
+
+/* the arrow is drawn, not typed: a glyph in a font sits on its baseline, which
+   left it a pixel or two high and off-centre in the circle. A masked SVG has
+   its own 24×24 box centred on the circle's centre, so the arrow is centred by
+   construction at any size and in any font. */
+.searchbar button[type="submit"]::after,
+.composer .searchbar button[type="submit"]::after {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 0 !important;
+  background: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V5M5.5 11.5 12 5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V5M5.5 11.5 12 5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
