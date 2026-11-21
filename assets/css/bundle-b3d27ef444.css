@@ -6121,6 +6121,61 @@ body.amigo-chat .composer:focus-within,
   padding: 16px 20px !important;
 }
 
+/* ── the site's field is the assistant's field ────────────────────────────
+   One pill that holds the input and the controls together, exactly like the
+   composer in Amigo: the text on top, the row of controls inside the same
+   rounded shape, one border around the whole thing rather than one per part. */
+.searchbar {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-2) !important;
+  border-radius: 26px !important;
+  padding: 8px 8px 8px 18px !important;
+  box-shadow: none !important;
+  display: grid !important;
+  gap: 4px;
+}
+.searchbar:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+/* inside the pill the field has no border of its own */
+.searchbar textarea,
+.searchbar input,
+.searchbar input[type="search"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 12px 4px 8px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.searchbar:focus-within textarea,
+.searchbar:focus-within input { box-shadow: none !important; outline: none !important; }
+
+/* the control row sits inside the pill, as it does in the assistant */
+.searchbar .composer-tools {
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 2px 2px;
+}
+.searchbar .mode-help,
+.searchbar .composer-prompt,
+.searchbar .composer-label { display: none !important; }
+
+/* The square frame around the pill in the screenshot is the ask panel wrapper,
+   not the field: it still drew a border after the earlier flattening. The pill is
+   the only surface on this part of the page. */
+.dash-hero-ask,
+.dash-hero-ask:focus-within,
+.composer,
+.panel,
+.ask-panel {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.dash-hero-ask { padding: 0 !important; }
+
 }
 @layer utilities {
 /* ── polish.css ── */
