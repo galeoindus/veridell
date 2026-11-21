@@ -1944,6 +1944,62 @@ body:not(.amigo-chat) .composer,
 .searchbar button[type="submit"] { flex: 0 0 auto; margin-inline-start: auto; }
 .searchbar .mic, .searchbar .btn-icon, .searchbar .mode-btn { flex: 0 0 auto; }
 
+/* ── the control row, tidied ──────────────────────────────────────────────
+   Everything in the row sits on one axis and inside the card: the voice
+   button at the leading edge, the mode pills beside it, the send pinned to the
+   trailing edge. The row cannot wrap, so the send can never be pushed past the
+   rounded edge. */
+.searchbar .composer-tools {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  min-width: 0;
+  padding: 0 2px 2px !important;
+}
+.searchbar .composer-tools > * {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchbar .composer-tools > button[type="submit"] {
+  margin-inline-start: auto !important;
+  flex: 0 0 auto;
+}
+/* the voice button and the mode pills share one height so the row reads level */
+.searchbar .composer-tools .mode-btn,
+.searchbar .composer-tools .btn-icon,
+.searchbar .composer-tools .mic {
+  height: 36px;
+  min-height: 36px;
+}
+.searchbar .composer-tools .btn-icon,
+.searchbar .composer-tools .mic { width: 36px; padding: 0; }
+
+/* the floating Amigo button sat on top of the Saved tab */
+@media (max-width: 860px) { .amigo-launcher { display: none !important; } }
+
+/* ── multimorphism, cleared where it does not belong ──────────────────────
+   The surface styles were reaching the reading surfaces: a blurred glass panel
+   behind body text, and soft/clay shadows under article paragraphs. A reader
+   should have a flat page. The treatments stay on the composer, the cards and
+   the panels; prose, articles and the answer body stay flat in every style. */
+.prose,
+.art-body,
+.answer-body,
+.article-shell,
+.panel-prose {
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+:root[data-surface-style="glass"] .prose,
+:root[data-surface-style="glass"] .art-body,
+:root[data-surface-style="soft"] .prose,
+:root[data-surface-style="clay"] .prose {
+  background: transparent !important;
+}
+
 }
 @layer utilities {
 /* ── polish.css ── */
