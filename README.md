@@ -4,7 +4,7 @@
 
 Veridellindo is a Wikimedia knowledge research and discovery platform. Ask a question, or open a topic, and get a direct answer, the key points, a topic-wise breakdown, the facts from the infobox, and every source with a link back to Wikipedia.
 
-It is a **static single-page application** — plain HTML, CSS and ES modules with no frontend bundler — plus Cloudflare Pages Functions for the optional source-grounded AI chat and speech. Cloudflare Pages runs a small Node build step to stamp each deployment and bundle the stylesheets. Search, article and Wikidata data are fetched live in the reader's browser from the public Wikimedia APIs, which need no key. The AI endpoint's OpenRouter credentials are Cloudflare encrypted Secrets and never reach the browser.
+It is a **static single-page application** — plain HTML, CSS and ES modules with no frontend bundler — plus Cloudflare Pages Functions for Amigo chat and image generation. Amigo gathers optional live research sources in the browser before sending the conversation to the model endpoint. Cloudflare Pages runs a small Node build step to stamp each deployment and bundle the stylesheets. Search, article and Wikidata data are fetched live in the reader's browser from the public Wikimedia APIs, which need no key. The AI endpoint's OpenRouter credentials are Cloudflare encrypted Secrets and never reach the browser.
 
 ---
 
@@ -62,8 +62,8 @@ disagree about who this site is.
 | **Light / dark / system theme**, one preference shared by every page; reading comfort and a reading-progress bar | header button on every route |
 | **Credits** — a logo-led attribution page: project identity, maker, the knowledge and infrastructure it runs on, AI-development acknowledgement, contributors and the licences | `#/credits` |
 | **Voice search**, where the browser supports it | composer |
-| **Chat (AI Mode)** — a search-shaped answer surface: one Amigo, one calm column, a large rounded composer, Quick / Detailed / Deep answers, numbered citations, a source-verification strip, saved answers, local history, voice input and read-aloud | `/chat/` |
-| **Site guide** — questions about Veridellindo itself are answered from the product's own facts in the browser, with links to every page: no model, no quota, no invention | `/chat/`, `assets/js/site-knowledge.js` |
+| **Amigo chat** — a separate conversational interface with saved local history, streaming responses, attachments, theme controls and a same-origin Pages Function | `/amigo/` |
+| **Site guide** — product help can use the repository's curated site facts; keep this separate from model-generated answers | `/amigo/`, `assets/js/site-knowledge.js` |
 | **PWA** — installable; the shell loads offline (no service worker: caching is done with `_headers`) | `manifest.webmanifest`, `_headers` |
 
 ### The answer architecture
@@ -96,16 +96,7 @@ shows which level is active.
 
 The default ranker is keyword overlap with a rough IDF weighting. The optional **Understand meaning** switch loads a small open sentence-embedding model (`Xenova/all-MiniLM-L6-v2`, about 23 MB, once) via transformers.js and re-orders the same sentences by cosine similarity. In this extractive mode nothing is generated — every sentence is quoted from the article, and the ranking only chooses the order.
 
-OpenRouter runs in **free-only** mode by default: only model ids ending in `:free` are ever sent, so the six-key pool adds capacity without adding a bill. A paid id is refused by the catalogue, by the allowlist and again in the request path. Turning free-only off takes a deliberate `OPENROUTER_FREE_ONLY=false` plus `ENABLE_PAID_AI=true`.
-
-Chat is a separate, clearly labelled mode. Auto reads the question before it spends anything: greetings and short conversation go to the lightest model that can hold a sentence, everyday questions to the cheap grounded path, and long, comparative or Deep questions to a heavier model. Model choice is by live OpenRouter price inside the allowed band, so the cheapest model that fits is the one that runs.
-
-A question about Veridellindo itself never reaches a model at all. `assets/js/site-knowledge.js` holds the product's facts — pages, sources, privacy, providers, limits, version — and the chat answers from that file, instantly and offline, with links to the pages it names. The same facts are injected into the AI prompt as context, so a model that is asked about the site answers from the product's own description.
- `/amigo/` sends the conversation to this site's own `/api/chat`, which answers with
- Cloudflare Workers AI first and falls back to OpenRouter free models only when a key is
- configured. The old `/chat/` route and `/api/ask` endpoint no longer exist. Amigo keeps
- conversation history in IndexedDB on the reader's device; site search and article requests
- go to Wikimedia directly and are not sent to any model.
+The current Pages Function at `/api/chat` tries Cloudflare Workers AI first and can fall back to OpenRouter free models when a key is configured. It also supports explicit provider selection from a server-owned allowlist. Do not assume that Google Gemini or Google Search grounding is integrated: this checkout contains no Gemini API adapter. Amigo keeps conversation history in IndexedDB on the reader's device; site search and article requests go to Wikimedia directly and are not sent to a model.
 
 ### Reading progress in the contents
 

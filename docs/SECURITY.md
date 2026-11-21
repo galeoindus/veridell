@@ -6,10 +6,7 @@ Nothing about you. There is no account, no sign-in, no analytics script and no
 server-side history. Chat threads, saved answers and memory notes live in your
 browser's own storage.
 
-The only thing that leaves the browser is what a question needs: the question,
-the passages it was answered from, and — if you attached one — the text of that
-file. That goes to this site's `/api/chat`, which forwards it to the configured
-model runtime and keeps nothing.
+When Amigo is used, the message context (and any attached content needed for the request) is sent to this site's `/api/chat` Pages Function, which forwards it to the configured model runtime. The Function does not persist chat history; the browser stores the conversation locally. The model provider receives the submitted content and handles it under its own terms. Search and article requests are separate and go directly to Wikimedia APIs.
 
 ## Reporting a problem
 

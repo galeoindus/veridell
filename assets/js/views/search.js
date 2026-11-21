@@ -30,21 +30,22 @@ export async function renderSearch(ctx, route) {
   ctx.setMode('search');
   const bar = el('section', { class: 'sbar' });
   const composer = el('div', { class: 'composer' });
+  const submitSearch = (value) => {
+    // If the reader switched the form to Ask, send them to Ask. Otherwise
+    // this page searches, whatever mode they used last elsewhere.
+    const mode = ctx.state.mode === 'ask' ? 'ask' : 'search';
+    ctx.navigate(`/${mode}?q=${encodeURIComponent(value)}`);
+  };
   const form = composerForm(ctx, {
     placeholderKey: 'askPlaceholder',
     autofocus: !query,
     labelled: true,
     initialMode: 'search',
-    onSubmit: (value) => {
-      // If the reader switched the form to Ask, send them to Ask. Otherwise
-      // this page searches, whatever mode they used last elsewhere.
-      const mode = ctx.state.mode === 'ask' ? 'ask' : 'search';
-      ctx.navigate(`/${mode}?q=${encodeURIComponent(value)}`);
-    },
+    onSubmit: submitSearch,
   });
   composer.append(form);
   composer.append(el('p', { class: 'voice-status', role: 'status', 'aria-live': 'polite' }));
-  attachSuggest(form.querySelector('textarea'), ctx);
+  attachSuggest(form.querySelector('textarea'), ctx, submitSearch);
   if (query) form.querySelector('textarea').value = query;
   bar.append(composer);
   wrap.append(bar);

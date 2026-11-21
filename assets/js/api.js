@@ -2,8 +2,8 @@
  *
  * Everything Veridellindo knows comes from the public Wikimedia APIs, called
  * straight from the browser (they send permissive CORS headers; the Action API
- * just needs `origin=*`). No keys and no proxy. This module never touches the
- * site's own /api/ask endpoint — that call lives in chat-page.js.
+ * just needs `origin=*`). No keys and no proxy. Amigo uses the separate same-origin
+ * Pages Function at /api/chat; this Wikimedia client does not call that endpoint.
  *
  *   Wikipedia Action API   search, parse, extracts, random, prefix search
  *   Wikipedia REST API     summaries, related, on-this-day, featured, pageviews

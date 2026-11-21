@@ -34,7 +34,7 @@ docs/                  this folder
 articles/<slug>/       the thirteen published articles, as real HTML
 assets/js/             the ES modules the browser imports
 assets/css/            the stylesheets, and the four built bundles
-functions/api/         the Pages Functions (ask, models, speech, image)
+functions/api/         the Pages Functions (chat, image)
 scripts/               build, audit, release and maintenance scripts
 test/                  the suite, one file per concern
 ```

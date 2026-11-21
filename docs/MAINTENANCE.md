@@ -45,15 +45,18 @@ One answer, in one place, so the docs stop disagreeing:
 
 | Where | Value |
 |---|---|
-| `wrangler.toml` `[vars]` | `AI_PROVIDER = "openrouter"`, `OPENROUTER_FREE_ONLY = "true"` |
-| Dashboard secrets | `OPENROUTER_API_KEY_1..6` |
-| Result | answers come from OpenRouter's `:free` models |
-| Cost | nothing — a `:free` model needs no billing opt-in |
-| Workers AI | still available; set `AI_PROVIDER=workers-ai` to keep everything inside Cloudflare |
+| `wrangler.toml` `[ai]` | Declares the `AI` binding used by the Pages Function; verify the binding is enabled for production and preview in Cloudflare Pages settings |
+| Pages Function binding | `env.AI` must be available to `functions/api/chat.js` in production and preview |
+| Dashboard secrets | Optional `OPENROUTER_API_KEY_1..6` values (legacy single key `OPENROUTER_API_KEY` is also read) |
+| Default request path | The handler attempts Cloudflare Workers AI first when the client sends `provider: "auto"` |
+| Fallback | The handler may try its fixed OpenRouter free-model allowlist when a key exists and Workers AI fails; an explicit OpenRouter choice is also supported |
+| Google Gemini | Not integrated in this checkout; add a dedicated server-side adapter only after the API, budget, grounding and citation contracts are approved |
 
-A `:free` model is allowed to run with `ENABLE_PAID_AI=false`. Only a paid model
-id requires the paid opt-in, and it is refused at the last boundary before the
-request leaves the worker.
+The active Pages Function does not read `AI_PROVIDER`, `WORKERS_AI_MODEL`,
+`OPENROUTER_FREE_ONLY`, `ENABLE_PAID_AI`, `ALLOW_PAID_FALLBACK` or
+`OPENROUTER_MODEL_TIER`. Do not treat those legacy template values as active
+runtime controls. The current model ids and OpenRouter free list are hard-coded
+in `functions/api/chat.js` and should be changed through a reviewed code change.
 
 ## What each failure means
 
@@ -146,27 +149,13 @@ npx wrangler pages secret put OPENROUTER_API_KEY_2 --project-name veridell
 # … through _6
 ```
 
-Plaintext variables can go in `wrangler.toml` under `[vars]` and deploy with
-the repository — that is where `AI_PROVIDER` and `OPENROUTER_FREE_ONLY` already
-are. A secret must never be written there; `wrangler.toml` is committed.
-
-**What the values mean here.**
-
-| Name | Kind | What it does |
-|---|---|---|
-| `AI_PROVIDER` | plain | `openrouter` sends answers through OpenRouter; `workers-ai` keeps everything on Cloudflare. |
-| `OPENROUTER_FREE_ONLY` | plain | `true` (the default) restricts every request to `:free` models, so the six keys cost nothing. `false` unlocks paid models, but only with `ENABLE_PAID_AI=true`. |
-| `ENABLE_PAID_AI` | plain | The second lock on spending. A key alone never bills anything. |
-| `ALLOW_PAID_FALLBACK` | plain | A third, separate opt-in: lets a failed free call fall through to a paid one. |
-| `WORKERS_AI_MODEL` | plain | Which Workers AI model answers when the provider is `workers-ai`. |
-| `OPENROUTER_API_KEY_1..6` | **secret** | Six separate quotas, tried in order; empty or rate-limited keys are skipped. |
-| `OPENROUTER_MODEL_TIER` | plain | The automatic floor: `cheap`, `balanced` or `deep`. |
-| `SITE_ORIGIN` | plain | The canonical origin, sent as the Referer to OpenRouter. Not a secret. |
-
-With the file as shipped — `AI_PROVIDER=openrouter`, `OPENROUTER_FREE_ONLY=true`,
-`ENABLE_PAID_AI=false` — the six keys are used against free models only. Nothing
-is billed, and if all six are exhausted the endpoint says so rather than
-silently spending.
+The current Pages Function uses the `AI` binding and optional OpenRouter keys.
+Add OpenRouter credentials as encrypted Cloudflare Pages secrets, never as
+plaintext variables or committed file contents. Local development uses
+`.dev.vars` (ignored by Git); the checked-in `.dev.vars.example` lists only the
+key names the current Function reads. The separate optional `amigo-worker/`
+project has its own configuration and secret contract; do not mix its values
+with the Pages Function without explicitly changing the client endpoint.
 
 ## What must never be committed
 

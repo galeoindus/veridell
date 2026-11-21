@@ -295,7 +295,7 @@ export function chipRow(items, { onPick, justify = false } = {}) {
  * response for an older query can never overwrite a newer one. */
 let suggestSequence = 0;
 
-export function attachSuggest(textarea, ctx) {
+export function attachSuggest(textarea, ctx, onSelect = null) {
   const id = `${textarea.id || 'search'}-suggestions-${++suggestSequence}`;
   const box = el('div', { class: 'suggest', id, role: 'listbox', hidden: true });
   textarea.setAttribute('role', 'combobox');
@@ -324,7 +324,10 @@ export function attachSuggest(textarea, ctx) {
     if (!hit) return;
     clearSuggestions();
     textarea.value = hit.title;
-    ctx.onSubmit(hit.title);
+    // A view may override form submission (for example, Search always searches).
+    // Suggestions must follow the same route as pressing Enter or Send.
+    const submit = typeof onSelect === 'function' ? onSelect : ctx.onSubmit;
+    submit?.(hit.title);
   };
   const setActive = (index) => {
     if (!rows.length) return;

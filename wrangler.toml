@@ -23,7 +23,7 @@ compatibility_date = "2026-01-01"
 pages_build_output_dir = "."
 
 # ── Workers AI ────────────────────────────────────────────────────────────
-# The /api/ask function reads this binding. It is free-tier friendly and
+# The /api/chat Pages Function reads this binding. It is free-tier friendly and
 # needs no key: Cloudflare runs the model.
 #
 # If the binding is added in the dashboard instead (Pages → Settings →
@@ -33,14 +33,8 @@ pages_build_output_dir = "."
 binding = "AI"
 
 # ── AI routing ────────────────────────────────────────────────────────────
-# These live in the repository, not only in the dashboard, because a Pages
-# deployment syncs plain-text variables from this file: anything set only in
-# the dashboard is written back to the dashboard's last value on the next
-# build, and a setting that disappears on deploy is worse than no setting.
-#
-# OpenRouter runs free-only: only model ids ending in `:free` are ever sent,
-# so the six-key pool adds capacity without adding a bill. A paid model still
-# needs ENABLE_PAID_AI=true (a secret, dashboard-only) plus
-# OPENROUTER_FREE_ONLY=false.
-[vars]
-OPENROUTER_FREE_ONLY = "true"
+# The current /api/chat Function owns its model allowlists in code. It tries
+# Workers AI first and may fall back to its fixed OpenRouter free-model list
+# when one of the OPENROUTER_API_KEY_* secrets is configured. Do not add
+# AI_PROVIDER / paid-model flags here unless the Function is changed to read
+# and enforce them.

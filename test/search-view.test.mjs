@@ -50,7 +50,7 @@ function makeCtx() {
     navigate(path) { navigations.push(path); },
     onSubmit() {},
     t,
-    suggest: async () => [],
+    suggest: async () => [{ title: 'Photosynthesis', description: 'How plants use light' }],
     onCleanup() {},
   };
 }
@@ -99,4 +99,19 @@ test('an empty query offers the empty state, not a spinner', async () => {
   const node = await renderSearch(ctx, { name: 'search', query: { q: '' }, params: {} });
   assert.ok(node.querySelector('.state'), 'a state block is shown');
   assert.equal(node.querySelectorAll('.sres-row').length, 0);
+});
+
+
+test('choosing an autocomplete suggestion follows the Search page submit route', async () => {
+  const ctx = makeCtx();
+  const node = await renderSearch(ctx, { name: 'search', query: { q: '' }, params: {} });
+  document.getElementById('main').append(node);
+  const field = node.querySelector('textarea');
+  field.value = 'pho';
+  field.dispatchEvent(new Event('input', { bubbles: true }));
+  await new Promise((resolve) => setTimeout(resolve, 280));
+  const suggestion = node.querySelector('.suggest-item');
+  assert.ok(suggestion, 'a matching suggestion should be rendered');
+  suggestion.dispatchEvent(new Event('click', { bubbles: true, cancelable: true }));
+  assert.deepEqual(ctx.navigations, ['/search?q=Photosynthesis']);
 });
