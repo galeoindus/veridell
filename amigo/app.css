@@ -927,3 +927,39 @@ body.dark .msg.me .bubble{background:linear-gradient(140deg,rgba(72,76,140,.38),
     border: 0;
   }
 }
+
+@layer pages {
+/* ── the assistant's input is a line, not a card ──────────────────────────
+   The composer was a 26px-radius panel with its own field colour, border and
+   shadow, so the message box looked like a widget sitting on the page. It is a
+   single hairline now, the same shape the site's search uses, and focusing it
+   changes the line's colour rather than opening anything. */
+.composer {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line2);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 6px 2px 8px;
+}
+.composer:focus-within {
+  border-bottom-color: var(--accent);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.composer textarea {
+  background: transparent;
+  padding: 10px 4px;
+  font-size: 1rem;
+}
+}
+
+@layer pages {
+  /* The green rounded rectangle in the screenshot was the browser's own focus
+     outline on the textarea, not the composer. Focusing the field changes the
+     hairline under it; it does not draw a box around it. */
+  .composer textarea:focus,
+  .composer textarea:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+}

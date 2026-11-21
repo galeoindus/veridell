@@ -390,11 +390,11 @@ export function attachSuggest(textarea, ctx, onSelect = null) {
     }
   });
   textarea.addEventListener('blur', () => setTimeout(hide, 150));
+  /* Focusing the field does not open anything. The list belongs to typing, not
+     to clicking: a reader who taps the input to place a cursor should see the
+     page they were reading, not a panel over it. */
   textarea.addEventListener('focus', () => {
-    if (rows.length && textarea.value.trim().length >= 2) {
-      box.hidden = false;
-      textarea.setAttribute('aria-expanded', 'true');
-    }
+    textarea.setAttribute('aria-expanded', box.hidden ? 'false' : 'true');
   });
   return box;
 }

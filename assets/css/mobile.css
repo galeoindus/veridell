@@ -609,9 +609,9 @@ section.dash-hero,
   font-size: 16px;
   line-height: 1.5;
 }
-.searchbar:focus-within > textarea,
-.searchbar:focus-within > input[type="search"],
-.searchbar:focus-within > input[type="text"] {
+.searchbar:focus-within textarea,
+.searchbar:focus-within input[type="search"],
+.searchbar:focus-within input[type="text"] {
   border-color: color-mix(in srgb, var(--accent) 60%, var(--border-2));
   outline: 2px solid color-mix(in srgb, var(--accent) 28%, transparent);
   outline-offset: 1px;
@@ -647,3 +647,88 @@ section.dash-hero,
 /* 7. three suggestions, not a wall of chips */
 .hero .chips > *:nth-child(n+4),
 .dash-hero .chips > *:nth-child(n+4) { display: none; }
+
+/* ── the input is a line, not a box ───────────────────────────────────────
+   Tapping the field must not feel like opening a widget. The input keeps one
+   hairline, no shadow and no inner surface; the suggestion list is a flat
+   continuation of the page rather than a floating card. */
+/* descendant, not child: the field is wrapped, and a direct-child selector
+   matched nothing, which left the input with no line at all */
+.searchbar textarea,
+.searchbar input[type="search"],
+.searchbar input[type="text"] {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 14px 2px;
+}
+.searchbar:focus-within > textarea,
+.searchbar:focus-within > input[type="search"],
+.searchbar:focus-within > input[type="text"] {
+  outline: none;
+  border-bottom-color: var(--accent);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* the suggestion list: flat rows, no card, no shadow */
+.suggest {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px 0 0;
+  max-height: 46vh;
+  overflow: auto;
+}
+.suggest [role="option"] { border-radius: 8px; }
+
+/* the same for the site field: focus is a line colour change, not a box */
+.searchbar textarea:focus,
+.searchbar textarea:focus-visible,
+.searchbar input:focus,
+.searchbar input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ── the assistant's composer, on the page that actually loads the bundle ──
+   amigo/app.css declares the composer inside `@layer pages`, but the chat page
+   also loads the site bundle, whose `responsive` layer comes later in the
+   cascade — so the site's own .composer rule kept re-drawing the box. This is
+   the same declaration in the layer that wins. */
+.composer {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-2);
+  border-radius: 0;
+  box-shadow: none;
+}
+.composer:focus-within {
+  border-bottom-color: var(--accent);
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.composer textarea,
+.composer textarea:focus,
+.composer textarea:focus-visible {
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  border: 0;
+}
+
+/* the last two that survived: a shadow on the wrapper and the browser's own
+   outline on the textarea, which drew the green rounded box seen in the
+   screenshot. Both are removed here, in the layer that wins. */
+body.amigo-chat .composer,
+.composer.composer {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+body.amigo-chat .composer textarea,
+.composer textarea {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
