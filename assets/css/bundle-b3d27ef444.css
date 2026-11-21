@@ -6268,6 +6268,24 @@ body:not(.amigo-chat) .composer,
   background: transparent !important;
 }
 
+/* the voice button is `.mic-btn`, not `.mic` — which is why the earlier rule
+   matched nothing and it sat off the row's axis. Measured now, not assumed. */
+.searchbar .mic-btn,
+.composer .mic-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+.searchbar .mic-btn svg,
+.composer .mic-btn svg { width: 20px; height: 20px; display: block; }
+
 }
 @layer utilities {
 /* ── polish.css ── */
