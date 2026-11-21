@@ -20,10 +20,10 @@ manifest, the storage keys, the meta tags and the canonical host are all
 `veridell`. The repository is `galeoindus/veridellindo` and nothing in the shipped
 tree names another one.
 
-**A new mark.** A faceted V on the forest-to-copper tile, with a single dot
-beneath the point: the source the answer stands on. It ships as SVG and at
-48/96/180/192/512 px, plus a maskable icon and a 1200×630 social card, so the
-identity survives every place a browser or a feed crops it.
+**A unified mark.** The supplied Veridellindo lotus-and-gradient logo now appears
+throughout the site and Amigo, including browser/app icons and the social card.
+The original transparent artwork is kept as the master; responsive PNG sizes and
+a maskable app icon are generated from it.
 
 **Every page checked, not just the home page.** All 22 HTML entry points now
 carry a skip link that lands on a real landmark, a canonical address, and

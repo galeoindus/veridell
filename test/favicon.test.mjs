@@ -1,10 +1,5 @@
-/* The favicon is read at 16px, so it is judged as a silhouette, not a drawing.
- *
- * The old icon reused the detailed brand mark: thin overlapping curves in pale
- * gold, blush and green on a light centre. At search-result size the linework
- * merged into the background and the icon read as a smudge. This test guards the
- * replacement: a separate micro-mark, declared identically on every page, with
- * every referenced file actually present.
+/* Brand icon contract: every route uses the supplied Veridellindo artwork,
+ * with all declared raster sizes present and its SVG wrapper resolving cleanly.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -25,7 +20,7 @@ const walk = (dir, prefix = '') => {
 };
 walk('');
 
-test('the micro-mark exists at every declared size', () => {
+test('the supplied brand mark exists at every declared size', () => {
   for (const size of [48, 96, 192]) {
     const file = `assets/img/brand/favicon-mark-${size}.png`;
     assert.ok(existsSync(new URL(file, ROOT)), `${file} is missing`);
@@ -35,12 +30,11 @@ test('the micro-mark exists at every declared size', () => {
   assert.ok(existsSync(new URL('favicon.ico', ROOT)));
 });
 
-test('the micro-mark is a separate asset, not the detailed logo', () => {
+test('the favicon SVG uses the supplied brand artwork', () => {
   const svg = read('assets/img/brand/favicon-mark.svg');
-  assert.match(svg, /viewBox="0 0 64 64"/, 'the vector source is not square');
-  // one ground, one bold stroke path, one accent dot: no thin linework
-  assert.ok((svg.match(/<path/g) || []).length <= 2, 'the mark carries too many paths to read at 16px');
-  assert.match(svg, /stroke-width="10"/, 'the stroke is too thin for a favicon');
+  assert.match(svg, /viewBox="0 0 64 64"/, 'the vector wrapper is not square');
+  assert.match(svg, /<image[^>]+href="favicon-mark-192\.png"/, 'the SVG does not reuse the supplied favicon PNG');
+  assert.ok(!/<path/.test(svg), 'the favicon must not quietly fall back to the retired V mark');
 });
 
 test('every page declares the same favicon set', () => {

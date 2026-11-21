@@ -51,9 +51,9 @@ function iconFor(value, size){
 
 const SKILLS = {"design-critique": {"icon": "🎨", "name": "Design Critique", "tag": "Rigorous, structured design critique — quick and deep modes", "chips": ["Give my design a tough critique", "Top issues on my landing page", "Review in quick mode", "Check against my design system"], "hero": "generic", "analytics": false, "helpline": false}, "presentation-agent": {"icon": "🎤", "name": "Presentation Agent", "tag": "Narrative-driven decks — presentations that stand on their own", "chips": ["Build an investor pitch narrative", "Suggest a board deck structure", "Plan a QBR presentation flow", "Review my slides' story arc"], "hero": "generic", "analytics": false, "helpline": false}, "pptx-master": {"icon": "📽️", "name": "PPTX Master", "tag": "Professional PowerPoint decks — build, edit, QA", "chips": ["Structure a 10-slide sales deck", "Give me a deck QA checklist", "Write slide copy and speaker notes", "Review my deck's visual hierarchy"], "hero": "generic", "analytics": false, "helpline": false}, "skill-creator": {"icon": "🛠️", "name": "Skill Creator", "tag": "Create, improve and test new skills", "chips": ["Help me build a new skill", "Create an evals set for my skill", "Improve my skill's description", "Review my skill's structure"], "hero": "generic", "analytics": false, "helpline": false}, "mixpanel-analyst": {"icon": "📈", "name": "Mixpanel Analyst", "tag": "Product data analyst — retention, activation, data-dictionary thinking", "chips": ["Explain why retention dropped", "How should we define the activation metric", "What does my event data say", "Pick metrics for a KPI dashboard"], "hero": "generic", "analytics": true, "helpline": false}, "product-analytics": {"icon": "🔍", "name": "Product Analytics", "tag": "Funnel, retention, cohort, activation, adoption, churn", "chips": ["Run a funnel analysis — CSV already uploaded", "How do I read cohort retention", "What are early churn signals", "How do we measure activation"], "hero": "generic", "analytics": true, "helpline": false}, "metric-reasoning": {"icon": "📐", "name": "Metric Reasoning", "tag": "The right KPI/metric definition — identity, grain, rate vs count", "chips": ["DAU dropped — write the identity first", "Give me the right conversion-rate definition", "Why does revenue differ across two sources", "Read this KPI's numerator/denominator"], "hero": "generic", "analytics": true, "helpline": false}, "descriptive-stats": {"icon": "📊", "name": "Descriptive Statistics", "tag": "Distributions, outliers, missing data — and when not to say mean", "chips": ["Profile my data — CSV uploaded", "Mean or median — which is right", "How do I spot outliers", "How do I report skewed data"], "hero": "generic", "analytics": true, "helpline": false}, "file-organizer": {"icon": "🗂️", "name": "File Organizer", "tag": "A trusted system for files and folders — taxonomy + naming", "chips": ["Plan how to organize my Drive", "Suggest a file naming convention", "Build a taxonomy for my folders", "Review my existing structure"], "hero": "generic", "analytics": false, "helpline": false}, "time-series": {"icon": "⏱️", "name": "Time Series", "tag": "Trend, baseline, anomaly, change point — answering \"when did it start\"", "chips": ["I see a WoW drop — fix the baseline first", "Is this spike an anomaly or a trend", "When did it start — find the change point", "CSV uploaded — pull the trend"], "hero": "generic", "analytics": true, "helpline": false}, "analytical-planning": {"icon": "🧭", "name": "Analytical Planning", "tag": "Hard business question → investigation plan first, analysis second", "chips": ["Revenue dropped — build an investigation plan", "Structure this KPI question", "I need a plan before starting an RCA", "Turn this vague question analysis-ready"], "hero": "generic", "analytics": true, "helpline": false}, "analysis-validation": {"icon": "✅", "name": "Analysis Validation", "tag": "The last gate before the final answer — baseline, denominator, Simpson", "chips": ["Critique my analysis hard", "Where is this conclusion weak?", "Run the validation checklist", "Challenge this KPI claim"], "hero": "generic", "analytics": true, "helpline": false}, "data-dictionary": {"icon": "📖", "name": "Data Dictionary", "tag": "Governed metric definitions — entities, grains, joins, source of truth", "chips": ["Show the governed definition of this metric", "Explain the entities and joins", "I need to define a new metric — review it", "Two definitions clash — which is right?"], "hero": "generic", "analytics": true, "helpline": false}, "schema-crawler": {"icon": "🕸️", "name": "Data Schema Crawler", "tag": "A method for understanding data sources and building semantic schemas", "chips": ["Help me understand my data source", "Help me build a semantic schema", "How to explore the warehouse", "The crawl protocol for schemas"], "hero": "generic", "analytics": false, "helpline": false}, "dashboard-design": {"icon": "📺", "name": "Dashboard Design", "tag": "KPI narrative and hierarchy — a story, not a pile of charts", "chips": ["Build the KPI hierarchy for an exec dashboard", "Design a weekly digest board", "Improve my dashboard's narrative", "How to surface anomalies on a dashboard"], "hero": "generic", "analytics": false, "helpline": false}, "changelog": {"icon": "📝", "name": "Changelog Reporter", "tag": "Branded changelogs from GitHub activity for non-technical readers", "chips": ["Write a changelog from my merged PRs", "Release notes in non-technical language", "Review my changelog format", "Help write a user-facing entry"], "hero": "generic", "analytics": false, "helpline": false}, "deck-standards": {"icon": "🏗️", "name": "Deck Build Standards", "tag": "Content contract → checkable build rules — consistent decks every time", "chips": ["Give me the deck build-rules checklist", "Keep decks consistent across runs", "Make the content contract checkable", "Explain the deck review rules"], "hero": "generic", "analytics": false, "helpline": false}, "brand-pptx": {"icon": "🖌️", "name": "Brand for PPTX", "tag": "Sarvam AI brand guidelines — everything for on-brand presentations", "chips": ["Build a deck in Sarvam brand", "Rules for on-brand slides", "Run brand QA on my deck", "Explain the brand colours and layout"], "hero": "generic", "analytics": false, "helpline": false}, "root-cause": {"icon": "🔎", "name": "Root Cause Analysis", "tag": "Why it happened — build, rank and test hypotheses with evidence", "chips": ["Revenue dropped — find the cause", "Build and rank hypotheses", "What moved this metric", "Say it in evidence language"], "hero": "generic", "analytics": true, "helpline": false}, "visualization": {"icon": "🖼️", "name": "Visualization", "tag": "One result = one right chart — chart selection and quality", "chips": ["Which chart fits this result?", "Suggest a funnel chart", "How do I show a retention curve", "Run a quality check on my chart"], "hero": "generic", "analytics": true, "helpline": false}, "stat-inference": {"icon": "🎲", "name": "Statistical Inference", "tag": "A/B tests, significance, confidence intervals, effect size — the math lives here", "chips": ["Is this A/B test result valid?", "Is this lift real or noise?", "Explain confidence intervals", "Comparing two rates — significant?"], "hero": "generic", "analytics": true, "helpline": false}, "metabase": {"icon": "🗄️", "name": "Metabase MCP", "tag": "Protocol for Metabase MCP tools — query, MBQL, execute", "chips": ["How do I build a Metabase query", "Explain MBQL", "How do I search tables", "The query execution protocol"], "hero": "generic", "analytics": false, "helpline": false}, "ui-critique": {"icon": "🪞", "name": "UI Design Critique", "tag": "UI and design screenshot review — Apple HIG + UX writing", "chips": ["Critique my UI hard", "Review against Apple HIG", "Improve my UX writing", "Review my landing page"], "hero": "generic", "analytics": false, "helpline": false}, "segmentation": {"icon": "🧩", "name": "Segmentation Drilldown", "tag": "Which segment moved the metric — contribution, Pareto, Simpson's", "chips": ["Which segment drove the drop?", "Run a contribution analysis", "Build a Pareto ranking of causes", "Check for Simpson's paradox"], "hero": "generic", "analytics": true, "helpline": false}, "sarvam-presentation": {"icon": "🎞️", "name": "Sarvam Presentation", "tag": "Professional .pptx decks — consulting, report and bold pitch looks", "chips": ["Build a 10-slide investor deck", "Make it a consulting-style deck", "A bold big-type pitch deck", "Edit my existing .pptx"], "hero": "generic", "analytics": false, "helpline": false}, "sarvam-html-presentation": {"icon": "🖥️", "name": "HTML Presentation", "tag": "Self-contained HTML slide decks you can open in any browser", "chips": ["Make an HTML deck on AI in India", "Turn my report into slides", "Convert my PPTX to HTML", "An executive briefing deck"], "hero": "generic", "analytics": false, "helpline": false}, "sarvam-doc-coauthoring": {"icon": "✍️", "name": "Doc Co-Authoring", "tag": "Ask first, plan as todos, then write — specs, proposals, PRDs, RFCs", "chips": ["Help me write a PRD", "Draft a project proposal", "Write a technical spec", "Co-author a decision doc"], "hero": "generic", "analytics": false, "helpline": false}, "sarvam-pdf": {"icon": "📄", "name": "PDF Studio", "tag": "Create, read and edit PDFs — extract text, merge, split, watermark", "chips": ["Extract the text from a PDF", "Create a PDF report", "Merge or split my PDFs", "Add a watermark"], "hero": "generic", "analytics": false, "helpline": false}, "sarvam-xlsx": {"icon": "📗", "name": "Excel & CSV", "tag": "Build and fix spreadsheets — formulas, formatting, cleaning", "chips": ["Build a budget spreadsheet", "Fix my formula errors", "Clean up this messy table", "Convert CSV to Excel"], "hero": "generic", "analytics": false, "helpline": false}, "sarvam-slides": {"icon": "🎨", "name": "Sarvam Slides", "tag": "Standalone HTML decks — five design systems, or your own brand", "chips": ["Build a pitch deck as HTML", "Make it in the Tatva style", "A deck in our brand colours", "Turn my report into slides"], "hero": "generic", "analytics": false, "helpline": false}, "assistant": {"icon": "💬", "name": "General Assistant", "tag": "Professional help with anything — clear, precise, to the point", "chips": ["Ask me anything", "Help me write or edit something", "Explain this clearly", "Compare my options", "Plan this out for me"], "hero": "generic", "analytics": false, "helpline": false}};
 /* Original Amigo companion — embedded so the app stays one-file portable. */
-const AMIGO_MASCOT_URI = "/assets/img/amigo/amigo-wave.webp";
+const AMIGO_BRAND_URI = "/assets/img/brand/logo-192.png";
 function darkNow(){ return document.body.classList.contains("dark"); }
-function heroMarkHTML(){ return '<img class="lgimg" alt="Amigo mascot" src="' + AMIGO_MASCOT_URI + '">'; }
+function heroMarkHTML(){ return '<img class="lgimg" alt="Veridellindo logo" src="' + AMIGO_BRAND_URI + '">'; }
 function dharmaHTML(){ return '<span class="typing-mascot" aria-label="Amigo is thinking"><i></i><i></i><i></i></span>'; }
 
 const AMP = String.fromCharCode(38);
@@ -114,7 +114,8 @@ const DEFAULTS = {
   skill: "auto", imageMode: false,
   deepSearch: false,
   connectors: { web: true, google: false, gkey: "", gcx: "", stack: true, hn: true, books: true, github: true, weather: true, trends: true, ghToken: "" },
-  liveMode: false
+  liveMode: false,
+  voiceLang: "auto"
 };
 let settings = Object.assign({}, DEFAULTS);
 let busy = false;
@@ -581,7 +582,7 @@ function addMsg(role, text, opts){
   if (opts && opts.image) addImage(bub, opts.image, opts.prompt);
   if (opts && opts.sources && opts.sources.length) addSources(bub, opts.sources);
   wrap.append(bub); chatEl.append(wrap);
-  if (!(opts && opts.typing)) addCopy(wrap, text);
+  if (!(opts && opts.typing)) addCopy(wrap, text, role === "assistant");
   scrollDown();
   return bub;
 }
@@ -597,13 +598,81 @@ function copyToClipboard(text, btn){
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fallback);
   else fallback();
 }
-function addCopy(wrap, text){
+let activeSpeechButton = null;
+function resetSpeechButton(button){
+  if (!button) return;
+  button.classList.remove("speaking");
+  button.title = "Read this answer aloud";
+  button.setAttribute("aria-label", "Read this answer aloud");
+  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
+}
+function speechLanguageFor(text){
+  const selected = String(settings.voiceLang || "auto");
+  if (selected && selected !== "auto") return selected;
+  const value = String(text || "");
+  if (/[\u0900-\u097f]/.test(value)) return "hi-IN";
+  if (/[\u0980-\u09ff]/.test(value)) return "bn-IN";
+  if (/[\u0b80-\u0bff]/.test(value)) return "ta-IN";
+  if (/[\u0c00-\u0c7f]/.test(value)) return "te-IN";
+  if (/[\u0600-\u06ff]/.test(value)) return "ur-PK";
+  const device = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+  return /^hi/i.test(device) ? "hi-IN" : "en-IN";
+}
+function speechPlainText(value){
+  return String(value || "")
+    .replace(/```[\s\S]*?```/g, " code block ")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s*/gm, "")
+    .replace(/[>*_`~|]/g, " ")
+    .replace(/\s+/g, " ").trim();
+}
+function speakAnswer(value, button){
+  const synth = window.speechSynthesis;
+  if (!synth || !window.SpeechSynthesisUtterance){ announce("Speech playback is not supported in this browser."); return; }
+  if (activeSpeechButton === button && synth.speaking){
+    synth.cancel(); resetSpeechButton(button); activeSpeechButton = null; announce("Stopped reading."); return;
+  }
+  if (activeSpeechButton) resetSpeechButton(activeSpeechButton);
+  synth.cancel();
+  const text = speechPlainText(value);
+  if (!text){ announce("There is no text to read."); return; }
+  const lang = speechLanguageFor(text);
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang; utterance.rate = 1; utterance.pitch = 1; utterance.volume = 1;
+  const voices = synth.getVoices ? synth.getVoices() : [];
+  const voice = voices.find(v => String(v.lang || "").toLowerCase() === lang.toLowerCase())
+    || voices.find(v => String(v.lang || "").toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
+  if (voice) utterance.voice = voice;
+  activeSpeechButton = button;
+  button.classList.add("speaking"); button.title = "Stop reading";
+  button.setAttribute("aria-label", "Stop reading");
+  button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> Stop';
+  utterance.onend = () => { resetSpeechButton(button); if (activeSpeechButton === button) activeSpeechButton = null; announce("Finished reading the answer."); };
+  utterance.onerror = (event) => { resetSpeechButton(button); if (activeSpeechButton === button) activeSpeechButton = null; if (event && event.error !== "canceled" && event.error !== "interrupted") announce("Could not play speech on this device."); };
+  try { synth.speak(utterance); announce("Reading the answer aloud."); }
+  catch (err){ noteError(err, "speech playback"); resetSpeechButton(button); activeSpeechButton = null; announce("Could not start speech playback."); }
+}
+
+function addCopy(wrap, text, withSpeech){
   if (!wrap || !text) return;
   const row = document.createElement("div"); row.className = "copyrow";
 
   const btn = document.createElement("button"); btn.className = "copybtn"; btn.type = "button"; btn.title = "Copy this message";
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M6 15H5.5A2.5 2.5 0 0 1 3 12.5v-7A2.5 2.5 0 0 1 5.5 3h7A2.5 2.5 0 0 1 15 5.5V6"/></svg> Copy';
   btn.addEventListener("click", () => copyToClipboard(text, btn));
+
+  if (withSpeech){
+    const speak = document.createElement("button");
+    speak.className = "copybtn speakbtn"; speak.type = "button";
+    speak.title = "Read this answer aloud"; speak.setAttribute("aria-label", "Read this answer aloud");
+    speak.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg> Listen';
+    const supported = !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
+    speak.disabled = !supported;
+    if (!supported){ speak.title = "Speech playback is not supported in this browser"; speak.setAttribute("aria-label", speak.title); }
+    else speak.addEventListener("click", () => speakAnswer(text, speak));
+    row.append(speak);
+  }
 
   const thumbs = '<path d="M7 21V10.5l4.4-6.9A1.7 1.7 0 0 1 14.3 4.5V10h4.1a1.8 1.8 0 0 1 1.8 2.2l-1.2 6.2A2 2 0 0 1 17 21H7Z"/><path d="M7 10.5H4.6A1.6 1.6 0 0 0 3 12.1v7.3A1.6 1.6 0 0 0 4.6 21H7"/>';
   const up = document.createElement("button"); up.className = "copybtn vote"; up.type = "button"; up.title = "Good answer";
@@ -613,7 +682,8 @@ function addCopy(wrap, text){
   up.addEventListener("click", () => { up.classList.toggle("on"); dn.classList.remove("on"); });
   dn.addEventListener("click", () => { dn.classList.toggle("on"); up.classList.remove("on"); });
 
-  row.append(btn, up, dn);
+  row.insertBefore(btn, row.firstChild);
+  row.append(up, dn);
   wrap.append(row);
 }
 
@@ -1036,7 +1106,7 @@ function engineLabel(provider, model){
 function addAmigoSignature(bub, provider, model){
   if (!bub || bub.querySelector(".amigo-signature")) return;
   const row = document.createElement("div"); row.className = "amigo-signature";
-  const img = document.createElement("img"); img.src = AMIGO_MASCOT_URI; img.alt = "Amigo"; img.loading = "lazy";
+  const img = document.createElement("img"); img.src = AMIGO_BRAND_URI; img.alt = "Veridellindo"; img.loading = "lazy";
   const name = document.createElement("span"); name.className = "amigo-name"; name.textContent = "Amigo";
   const label = document.createElement("span"); label.className = "engine-label"; label.textContent = engineLabel(provider, model);
   row.append(img, name, label); bub.append(row);
@@ -1369,7 +1439,7 @@ async function send(){
       bub.innerHTML = mdLite(cap);
       addImage(bub, src, text);
       addAmigoSignature(bub, "workers-ai", "@cf/black-forest-labs/flux-1-schnell");
-      if (bubWrap) addCopy(bubWrap, text);
+      if (bubWrap) addCopy(bubWrap, text, false);
       curHistory().push({ role: "assistant", content: cap, image: src, imagePrompt: text, provider: "workers-ai", model: "@cf/black-forest-labs/flux-1-schnell" });
       histSave();
     } catch(err){
@@ -1449,7 +1519,7 @@ async function send(){
     }
     if (sources) addSources(bub, sources);
     addAmigoSignature(bub, usedProvider, usedModel);
-    if (bubWrap) addCopy(bubWrap, reply);
+    if (bubWrap) addCopy(bubWrap, reply, true);
     if (curHistory().length <= 3) autoTitle(curSkill);
     curHistory().push({ role: "assistant", content: reply, sources: sources || null, provider: usedProvider, model: usedModel });
     histSave();
@@ -2190,27 +2260,45 @@ document.addEventListener("click", (e) => {
   if (e.target.closest("#toolMenu") || e.target.closest("#plusBtn")) return;
   m.classList.remove("open");
 });
-/* voice input — only where the browser supports it */
+/* Voice input — native browser recognition, with clear permission/error feedback. */
 (function(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const b = $("#micBtn"); if (!b || !SR) return;
-  b.style.display = "";
+  b.style.display = ""; b.hidden = false;
   const rec = new SR();
-  // Speak the language the reader picked, not a hardcoded one. A device whose
-  // locale is Urdu was transcribing Hindi into Urdu script because the hint was
-  // en-IN and the browser fell back to the system language.
-  const voiceLang = String(settings.voiceLang || "").trim();
-  const device = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-  rec.lang = voiceLang || (/^hi/i.test(device) ? "hi-IN" : "en-IN");
-  rec.interimResults = false; rec.maxAlternatives = 1;
+  rec.interimResults = false; rec.maxAlternatives = 1; rec.continuous = false;
   let on = false;
-  b.addEventListener("click", () => { if (on){ try { rec.stop(); } catch(e){ noteError(e, "silent path"); } return; } try { rec.start(); } catch(e){ noteError(e, "silent path"); } });
-  rec.onstart = () => { on = true; b.classList.add("on"); b.title = "Listening\u2026 tap to stop"; };
-  rec.onend = () => { on = false; b.classList.remove("on"); b.title = "Speak your question"; };
-  rec.onerror = () => { on = false; b.classList.remove("on"); b.title = "Speak your question"; };
+  function reset(){
+    on = false; b.classList.remove("on"); b.setAttribute("aria-pressed", "false");
+    b.title = "Speak your question"; b.setAttribute("aria-label", "Speak your question");
+  }
+  b.addEventListener("click", () => {
+    if (on){ try { rec.stop(); } catch(e){ noteError(e, "speech stop"); reset(); } return; }
+    rec.lang = speechLanguageFor(inputEl.value || "");
+    try { rec.start(); }
+    catch(e){ noteError(e, "speech start"); announce("Microphone could not start. Check browser permission and try again."); reset(); }
+  });
+  rec.onstart = () => {
+    on = true; b.classList.add("on"); b.setAttribute("aria-pressed", "true");
+    b.title = "Listening… tap to stop"; b.setAttribute("aria-label", "Stop listening");
+    announce("Listening. Speak your question now.");
+  };
+  rec.onend = reset;
+  rec.onerror = (event) => {
+    const code = String(event && event.error || "");
+    if (code === "not-allowed" || code === "service-not-allowed") announce("Microphone permission is blocked. Allow microphone access in your browser settings.");
+    else if (code === "no-speech") announce("No speech was detected. Tap the microphone and try again.");
+    else if (code === "audio-capture") announce("No microphone was found on this device.");
+    else if (code !== "aborted") announce("Speech recognition failed. Please try again.");
+    reset();
+  };
   rec.onresult = (e) => {
     const t = e.results && e.results[0] && e.results[0][0] && e.results[0][0].transcript;
-    if (t){ inputEl.value = (inputEl.value ? inputEl.value.replace(/\s+$/, "") + " " : "") + t.trim(); inputEl.focus(); }
+    if (t){
+      inputEl.value = (inputEl.value ? inputEl.value.replace(/\s+$/, "") + " " : "") + t.trim();
+      inputEl.style.height = "auto"; inputEl.style.height = Math.min(inputEl.scrollHeight, 130) + "px";
+      inputEl.focus(); announce("Voice input added to your message.");
+    }
   };
 })();
 $("#btnMenu").addEventListener("click", () => {
@@ -2271,9 +2359,10 @@ const overlay = $("#overlay");
 function syncSettingsFields(){
   const cn = getConn();
   $("#inGKey").value = cn.gkey || ""; $("#inGCx").value = cn.gcx || ""; $("#inGhTok").value = cn.ghToken || "";
-  const worker = $("#inWorkerUrl"), model = $("#inAiModel");
+  const worker = $("#inWorkerUrl"), model = $("#inAiModel"), voice = $("#inVoiceLang");
   if (worker) worker.value = settings.workerUrl || "";
   if (model) model.value = settings.aiModel || "auto";
+  if (voice) voice.value = settings.voiceLang || "auto";
 }
 $("#btnSet").addEventListener("click", () => { syncSettingsFields(); chatListRender(); overlay.classList.add("open"); });
 $("#btnClose").addEventListener("click", () => overlay.classList.remove("open"));
@@ -2282,6 +2371,7 @@ $("#btnSave").addEventListener("click", () => {
   const _ib = $("#btnImg"); settings.imageMode = !!(_ib && _ib.classList.contains("on"));
   settings.workerUrl = $("#inWorkerUrl").value.trim().replace(/\/+$/, "");
   settings.aiModel = $("#inAiModel").value || "auto";
+  settings.voiceLang = $("#inVoiceLang") ? $("#inVoiceLang").value : "auto";
   settings.connectors = {
     gkey: $("#inGKey").value.trim(), gcx: $("#inGCx").value.trim(),
     google: !!(($("#inGKey").value.trim()) && ($("#inGCx").value.trim())),
@@ -2347,7 +2437,7 @@ function sideListRender(){
     const row = document.createElement("button");
     row.type = "button";
     row.className = "srow" + (id === curSkill ? " on" : "");
-    row.innerHTML = '<span class="si"><img class="triMark" alt="" src="' + AMIGO_MASCOT_URI + '"></span><span class="sn">' + esc(chatTitle(id)) + '</span>';
+    row.innerHTML = '<span class="si"><img class="triMark" alt="" src="' + AMIGO_BRAND_URI + '"></span><span class="sn">' + esc(chatTitle(id)) + '</span>';
     row.addEventListener("click", () => openChat(id));
     box.append(row);
   });
@@ -2477,7 +2567,7 @@ $("#btnTest").addEventListener("click", async () => {
   syncLiveBtn();
   renderAttBar();
   sideListRender();
-  const _bl = $("#brandLogo"); if (_bl) _bl.src = AMIGO_MASCOT_URI;
+  const _bl = $("#brandLogo"); if (_bl) _bl.src = AMIGO_BRAND_URI;
   renderAll();
   updateEngineStatus();
   inputEl.focus();

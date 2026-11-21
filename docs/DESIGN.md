@@ -10,27 +10,27 @@ sheltered place). A quiet place where things are checked. The product is
 Veridellindo; the assistant inside it is Amigo. Never write the two as one name, and
 never ship a second product name.
 
-**The mark.** A faceted V on a rounded tile: two facets of one prism, cream on
-the left and copper on the right, with a single dot beneath the point. The V is
-the initial; the fold makes it a cut stone rather than a letter; the dot is the
-source every answer stands on. It is drawn from one geometry at every size the
-site asks for — SVG, 48, 96, 180, 192 and 512 px, a maskable 512 for Android,
-and a 1200×630 card for feeds. The art sits inside the 80 % safe circle on the
-maskable variant so an aggressive launcher crop cannot cut the point off.
+**The mark.** The supplied Veridellindo logo is a white lotus-like line symbol
+set over a warm orange, coral, magenta and violet gradient cloud, with a small
+charcoal sparkle at the lower right. Use the same master artwork for the site
+header, assistant entry points, chat welcome state, saved-chat identity, browser
+icons, app icons and social preview. Keep the transparent background around the
+mark; do not redraw it as a lettermark or substitute an unrelated assistant
+mascot. The typing indicator may remain a separate progress illustration.
 
-**The tile.** A diagonal gradient from `#082A26` (deep forest) through `#12564C`
-(teal) to `#9E5626` (copper). It is the same three-stop ramp in the mark, the
-social card and the theme colours, so a screenshot of any one of them identifies
-the others.
+**The tile.** The supplied gradient is the visual anchor: warm orange and gold
+flow through coral and pink into violet. Use it sparingly for primary actions,
+active states and brand accents. Keep reading surfaces quiet, opaque and high
+contrast so the full-colour logo remains distinctive.
 
 **The promise.** *Every answer, with its source.* It is the tagline, the
 manifest description, the `alternateName` in structured data and the first line
 of the README. If a new surface needs a one-line description, use that line
 rather than inventing a second one.
 
-**The colours.** Cream paper, forest ink, a green that means "the site" and a
-brass that means "you can touch this". Reading surfaces stay opaque and quiet;
-chrome may be translucent. The two accents are the only loud things on a page.
+**The colours.** Soft lilac-white and deep plum surfaces support the orange,
+coral, magenta and violet brand gradient. Keep long-form content calm and
+readable; reserve the brighter gradient for focal actions and brand moments.
 
 **The type.** A serif display for headings — Iowan Old Style, Palatino, Georgia
 and Tiro Devanagari Hindi in that order — and the system sans for everything
@@ -119,7 +119,7 @@ Article text, source citations, tables, infoboxes and answer bodies should use s
 
 ## Amigo assistant layer
 
-The conversational assistant is named **Amigo**; the knowledge platform remains Veridellindo. The `amigo-mark.svg` is a neutral geometric chat-face mark. Assistant progress and answer-reveal states use restrained CSS motion, with a complete reduced-motion fallback. The old wheel-like loader is replaced by a neutral progress ring. The shared `amigo-ui.css` composes with the existing light/dark design tokens and responsive article-gallery layout; `amigo-chat.css` is scoped to the dedicated chat route. Exactly one Amigo instance appears per screen: the rail's mark is the site facet, and the character appears once, in the welcome state or beside an answer. `chat-ai-mode.css` is the last layer in the chat cascade and settles the shell into an AI Mode shape — a search-led hero, chip starters, one answer card per reply, and a single rounded composer on the floor. The rail carries the site's doorways (Articles, Topics, Library, Sources, How it works) so the chat is part of Veridellindo rather than a separate product. Every answer states what it is: a badge (Source-backed, From the library, Site guide, Conversation), how many of its sources are actually cited, and which model wrote it. Preserve the existing source-grounding, URL validation, server-side secret handling, and privacy notice when extending the agent.
+The conversational assistant is named **Amigo**; the knowledge platform remains Veridellindo. The supplied Veridellindo logo is reused for the rail, welcome state, saved-chat identity and chat header; the typing indicator remains a separate progress illustration. Assistant progress and answer-reveal states use restrained CSS motion, with a complete reduced-motion fallback. The dedicated `amigo/redesign.css` is loaded last on the chat route and owns the refreshed violet, coral and warm-orange chat surface while preserving the existing interaction IDs and data flow. The chat has a centred welcome state, starter cards, readable answer surfaces and a rounded composer with upload, microphone, stop and send actions. The rail carries the site's doorways (Articles, Topics, Library, Sources, How it works) so the chat is part of Veridellindo rather than a separate product. Every answer states what it is: a badge (Source-backed, From the library, Site guide, Conversation), how many of its sources are actually cited, and which model wrote it. Preserve the existing source-grounding, URL validation, server-side secret handling, and privacy notice when extending the agent.
 
 
 ## User-controlled reading and surface preferences

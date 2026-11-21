@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Veridellindo">
-  <rect width="64" height="64" rx="14" fill="#173b32"/>
-  <path d="M17 17 L32 49 L47 17" fill="none" stroke="#f7f4ec" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="32" cy="10" r="5" fill="#b46a45"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Veridellindo"><image href="favicon-mark-192.png" width="64" height="64" preserveAspectRatio="xMidYMid meet"/></svg>

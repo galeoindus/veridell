@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="veridell-build" content="6.10.39-95a21d2">
-  <meta name="veridell-version" content="6.10.39">
+  <meta name="veridell-build" content="6.10.38-d65ffe8">
+  <meta name="veridell-version" content="6.10.38">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Amigo — Veridellindo</title>
@@ -17,7 +17,7 @@
 <meta property="og:description" content="The assistant on Veridellindo. Cloudflare Workers AI, on this site's own endpoint.">
 <meta property="og:url" content="https://veridellindo.pages.dev/amigo/">
 <meta property="og:image" content="https://veridellindo.pages.dev/assets/img/brand/social-card.png">
-<meta property="og:image:alt" content="The Veridellindo badge: a gold, pink and green ring around a line-art lotus.">
+<meta property="og:image:alt" content="Veridellindo gradient lotus mark on a dark background.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Amigo — Veridellindo">
 <meta name="twitter:description" content="The assistant on Veridellindo. Cloudflare Workers AI, on this site's own endpoint.">
@@ -34,9 +34,11 @@
   "description": "The assistant interface on Veridellindo, answered by Cloudflare Workers AI through this site's own endpoint."
 }
 </script>
-  <script src="/assets/js/image-fallback.js?v=6.10.39-95a21d2"></script>
-  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.39-95a21d2">
-  <script src="/assets/js/global-theme.js?v=6.10.39-95a21d2"></script>
+  <script src="/assets/js/image-fallback.js?v=6.10.38-d65ffe8"></script>
+  <link rel="stylesheet" href="/assets/css/bundle-3428694c77.css?v=6.10.38-d65ffe8">
+  <link rel="stylesheet" href="/assets/css/brand-refresh.css?v=6.10.38-d65ffe8">
+  <link rel="stylesheet" href="/amigo/redesign.css">
+  <script src="/assets/js/global-theme.js?v=6.10.38-d65ffe8"></script>
   <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/brand/favicon-mark-48.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/brand/favicon-mark-96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/favicon-mark-192.png">
@@ -44,25 +46,7 @@
 </head>
 <body class="amigo-chat">
 <a class="skip-link" href="#chat">Skip to the conversation</a>
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <linearGradient id="gstar" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f9730c"/><stop offset=".5" stop-color="#ffb053"/><stop offset="1" stop-color="#3333cc"/>
-    </linearGradient>
-    <linearGradient id="gcha" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0e2f63"/><stop offset=".5" stop-color="#1a4a94"/><stop offset="1" stop-color="#2a6fd0"/>
-    </linearGradient>
-    <linearGradient id="gcha2" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0" stop-color="#143f85"/><stop offset="1" stop-color="#2a6fd0"/>
-    </linearGradient>
-    <linearGradient id="gflame" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffb053"/><stop offset="1" stop-color="#e6651b"/>
-    </linearGradient>
-    <linearGradient id="gem" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4285f4"/><stop offset=".5" stop-color="#9b72cb"/><stop offset="1" stop-color="#d96570"/>
-    </linearGradient>
-  </defs>
-</svg>
+
 
 <div class="shell">
 <aside id="side">
@@ -81,7 +65,7 @@
   <header>
     <button class="hbtn" id="btnMenu" type="button" title="Your chats" aria-label="Open saved chats" aria-controls="side" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="brand">
-      <div class="star"><img class="lgimg" id="brandLogo" alt="Amigo mascot"></div>
+      <div class="star"><img class="lgimg" id="brandLogo" alt="Veridellindo logo"></div>
       <h1>Amigo</h1>
     </div>
     <span class="engine-status" id="engineStatus">Connect Cloudflare</span>
@@ -109,7 +93,7 @@
     <label class="sr-only" for="input">Message Amigo</label>
         <textarea id="input" rows="1" placeholder="Message Amigo…" aria-describedby="inputHelp"></textarea>
         <span id="inputHelp" class="sr-only">Press Enter to send. Press Shift and Enter for a new line.</span>
-    <button id="micBtn" class="toolbtn" type="button" title="Speak your question" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
+    <button id="micBtn" class="toolbtn" type="button" title="Speak your question" aria-label="Speak your question" aria-pressed="false" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a2.6 2.6 0 0 1 2.6 2.6v5a2.6 2.6 0 0 1-5.2 0v-5A2.6 2.6 0 0 1 12 4Z"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0"/><path d="M12 17v3.5"/></svg></button>
     <button id="stop" type="button" class="toolbtn" aria-label="Stop response" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
         <button type="button" id="send" title="Send" aria-label="Send message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M6 12l6-6 6 6"/></svg></button>
     <div class="menu" id="toolMenu">
@@ -123,7 +107,7 @@
   </div>
 
 
-  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.39</span> <span id="appBuild" class="foot-build"></span></span></div>
+  <div class="sarvline">✦ <b>AI for All, from India</b> · your choice of free AI ✦ <span class="site-version">Veridellindo <span id="appVersion">v6.10.38</span> <span id="appBuild" class="foot-build"></span></span></div>
   <input type="file" id="fileInput" multiple style="display:none">
 </div>
 </div>
@@ -147,6 +131,20 @@
         <option value="meta-llama/llama-3.3-70b-instruct:free">OpenRouter — Llama 3.3 70B (free)</option>
       </select>
       <div class="hint">OpenRouter credentials stay inside Cloudflare Worker Secrets. The browser only calls this Worker URL. Auto mode prioritises Workers AI and falls back to OpenRouter when needed.</div>
+    </div>
+
+    <div class="field" id="fVoice">
+      <label for="inVoiceLang">Voice language</label>
+      <select id="inVoiceLang">
+        <option value="auto">Automatic — detect Hindi / English</option>
+        <option value="hi-IN">Hindi (India)</option>
+        <option value="en-IN">English (India)</option>
+        <option value="ur-PK">Urdu</option>
+        <option value="bn-IN">Bengali</option>
+        <option value="ta-IN">Tamil</option>
+        <option value="te-IN">Telugu</option>
+      </select>
+      <div class="hint">Used by the microphone and Read aloud buttons. Available voices depend on your browser and device.</div>
     </div>
 
     <div class="field" id="fConn">
@@ -178,6 +176,6 @@
 <script src="/amigo/app.js"></script>
 <script src="/amigo/boot.js"></script>
 <script type="module" src="/assets/js/build-watch.js"></script>
-  <script src="/assets/js/error-report.js?v=6.10.39-95a21d2"></script>
+  <script src="/assets/js/error-report.js?v=6.10.38-d65ffe8"></script>
 </body>
 </html>

@@ -237,7 +237,7 @@ body:not(.dark) .copybtn.vote.on{color:#1a73e8}
   #btnMenu{display:grid}
   .shell .app{max-width:100%}
 }
-/* ---- the "+" menu (Gemini-style floating card) ---- */
+/* ---- the "+" menu floating action card ---- */
 .composer{position:relative}
 .menu{display:none; position:absolute; left:4px; bottom:calc(100% + 10px); min-width:262px; z-index:35;
   background:var(--field); border:1px solid var(--line); border-radius:18px; padding:8px;
@@ -377,13 +377,8 @@ body.dark .overlay{background:rgba(0,0,0,.6)}
 #send svg{width:18px; height:18px; pointer-events:none}
 #micBtn.on{background:rgba(230,101,27,.18); color:#e6651b}
 /* dark mode: make the Anahata chakra light so it stays visible on a dark background */
-body.dark #gcha stop:nth-of-type(1){stop-color:#b7d1ff}
-body.dark #gcha stop:nth-of-type(2){stop-color:#8fb8ff}
-body.dark #gcha stop:nth-of-type(3){stop-color:#6ea6ff}
-body.dark #gcha2 stop:nth-of-type(1){stop-color:#d3e2ff}
-body.dark #gcha2 stop:nth-of-type(2){stop-color:#9cc2ff}
 .brand .star{filter:drop-shadow(0 1px 4px rgba(70,110,200,.22))}
-/* the light that breathes around the conch — the Google AI Mode feel */
+/* subtle halo behind the welcome mark */
 .hero .hstar{position:relative; filter:none}
 .hero .hstar .lgimg{position:relative; z-index:2}
 .hero .hstar::before, .hero .hstar::after{content:""; position:absolute; left:50%; top:50%; border-radius:50%; pointer-events:none; z-index:1}
@@ -401,7 +396,7 @@ body.dark .hero .hstar{filter:none}
 body.dark .hero .hstar::before{opacity:.16}
 body.dark .hero .hstar::after{background:radial-gradient(circle, rgba(150,190,255,.34), rgba(150,190,255,0) 66%); opacity:.4}
 
-/* ==================== Google AI Mode look ==================== */
+/* ==================== refreshed assistant surface ==================== */
 :root{
   --bg:#ffffff; --panel:#ffffff; --ink:#1f1f1f; --muted:#5f6368;
   --line:#dadce0; --line2:#bdc1c6; --hover:#f1f3f4; --bubble:#f1f3f4;

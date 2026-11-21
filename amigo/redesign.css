@@ -1,0 +1,225 @@
+/* Veridellindo / Amigo — refreshed chat surface.
+   Loaded after the shared stylesheet so it can theme the chat without changing
+   component IDs, document order, history storage or provider behaviour. */
+:root {
+  color-scheme: light;
+  --amigo-accent: #7b35d4;
+  --amigo-accent-2: #d72d91;
+  --amigo-warm: #ff8b38;
+  --amigo-page: #f7f5fb;
+  --amigo-panel: rgba(255,255,255,.88);
+  --amigo-card: #fff;
+  --amigo-ink: #211a30;
+  --amigo-muted: #70697d;
+  --amigo-line: rgba(78,55,105,.13);
+  --amigo-shadow: 0 18px 48px rgba(70,42,108,.09);
+}
+body.dark {
+  color-scheme: dark;
+  --amigo-page: #100d19;
+  --amigo-panel: rgba(25,20,37,.93);
+  --amigo-card: #1a1525;
+  --amigo-ink: #f1edf7;
+  --amigo-muted: #b2aabd;
+  --amigo-line: rgba(219,201,242,.14);
+  --amigo-shadow: 0 20px 54px rgba(0,0,0,.28);
+}
+body.amigo-chat {
+  color: var(--amigo-ink);
+  background:
+    radial-gradient(ellipse at 83% 3%, rgba(255,151,67,.11), transparent 32rem),
+    radial-gradient(ellipse at 6% 85%, rgba(135,57,214,.09), transparent 34rem),
+    var(--amigo-page);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Devanagari", sans-serif;
+}
+body.dark.amigo-chat {
+  background:
+    radial-gradient(ellipse at 82% 2%, rgba(234,117,67,.10), transparent 32rem),
+    radial-gradient(ellipse at 2% 90%, rgba(135,57,214,.12), transparent 34rem),
+    var(--amigo-page);
+}
+body.amigo-chat .shell { max-width: 1580px; }
+body.amigo-chat #side {
+  width: 286px;
+  padding: 22px 16px 18px;
+  gap: 12px;
+  background: var(--amigo-panel);
+  border-right: 1px solid var(--amigo-line);
+  box-shadow: 10px 0 40px rgba(63,43,98,.035);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+body.amigo-chat .sTop { padding: 0 4px 12px; }
+body.amigo-chat .sBrand { gap: 10px; color: var(--amigo-ink); font-weight: 760; letter-spacing: -.035em; }
+body.amigo-chat .sBrand img { width: 34px; height: 34px; object-fit: contain; }
+body.amigo-chat #sideClose { border-radius: 12px; }
+body.amigo-chat .sSearch {
+  min-height: 44px; padding: 10px 14px; border: 1px solid var(--amigo-line);
+  border-radius: 14px; background: var(--amigo-card); color: var(--amigo-ink);
+}
+body.amigo-chat .sSearch:focus { border-color: rgba(123,53,212,.6); box-shadow: 0 0 0 3px rgba(123,53,212,.11); outline: none; }
+body.amigo-chat .sNew {
+  min-height: 46px; padding: 11px 14px; border: 1px solid transparent; border-radius: 14px;
+  background: linear-gradient(110deg, rgba(123,53,212,.11), rgba(215,45,145,.09), rgba(255,139,56,.10));
+  color: var(--amigo-ink); font-weight: 700;
+}
+body.amigo-chat .sNew:hover { border-color: var(--amigo-line); filter: brightness(1.02); }
+body.amigo-chat .srow { border-radius: 12px; color: var(--amigo-muted); }
+body.amigo-chat .srow:hover, body.amigo-chat .srow.on { background: rgba(123,53,212,.09); color: var(--amigo-ink); }
+body.amigo-chat .app { padding-inline: clamp(18px, 3vw, 44px); }
+body.amigo-chat .app > header {
+  min-height: 70px; padding: 10px 0 12px; border-bottom: 1px solid var(--amigo-line);
+}
+body.amigo-chat .brand { gap: 11px; }
+body.amigo-chat .brand .star {
+  width: 40px; height: 40px; display: grid; place-items: center; padding: 2px;
+  border-radius: 13px; background: linear-gradient(135deg, rgba(255,139,56,.13), rgba(215,45,145,.10), rgba(123,53,212,.12));
+  filter: drop-shadow(0 5px 13px rgba(123,53,212,.13));
+}
+body.amigo-chat .brand .star img { width: 100%; height: 100%; object-fit: contain; animation: none; }
+body.amigo-chat .brand h1 {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.24rem; font-weight: 780;
+  letter-spacing: -.045em; color: var(--amigo-ink);
+}
+body.amigo-chat .engine-status {
+  max-width: 240px; overflow: hidden; text-overflow: ellipsis; padding: 7px 11px;
+  border: 1px solid var(--amigo-line); border-radius: 999px; background: var(--amigo-panel);
+  color: var(--amigo-muted); font-size: .72rem;
+}
+body.amigo-chat .hbtns { gap: 6px; }
+body.amigo-chat .hbtn {
+  width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid transparent;
+  border-radius: 13px; background: transparent; color: var(--amigo-muted); transition: background .16s, color .16s, border-color .16s;
+}
+body.amigo-chat .hbtn:hover { background: rgba(123,53,212,.09); border-color: var(--amigo-line); color: var(--amigo-ink); }
+body.amigo-chat #chat { padding: clamp(22px,4vh,48px) 8px 30px; }
+body.amigo-chat #chatMessages { width: 100%; }
+body.amigo-chat .hero { padding: clamp(30px,7vh,82px) 8px 30px; }
+body.amigo-chat .hero .hstar {
+  width: 112px; height: 112px; margin: 0 auto 24px; display: grid; place-items: center;
+  border: 1px solid rgba(123,53,212,.12); border-radius: 34px;
+  background: linear-gradient(145deg, rgba(255,255,255,.8), rgba(255,255,255,.44));
+  box-shadow: 0 20px 56px rgba(106,55,157,.13), inset 0 1px 0 rgba(255,255,255,.9);
+}
+body.dark.amigo-chat .hero .hstar { background: linear-gradient(145deg, rgba(42,32,57,.85), rgba(27,20,39,.82)); box-shadow: 0 20px 56px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.05); }
+body.amigo-chat .hero .hstar .lgimg { width: 90px; height: 90px; object-fit: contain; position: relative; z-index: 2; }
+body.amigo-chat .hero h2 { margin: 0 0 10px; color: var(--amigo-ink); font-size: clamp(1.7rem,3.4vw,2.55rem); line-height: 1.15; font-weight: 780; letter-spacing: -.055em; }
+body.amigo-chat .hero h2 .g { background: linear-gradient(105deg,var(--amigo-warm),var(--amigo-accent-2) 48%,var(--amigo-accent)); background-clip: text; -webkit-background-clip: text; color: transparent; }
+body.amigo-chat .hero p { color: var(--amigo-muted); font-size: .98rem; line-height: 1.65; }
+body.amigo-chat .gcards { max-width: 720px; gap: 12px; }
+body.amigo-chat .gcard {
+  min-height: 76px; display: flex; align-items: center; gap: 12px; padding: 15px 17px;
+  border: 1px solid var(--amigo-line); border-radius: 18px; background: var(--amigo-panel);
+  box-shadow: 0 7px 24px rgba(63,43,98,.035); text-align: left; backdrop-filter: blur(12px);
+  transition: transform .17s ease, border-color .17s ease, box-shadow .17s ease;
+}
+body.amigo-chat .gcard:hover { transform: translateY(-2px); border-color: rgba(123,53,212,.32); box-shadow: 0 12px 28px rgba(83,51,133,.09); }
+body.amigo-chat .gcard .gi { width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border-radius: 11px; background: linear-gradient(135deg,rgba(255,139,56,.14),rgba(215,45,145,.11),rgba(123,53,212,.13)); font-size: 17px; }
+body.amigo-chat .gcard .gt { color: var(--amigo-muted); font-size: .82rem; line-height: 1.5; }
+body.amigo-chat .msg { margin-bottom: 28px; gap: 12px; }
+body.amigo-chat .msg .who { width: 34px; height: 34px; margin-top: 3px; border-radius: 12px; overflow: hidden; }
+body.amigo-chat .msg .who img, body.amigo-chat .msg .who svg { width: 100%; height: 100%; object-fit: contain; }
+body.amigo-chat .msg.ai .bubble {
+  max-width: 100%; padding: 19px 21px; border: 1px solid var(--amigo-line); border-radius: 8px 21px 21px 21px;
+  background: var(--amigo-card); color: var(--amigo-ink); box-shadow: 0 9px 26px rgba(55,39,82,.045);
+}
+body.dark.amigo-chat .msg.ai .bubble { box-shadow: 0 12px 32px rgba(0,0,0,.18); }
+body.amigo-chat .msg.me .bubble {
+  max-width: min(82%, 720px); padding: 13px 18px; border: 1px solid rgba(255,255,255,.15);
+  border-radius: 21px 8px 21px 21px; background: linear-gradient(120deg,#7636d2,#c02eaa 62%,#e96d69);
+  color: #fff; box-shadow: 0 9px 24px rgba(126,54,177,.17);
+}
+body.amigo-chat .msg.me .bubble a { color: #fff; }
+body.amigo-chat .msg.ai .copyrow, body.amigo-chat .msg.me .copyrow { padding-inline: 0; gap: 6px; }
+body.amigo-chat .copyrow { margin-top: 10px; opacity: .82; }
+body.amigo-chat .copybtn {
+  min-height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px;
+  border: 1px solid var(--amigo-line); border-radius: 10px; background: var(--amigo-panel);
+  color: var(--amigo-muted); font-size: .72rem; transition: background .15s, color .15s, border-color .15s;
+}
+body.amigo-chat .copybtn:hover { background: rgba(123,53,212,.09); color: var(--amigo-ink); border-color: rgba(123,53,212,.25); transform: none; }
+body.amigo-chat .copybtn:disabled { opacity: .45; cursor: not-allowed; }
+body.amigo-chat .copybtn.speaking { color: var(--amigo-accent); border-color: rgba(123,53,212,.35); background: rgba(123,53,212,.1); }
+body.amigo-chat .composer {
+  display: flex; align-items: flex-end; gap: 8px; margin: 14px auto 8px; padding: 9px 10px;
+  border: 1px solid var(--amigo-line); border-radius: 25px; background: var(--amigo-panel);
+  box-shadow: var(--amigo-shadow), inset 0 1px 0 rgba(255,255,255,.65); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+}
+body.dark.amigo-chat .composer { box-shadow: 0 15px 38px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.04); }
+body.amigo-chat .composer:focus-within { border-color: rgba(123,53,212,.45); box-shadow: 0 0 0 4px rgba(123,53,212,.08), var(--amigo-shadow); }
+body.amigo-chat .composer textarea { min-height: 44px; max-height: min(190px, 28dvh); padding: 11px 7px; border: 0; background: transparent; color: var(--amigo-ink); font: inherit; font-size: .96rem; line-height: 1.55; resize: none; outline: none; box-shadow: none; }
+body.amigo-chat .composer textarea::placeholder { color: var(--amigo-muted); opacity: .78; }
+body.amigo-chat .toolbtn {
+  width: 42px; height: 42px; flex: 0 0 42px; display: grid; place-items: center; border: 1px solid transparent;
+  border-radius: 14px; background: transparent; color: var(--amigo-muted); transition: background .15s,color .15s;
+}
+body.amigo-chat .toolbtn:hover { background: rgba(123,53,212,.09); color: var(--amigo-ink); }
+body.amigo-chat #plusBtn { border: 1px solid var(--amigo-line); background: rgba(123,53,212,.045); }
+body.amigo-chat #micBtn.on { background: rgba(219,55,86,.12); color: #de365c; box-shadow: 0 0 0 4px rgba(219,55,86,.08); animation: amigoMicPulse 1.35s ease-in-out infinite; }
+body.amigo-chat #send { width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 15px; background: linear-gradient(135deg,#ff963e,#df398d 52%,#7939d3); color: #fff; box-shadow: 0 7px 17px rgba(174,57,151,.25); }
+body.amigo-chat #send:disabled { background: var(--amigo-line); box-shadow: none; color: var(--amigo-muted); }
+body.amigo-chat #send:not(:disabled):hover { filter: brightness(1.06); transform: translateY(-1px); }
+body.amigo-chat .menu { border: 1px solid var(--amigo-line); border-radius: 18px; background: var(--amigo-card); box-shadow: var(--amigo-shadow); overflow: hidden; }
+body.amigo-chat .mitem { color: var(--amigo-ink); }
+body.amigo-chat .mitem:hover { background: rgba(123,53,212,.08); }
+body.amigo-chat .attbar { padding-inline: 8px; }
+body.amigo-chat .helpline { color: var(--amigo-muted); font-size: .68rem; }
+body.amigo-chat .sarvline { color: var(--amigo-muted); padding-bottom: max(10px,env(safe-area-inset-bottom)); }
+body.amigo-chat .sarvline b { color: var(--amigo-ink); }
+body.amigo-chat .overlay { background: rgba(18,12,28,.54); backdrop-filter: blur(8px); }
+body.amigo-chat .modal { border: 1px solid var(--amigo-line); border-radius: 24px; background: var(--amigo-card); color: var(--amigo-ink); box-shadow: 0 28px 90px rgba(12,8,24,.3); }
+body.amigo-chat .modal h2 { color: var(--amigo-ink); }
+body.amigo-chat .modal .sub, body.amigo-chat .field .hint { color: var(--amigo-muted); }
+body.amigo-chat .field input[type=text], body.amigo-chat .field input[type=password], body.amigo-chat .field select { border-color: var(--amigo-line); border-radius: 12px; background: var(--amigo-page); color: var(--amigo-ink); }
+body.amigo-chat .field input:focus, body.amigo-chat .field select:focus { border-color: rgba(123,53,212,.6); box-shadow: 0 0 0 3px rgba(123,53,212,.1); }
+body.amigo-chat .btn.primary { background: linear-gradient(115deg,#883bd0,#cf368d); color: #fff; }
+body.amigo-chat .btn.ghost { background: var(--amigo-page); color: var(--amigo-ink); border-color: var(--amigo-line); }
+body.amigo-chat .chatrow { border-color: var(--amigo-line); border-radius: 13px; background: var(--amigo-page); }
+body.amigo-chat .scrim { background: rgba(16,12,25,.46); backdrop-filter: blur(3px); }
+body.amigo-chat :focus-visible { outline: 3px solid rgba(123,53,212,.55); outline-offset: 3px; }
+body.amigo-chat .composer :focus-visible { outline-offset: 1px; }
+@keyframes amigoMicPulse { 0%,100% { box-shadow: 0 0 0 3px rgba(219,55,86,.07); } 50% { box-shadow: 0 0 0 7px rgba(219,55,86,.03); } }
+@media (max-width: 1024px) {
+  body.amigo-chat .app { padding-inline: 22px; }
+}
+@media (max-width: 860px) {
+  body.amigo-chat #side { padding-top: max(18px,env(safe-area-inset-top)); }
+  body.amigo-chat .app { padding-inline: 16px; }
+  body.amigo-chat .app > header { min-height: 64px; }
+  body.amigo-chat .engine-status { display: none; }
+}
+@media (max-width: 560px) {
+  body.amigo-chat .app { padding-inline: 12px; }
+  body.amigo-chat .app > header { min-height: 58px; gap: 4px; }
+  body.amigo-chat .brand .star { width: 34px; height: 34px; border-radius: 11px; }
+  body.amigo-chat .brand h1 { font-size: 1.08rem; }
+  body.amigo-chat .hbtns { gap: 0; }
+  body.amigo-chat .hbtn { width: 36px; height: 38px; }
+  body.amigo-chat #chat { padding: 22px 0 20px; }
+  body.amigo-chat .hero { padding: 5vh 2px 22px; }
+  body.amigo-chat .hero .hstar { width: 88px; height: 88px; border-radius: 27px; margin-bottom: 19px; }
+  body.amigo-chat .hero .hstar .lgimg { width: 72px; height: 72px; }
+  body.amigo-chat .hero p { font-size: .9rem; }
+  body.amigo-chat .gcards { grid-template-columns: 1fr; gap: 9px; }
+  body.amigo-chat .gcard { min-height: 62px; padding: 11px 13px; }
+  body.amigo-chat .msg { gap: 8px; margin-bottom: 21px; }
+  body.amigo-chat .msg .who { width: 28px; height: 28px; }
+  body.amigo-chat .msg.ai .bubble { padding: 15px; border-radius: 7px 17px 17px 17px; }
+  body.amigo-chat .msg.me .bubble { max-width: 90%; padding: 11px 14px; }
+  body.amigo-chat .composer { gap: 5px; margin: 8px auto 6px; padding: 6px; border-radius: 21px; }
+  body.amigo-chat .toolbtn { width: 38px; height: 40px; flex-basis: 38px; border-radius: 12px; }
+  body.amigo-chat #send { width: 40px; height: 40px; flex-basis: 40px; border-radius: 13px; }
+  body.amigo-chat .composer textarea { padding: 9px 2px; font-size: .91rem; }
+  body.amigo-chat .helpline { font-size: .61rem; line-height: 1.5; }
+  body.amigo-chat .sarvline { font-size: .6rem; }
+  body.amigo-chat .copyrow { opacity: 1; }
+}
+@media (hover:none) { body.amigo-chat .copyrow { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  body.amigo-chat *, body.amigo-chat *::before, body.amigo-chat *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Image tools use the same brand ramp as the primary composer action. */
+body.amigo-chat .dlbtn { background: linear-gradient(115deg,#ff963e,#dc398c 52%,#7939d3); box-shadow: 0 7px 18px -9px rgba(123,53,212,.55); }
+body.amigo-chat .bubble .tick.on { background: linear-gradient(135deg,#ff963e,#dc398c 52%,#7939d3); }
+body.amigo-chat .fgo, body.amigo-chat #setupBtn { background: linear-gradient(115deg,#ff963e,#dc398c 52%,#7939d3); color: #fff; }
