@@ -165,7 +165,30 @@ function render(ctx, mount, state) {
     filename: data.title,
   }));
 
-  mount.append(panelFull, exportRow);
+  /* Translation is an action again. It used to live in a three-tab bar, and when
+     that bar was removed the translator went with it — the import stayed at the
+     top of this file, unused, which is why nothing looked broken. It is a button
+     that opens the panel in place, under the article, so the reader keeps the
+     text they were reading. */
+  const translateRow = el('div', { class: 'article-actions' });
+  const translateBtn = el('button', {
+    type: 'button', class: 'btn btn-ghost', 'aria-expanded': 'false', 'aria-controls': 'article-translate',
+  }, t('translateTab') || 'Translate');
+  const translateSlot = el('div', { id: 'article-translate', hidden: true });
+  translateBtn.addEventListener('click', () => {
+    const open = translateSlot.hidden;
+    translateSlot.hidden = !open;
+    translateBtn.setAttribute('aria-expanded', String(open));
+    if (open && !translateSlot.firstChild) {
+      const translator = translatePanel(state, ctx);
+      translateSlot.append(translator);
+      ctx.onCleanup(() => translator.abortTranslation?.());
+    }
+    if (open) translateSlot.scrollIntoView({ block: 'nearest' });
+  });
+  translateRow.append(translateBtn);
+
+  mount.append(panelFull, translateRow, translateSlot, exportRow);
 
   repaintFull(ctx, state);
   loadRelated(ctx, mount, { title: data.title, lang });

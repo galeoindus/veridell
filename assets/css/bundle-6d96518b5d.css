@@ -2569,7 +2569,7 @@ body.amigo-chat .composer:focus-within,
   border: 1px solid var(--border-2) !important;
   border-bottom-width: 1px !important;
   border-radius: 26px !important;
-  box-shadow: none !important;
+  box-shadow: var(--surface-shadow, none) !important;
 }
 .searchbar textarea,
 .searchbar input,
