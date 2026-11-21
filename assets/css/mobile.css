@@ -791,3 +791,88 @@ body.amigo-chat .composer:focus-within,
   background: var(--surface) !important;
   padding: 16px 20px !important;
 }
+
+/* ── the card, not a line ─────────────────────────────────────────────────
+   The field carried a 1px bottom border of its own, which drew a stray line
+   under the text inside the card — the lining beside the chat box. The card
+   holds the whole shape: one rounded surface, and nothing inside it draws an
+   edge. Every icon in the row is centred on the same axis. */
+.searchbar,
+.composer {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-2) !important;
+  border-bottom-width: 1px !important;
+  border-radius: 26px !important;
+  box-shadow: none !important;
+}
+.searchbar textarea,
+.searchbar input,
+.searchbar input[type="search"],
+.composer textarea {
+  border: 0 !important;
+  border-bottom: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+}
+.searchbar:focus-within,
+.composer:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-2)) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent) !important;
+}
+.searchbar:focus-within textarea,
+.searchbar:focus-within input,
+.composer:focus-within textarea {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* icons on one axis */
+.searchbar .composer-tools,
+.composer .composer-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.searchbar .mic,
+.searchbar .btn-icon,
+.searchbar .mode-btn,
+.searchbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.searchbar .mode-btn { padding: 0 12px; }
+.searchbar button[type="submit"] { margin-inline-start: auto; }
+
+/* The rectangle around the rounded card in the screenshot is the ask panel
+   wrapper, not the card. It is flattened so the card is the only shape, and the
+   helper sentence under the field is removed — the placeholder already says what
+   the field does. */
+.dash-hero-ask,
+.dash-hero-ask:focus-within,
+.panel,
+.ask-panel,
+.hero-search {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.searchbar .mode-help,
+.searchbar .composer-prompt,
+.searchbar .composer-label { display: none !important; }
+
+/* the wrapper around the card on the site is not a second box */
+body:not(.amigo-chat) .composer,
+.dash-hero .composer {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
