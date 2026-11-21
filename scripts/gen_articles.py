@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate static, indexable article pages for Veridell's curated topics.
+"""Generate static, indexable article pages for Veridellindo's curated topics.
 
 Each page is real HTML: lead, quick facts, a numbered table of contents,
 numbered sections with inline citations, a reference list, related topics and
@@ -47,7 +47,7 @@ POINTS_SCRIPT = f'\n<script type="module" src="/assets/js/article-points.js?v={V
 
 ORIGIN = "https://veridellindo.pages.dev"
 LANG = "en"
-UA = "Veridell/3.0 (static article generator; contact bholasee8816@gmail.com)"
+UA = "Veridellindo/3.0 (static article generator; contact bholasee8816@gmail.com)"
 
 TOPICS = [
     "Chandrayaan-3", "Unified Payments Interface", "Indian independence movement",
@@ -427,16 +427,16 @@ HEAD = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title} — Veridell</title>
+  <title>{title} — Veridellindo</title>
   <meta name="description" content="{description}">
   <link rel="canonical" href="{canonical}">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#101713">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="{title} — Veridell">
+  <meta property="og:title" content="{title} — Veridellindo">
   <meta property="og:description" content="{description}">
   <meta property="og:url" content="{canonical}">
-  <meta property="og:site_name" content="Veridell">
+  <meta property="og:site_name" content="Veridellindo">
   <meta property="og:image" content="{imageUrl}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{imageUrl}">
@@ -457,7 +457,7 @@ HEAD = """<!DOCTYPE html>
     <div class="topbar-inner">
       <a class="brand" href="/#/">
         <img class="brand-mark" src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async">
-        <span class="brand-text"><strong>Veridell</strong><small>Wikipedia, understood</small></span>
+        <span class="brand-text"><strong>Veridellindo</strong><small>Understand a question. Follow the evidence.</small></span>
       </a>
 {nav}
     </div>
@@ -479,9 +479,9 @@ HEAD = """<!DOCTYPE html>
     </div>
 
     <div class="article-actions">
-      <a class="btn btn-primary" href="/#/article/{slug_enc}">Open in Veridell</a>
+      <a class="btn btn-primary" href="/#/article/{slug_enc}">Open in Veridellindo</a>
       <a class="btn btn-ghost" href="/#/ask?q={title_enc}">Ask about it</a>
-      <a class="btn btn-ghost" href="/amigo/">Ask about it</a>
+      <a class="btn btn-ghost" href="/amigo/">Ask Amigo</a>
       <a class="btn btn-ghost" href="{wikiUrl}" target="_blank" rel="noopener noreferrer">Read on Wikipedia ↗</a>
     </div>
 """
@@ -491,7 +491,7 @@ FOOT = """  </main>
   <footer class="site-foot">
     <div class="foot-inner">
       <div class="foot-col">
-        <div class="foot-brand"><strong>Veridell</strong></div>
+        <div class="foot-brand"><strong>Veridellindo</strong></div>
         <p>A Wikipedia-based knowledge explorer. It turns free knowledge into a core answer, a topic-wise breakdown and Markdown you can keep.</p>
       </div>
       <div class="foot-col">
@@ -516,8 +516,8 @@ FOOT = """  </main>
       </div>
     </div>
     <div class="foot-legal">
-      <p>Wikipedia article text is available under the Creative Commons Attribution-ShareAlike Licence (CC BY-SA 4.0). Wikidata data is released under CC0 1.0. Files on Wikimedia Commons carry their own licence, shown with each image. Veridell is an independent reader and is not affiliated with or endorsed by the Wikimedia Foundation.</p>
-      <p>Veridell reformats, condenses and reorders this text for reading. The original, with its full edit history, is at <a href="{wikiUrl}" target="_blank" rel="noopener noreferrer">{lang}.wikipedia.org</a>.</p>
+      <p>Wikipedia article text is available under the Creative Commons Attribution-ShareAlike Licence (CC BY-SA 4.0). Wikidata data is released under CC0 1.0. Files on Wikimedia Commons carry their own licence, shown with each image. Veridellindo is an independent reader and is not affiliated with or endorsed by the Wikimedia Foundation.</p>
+      <p>Veridellindo reformats, condenses and reorders this text for reading. The original, with its full edit history, is at <a href="{wikiUrl}" target="_blank" rel="noopener noreferrer">{lang}.wikipedia.org</a>.</p>
       <p class="foot-version">Veridellindo <span id="appVersion">v{version}</span> <span id="appBuild" class="foot-build"></span></p>
     </div>
   </footer>
@@ -548,7 +548,7 @@ def page_html(art, related, article_map=None):
         "inLanguage": LANG,
         "isBasedOn": art["wikiUrl"],
         "license": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "publisher": {"@type": "Organization", "name": "Veridell", "url": ORIGIN + "/"},
+        "publisher": {"@type": "Organization", "name": "Veridellindo", "url": ORIGIN + "/"},
         "isAccessibleForFree": True,
     }, ensure_ascii=False)
 
@@ -850,20 +850,20 @@ def main():
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Articles — Veridell</title>
-  <meta name="description" content="Thirteen curated Veridell article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
+  <title>Articles — Veridellindo</title>
+  <meta name="description" content="Thirteen curated Veridellindo article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="{ORIGIN}/articles/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Articles — Veridell">
-  <meta property="og:description" content="Thirteen curated Veridell article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
+  <meta property="og:title" content="Articles — Veridellindo">
+  <meta property="og:description" content="Thirteen curated Veridellindo article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
   <meta property="og:url" content="{ORIGIN}/articles/">
-  <meta property="og:site_name" content="Veridell">
+  <meta property="og:site_name" content="Veridellindo">
   <meta property="og:locale" content="en_IN">
   <meta property="og:image" content="{ORIGIN}/assets/img/brand/og-card.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Articles — Veridell">
-  <meta name="twitter:description" content="Thirteen curated Veridell article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
+  <meta name="twitter:title" content="Articles — Veridellindo">
+  <meta name="twitter:description" content="Thirteen curated Veridellindo article pages with images, quick facts, cited sections and references. Search opens the full live Wikipedia catalogue.">
   <meta name="twitter:image" content="{ORIGIN}/assets/img/brand/og-card.png">
   <meta name="theme-color" content="#101713">
   <link rel="icon" href="/assets/img/brand/logo-48.png" sizes="48x48" type="image/png">
@@ -884,7 +884,7 @@ def main():
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="grain" aria-hidden="true"></div>
   <header class="topbar"><div class="topbar-inner">
-    <a class="brand" href="/#/"><img src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async"><span class="brand-text"><strong>Veridell</strong><small>Wikipedia, understood</small></span></a>
+    <a class="brand" href="/#/"><img src="/assets/img/brand/logo-96.png" alt="" width="26" height="26" decoding="async"><span class="brand-text"><strong>Veridellindo</strong><small>Understand a question. Follow the evidence.</small></span></a>
 {NAV}
   </div></header>
   <main id="main" class="wrap" tabindex="-1">

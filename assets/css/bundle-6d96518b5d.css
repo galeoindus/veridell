@@ -2771,6 +2771,8 @@ body:not(.amigo-chat) .composer,
 /* the circle: one size everywhere, and a box that centres its contents */
 .searchbar button[type="submit"],
 .composer .searchbar button[type="submit"] {
+  position: relative !important;
+  overflow: hidden !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -2793,13 +2795,23 @@ body:not(.amigo-chat) .composer,
 .searchbar button[type="submit"]::after,
 .composer .searchbar button[type="submit"]::after {
   content: "" !important;
+  /* Absolute, not a flex item. The button still holds its text label in the
+     DOM (the accessible name), and a text node inside a flex container becomes
+     an anonymous flex item — so the arrow was centred with the label's box and
+     sat about 4 px to the right of the circle's centre. Pinning the arrow to
+     the circle's own centre removes the label from the geometry entirely. */
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) !important;
   display: block !important;
   width: 20px !important;
   height: 20px !important;
   font-size: 0 !important;
   background: currentColor !important;
-  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V5M5.5 11.5 12 5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
-  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V5M5.5 11.5 12 5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V4.5M5.5 11 12 4.5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 19.5V4.5M5.5 11 12 4.5l6.5 6.5'/></svg>") center / 20px 20px no-repeat !important;
 }
 
 }
